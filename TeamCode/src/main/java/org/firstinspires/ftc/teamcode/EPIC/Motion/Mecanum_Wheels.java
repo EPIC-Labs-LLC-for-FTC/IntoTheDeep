@@ -96,7 +96,7 @@ public class Mecanum_Wheels {
         int new_backLeftTarget;
         int new_backRightTarget;
         double ticksPerInchMecanum = (537.7 / mecanumWheelCircumference);
-        // Ensure that the opmode is still active
+        // Ensure that the opmode is still active.
         if (parent.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
