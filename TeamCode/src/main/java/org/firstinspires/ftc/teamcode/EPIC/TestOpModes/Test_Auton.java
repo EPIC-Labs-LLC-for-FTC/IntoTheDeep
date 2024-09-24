@@ -1,13 +1,16 @@
-package org.firstinspires.ftc.teamcode.EPIC.OpModes;
+package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
+import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
+import org.firstinspires.ftc.teamcode.EPIC.Components.Arm;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "Test Auton")
+@Autonomous(name = "Test Auton")
 //@Disabled
-public class Autonomous extends LinearOpMode {
+public class Test_Auton extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         double distance = 0;
@@ -20,6 +23,27 @@ public class Autonomous extends LinearOpMode {
         mecanum.telemetry = this.telemetry;
         mecanum.initialize();
 
+        //Component Declaration
+        //Arm declaration and initialization
+        Arm arm = new Arm(hardwareMap);
+        arm.setParent(this);
+        arm.setTelemetry(this.telemetry);
+        arm.setIsAutonomous(true);
+        arm.initialize();
+
+        //Wrist declaration and initialization
+        Wrist wrist = new Wrist(hardwareMap);
+        wrist.setParent(this);
+        wrist.setTelemetry(this.telemetry);
+        wrist.setIsAutonomous(true);
+        wrist.initialize();
+
+        //Claw declaration and initialization
+        Claw claw = new Claw(hardwareMap);
+        claw.setParent(this);
+        claw.setTelemetry(this.telemetry);
+        claw.setIsAutonomous(true);
+        claw.initialize();
 
         waitForStart();
         sleep(100);
