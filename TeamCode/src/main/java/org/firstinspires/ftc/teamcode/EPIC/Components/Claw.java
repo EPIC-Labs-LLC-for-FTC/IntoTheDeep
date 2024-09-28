@@ -65,12 +65,16 @@ public class Claw implements IComponents,IClaw{
     @Override
     public void open(double position) {
         leftFinger.setPosition(position);
-        rightFinger.setPosition(position);  
+        rightFinger.setPosition(position);
     }
 
     @Override
     public void close(double position) {
         leftFinger.setPosition(-position);
         rightFinger.setPosition(-position);
+    }
+
+    public void restClaw() {
+        close(reset);
     }
 }
