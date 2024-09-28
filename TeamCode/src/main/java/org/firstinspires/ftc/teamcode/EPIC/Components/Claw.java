@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.EPIC.Components;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
@@ -24,10 +25,11 @@ public class Claw implements IComponents,IClaw{
     }
     @Override
     public void initialize() {
+        leftFinger.setDirection(Servo.Direction.REVERSE);
+        rightFinger.setDirection(Servo.Direction.FORWARD);
 
         if(IsAutonomous){
             //override settings for autonomous mode if needed
-
         }
     }
 
