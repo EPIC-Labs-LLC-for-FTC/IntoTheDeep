@@ -16,6 +16,8 @@ public class Claw implements IComponents,IClaw{
 
     private Servo leftFinger;
     private Servo rightFinger;
+    public double reset = 0;
+
     //Declare your servos, motors, sensors, other devices here
 
     public Claw(HardwareMap hardwareMap) {
@@ -27,6 +29,12 @@ public class Claw implements IComponents,IClaw{
     public void initialize() {
         leftFinger.setDirection(Servo.Direction.REVERSE);
         rightFinger.setDirection(Servo.Direction.FORWARD);
+
+        leftFinger.scaleRange(0, 0.125);
+        rightFinger.scaleRange(0, 0.125);
+
+        leftFinger.setPosition(reset);
+        rightFinger.setPosition(reset);
 
         if(IsAutonomous){
             //override settings for autonomous mode if needed
@@ -56,11 +64,13 @@ public class Claw implements IComponents,IClaw{
 
     @Override
     public void open(double position) {
-
+        leftFinger.setPosition(position);
+        rightFinger.setPosition(position);  
     }
 
     @Override
     public void close(double position) {
-
+        leftFinger.setPosition(-position);
+        rightFinger.setPosition(-position);
     }
 }
