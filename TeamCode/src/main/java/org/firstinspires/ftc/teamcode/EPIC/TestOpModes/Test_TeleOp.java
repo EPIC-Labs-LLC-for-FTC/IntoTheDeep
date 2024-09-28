@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Arm;
+import org.firstinspires.ftc.teamcode.EPIC.Components.Slider;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 
 
@@ -49,6 +50,12 @@ public class Test_TeleOp extends LinearOpMode {
         claw.setTelemetry(this.telemetry);
         claw.setIsAutonomous(true);
         claw.initialize();
+
+        Slider slider = new Slider(hardwareMap);
+        slider.setParent(this);
+        slider.setTelemetry(this.telemetry);
+        slider.setIsAutonomous(false);
+        slider.initialize();
 
         while (opModeInInit()){
 
