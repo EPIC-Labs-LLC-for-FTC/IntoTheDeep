@@ -75,7 +75,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         armRight = hardwareMap.get(DcMotorEx.class, "armRight");
         armLeft = hardwareMap.get(DcMotorEx.class, "armLeft");
-
+//
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
