@@ -75,6 +75,6 @@ public class Claw implements IComponents,IClaw{
     }
 
     public void restClaw() {
-        close(reset);
+        this.close(reset);
     }
 }
