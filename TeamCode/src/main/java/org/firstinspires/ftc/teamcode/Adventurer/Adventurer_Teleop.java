@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorImplEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp(name = "Adventurer_Teleop")
@@ -14,8 +13,6 @@ public class Adventurer_Teleop extends LinearOpMode {
     public DcMotorEx frontRight = null;
     public DcMotorEx backLeft = null;
     public DcMotorEx backRight = null;
-    public DcMotorEx armLeft = null;
-    public DcMotorEx armRight = null;
 
     double movement;
     double rotation;
@@ -53,18 +50,6 @@ public class Adventurer_Teleop extends LinearOpMode {
 
     }
 
-    public void slideControl() {
-
-        if (gamepad2.right_bumper) {
-            armRight.setPower(1);
-            armLeft.setPower(1);
-        } else if (gamepad2.left_bumper) {
-            armRight.setPower(-1);
-            armLeft.setPower(-1);
-        }
-
-    }
-
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -73,17 +58,13 @@ public class Adventurer_Teleop extends LinearOpMode {
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
 
-        armRight = hardwareMap.get(DcMotorEx.class, "armRight");
-        armLeft = hardwareMap.get(DcMotorEx.class, "armLeft");
-
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        armRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -96,7 +77,6 @@ public class Adventurer_Teleop extends LinearOpMode {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 driverControl();
-                slideControl();
 
             }
 
