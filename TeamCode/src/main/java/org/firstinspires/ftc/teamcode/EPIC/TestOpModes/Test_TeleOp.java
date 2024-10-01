@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
+import org.firstinspires.ftc.teamcode.EPIC.Components.Slider;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Arm;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
@@ -50,6 +51,12 @@ public class Test_TeleOp extends LinearOpMode {
         claw.setIsAutonomous(true);
         claw.initialize();
 
+        Slider slider = new Slider(hardwareMap);
+        slider.setParent(this);
+        slider.setTelemetry(this.telemetry);
+        slider.setIsAutonomous(false);
+        slider.initialize();
+
         while (opModeInInit()){
 
         }
@@ -70,7 +77,11 @@ public class Test_TeleOp extends LinearOpMode {
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
-
+            wrist.moveLeft(0.5);
+            sleep(100);
+            arm.liftUp(500);
+            sleep(1000);
+            slider.goUp(1000);
             //wheels.move(lefty,righty,leftx,rightx);
             //if(touchSensor.isPressed()){
             telemetry.addData("My Touch Sensor is pressed? ", touchSensor.isPressed());

@@ -46,4 +46,7 @@ public class Wrist implements IComponents,IWrist{
     public void move(double position) {
 
     }
+    public void moveLeft(double position){
+        position = -position;
+    }
 }
