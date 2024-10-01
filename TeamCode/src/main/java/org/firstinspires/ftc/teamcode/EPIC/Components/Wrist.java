@@ -5,10 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Wrist implements IComponents,IWrist{
-    public boolean IsAutonomous = false;
-    private LinearOpMode parent;
-    private Telemetry telemetry;
+public class Wrist extends AComponents implements IWrist{
     //Declare your servos, motors, sensors, other devices here
 
     public Wrist(HardwareMap hardwareMap) {
@@ -25,21 +22,6 @@ public class Wrist implements IComponents,IWrist{
     public void displayComponentValues() {
         telemetry.addData("Arm","Object Initialized");
         telemetry.update();
-    }
-
-    @Override
-    public void setParent(LinearOpMode parent) {
-        this.parent = parent;
-    }
-
-    @Override
-    public void setTelemetry(Telemetry telemetry) {
-        this.telemetry = telemetry;
-    }
-
-    @Override
-    public void setIsAutonomous(boolean isAutonomous) {
-        this.IsAutonomous = isAutonomous;
     }
 
     @Override

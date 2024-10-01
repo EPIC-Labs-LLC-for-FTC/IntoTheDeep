@@ -9,10 +9,7 @@ import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Claw implements IComponents,IClaw{
-    public boolean IsAutonomous = false;
-    private LinearOpMode parent;
-    private Telemetry telemetry;
+public class Claw extends AComponents implements IClaw{
 
     private Servo leftFinger;
     private Servo rightFinger;
@@ -25,6 +22,7 @@ public class Claw implements IComponents,IClaw{
         leftFinger = hardwareMap.get(Servo.class, "leftFinger");
         rightFinger = hardwareMap.get(Servo.class, "rightFinger");
     }
+
     @Override
     public void initialize() {
         leftFinger.setDirection(Servo.Direction.REVERSE);
@@ -45,21 +43,6 @@ public class Claw implements IComponents,IClaw{
     public void displayComponentValues() {
         telemetry.addData("Arm","Object Initialized");
         telemetry.update();
-    }
-
-    @Override
-    public void setParent(LinearOpMode parent) {
-        this.parent = parent;
-    }
-
-    @Override
-    public void setTelemetry(Telemetry telemetry) {
-        this.telemetry = telemetry;
-    }
-
-    @Override
-    public void setIsAutonomous(boolean isAutonomous) {
-        this.IsAutonomous = isAutonomous;
     }
 
     @Override

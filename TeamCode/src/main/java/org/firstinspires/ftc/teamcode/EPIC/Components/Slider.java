@@ -7,10 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Slider implements IComponents, ISlider{
-    public boolean IsAutonomous = false;
-    private LinearOpMode parent;
-    private Telemetry telemetry;
+public class Slider extends AComponents implements ISlider{
+
     private DcMotorEx slideMotorR;
     private DcMotorEx slideMotorL;
 
@@ -40,21 +38,6 @@ public class Slider implements IComponents, ISlider{
     @Override
     public void displayComponentValues() {
 
-    }
-
-    @Override
-    public void setParent(LinearOpMode parent) {
-        this.parent = parent;
-    }
-
-    @Override
-    public void setTelemetry(Telemetry telemetry) {
-        this.telemetry = telemetry;
-    }
-
-    @Override
-    public void setIsAutonomous(boolean isAutonomous) {
-        this.IsAutonomous = isAutonomous;
     }
 
     @Override
