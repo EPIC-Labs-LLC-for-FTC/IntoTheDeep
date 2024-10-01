@@ -6,14 +6,13 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "Test Auton")
-//@Disabled
+@Disabled
 public class Autonomous extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         double distance = 0;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         mecanum.leftErrorAdjustment = 1;
-        //mecanum.
         mecanum.parent = this;
         mecanum.IsAutonomous = true;
         mecanum.velocity = 400;
