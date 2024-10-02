@@ -97,6 +97,9 @@ public class Slider extends AComponents implements ISlider{
             targetPosR = slideMotorR.getCurrentPosition() + (int) (ticksPerInchSlider * -position);
             targetPosL = slideMotorL.getCurrentPosition() + (int) (ticksPerInchSlider * -position);
 
+            slideMotorR.setTargetPosition(targetPosR);
+            slideMotorL.setTargetPosition(targetPosL);
+
             slideMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             slideMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
