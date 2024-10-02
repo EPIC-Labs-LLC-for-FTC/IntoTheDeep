@@ -16,11 +16,12 @@ public class Wrist extends AComponents implements IWrist{
         if(IsAutonomous){
             //override settings for autonomous mode if needed
         }
+        this.displayComponentValues();
     }
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Arm","Object Initialized");
+        telemetry.addData("Wrist","Object Initialized");
         telemetry.update();
     }
 

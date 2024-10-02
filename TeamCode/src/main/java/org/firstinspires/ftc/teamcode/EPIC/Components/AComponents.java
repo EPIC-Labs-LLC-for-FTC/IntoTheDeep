@@ -16,6 +16,7 @@ public abstract class AComponents {
         telemetry.update();
     }
 
+    //Do not override these methods in the component classes
     public void setParent(LinearOpMode parent) {
         this.parent = parent;
     }

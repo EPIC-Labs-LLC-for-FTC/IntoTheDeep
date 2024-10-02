@@ -17,6 +17,7 @@ public class Arm extends AComponents implements IArm{
         if(IsAutonomous){
             //override settings for autonomous mode if needed
         }
+        this.displayComponentValues();
     }
 
     @Override

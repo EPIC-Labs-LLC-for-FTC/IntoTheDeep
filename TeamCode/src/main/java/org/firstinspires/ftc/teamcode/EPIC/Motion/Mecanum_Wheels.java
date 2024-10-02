@@ -61,11 +61,6 @@ public class Mecanum_Wheels {
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        frontleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         if(IsAutonomous)
         {
 
@@ -85,6 +80,12 @@ public class Mecanum_Wheels {
 
             backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
+
+        frontleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
     }
 
 

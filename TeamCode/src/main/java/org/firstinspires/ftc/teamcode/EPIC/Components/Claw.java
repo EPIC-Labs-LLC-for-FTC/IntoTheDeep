@@ -37,11 +37,12 @@ public class Claw extends AComponents implements IClaw{
         if(IsAutonomous){
             //override settings for autonomous mode if needed
         }
+        this.displayComponentValues();
     }
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Arm","Object Initialized");
+        telemetry.addData("Claw","Object Initialized");
         telemetry.update();
     }
 

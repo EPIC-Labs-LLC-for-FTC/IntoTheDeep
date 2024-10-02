@@ -11,6 +11,11 @@ public class Slider extends AComponents implements ISlider{
 
     private DcMotorEx slideMotorR;
     private DcMotorEx slideMotorL;
+    private final double inchesPerRotationSlider = 1;
+    //inchesPerRotationSlider will be changed to reflect actual slider movement after testing.
+    public double speed = 1.0;
+    public double errorAdjustmentR = 1.0;
+    public double errorAdjustmentL = 1.0;
 
     public Slider(HardwareMap hardwareMap){
         //define devices here
@@ -27,17 +32,24 @@ public class Slider extends AComponents implements ISlider{
         slideMotorR.setDirection(DcMotorSimple.Direction.FORWARD);
         slideMotorL.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        if (IsAutonomous) {
+            slideMotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slideMotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+
         slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        if (IsAutonomous) {
-
-        }
+        this.displayComponentValues();
     }
 
     @Override
     public void displayComponentValues() {
-
+        telemetry.addData("Slider", "Object Initialized");
+        telemetry.update();
     }
 
     @Override
@@ -47,6 +59,11 @@ public class Slider extends AComponents implements ISlider{
 
     @Override
     public void goDown(double position) {
+
+    }
+
+    @Override
+    public void freeMove() {
 
     }
 }
