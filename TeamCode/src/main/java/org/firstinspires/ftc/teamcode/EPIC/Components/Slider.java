@@ -54,16 +54,64 @@ public class Slider extends AComponents implements ISlider{
 
     @Override
     public void goUp(double position) {
+        int targetPosR;
+        int targetPosL;
+        double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
 
+        if (parent.opModeIsActive()) {
+            targetPosR = slideMotorR.getCurrentPosition() + (int) (ticksPerInchSlider * position);
+            targetPosL = slideMotorL.getCurrentPosition() + (int) (ticksPerInchSlider * position);
+
+            slideMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            slideMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            slideMotorR.setPower(speed * errorAdjustmentR);
+            slideMotorL.setPower(speed * errorAdjustmentL);
+
+            while (parent.opModeIsActive() &&
+                    (slideMotorR.isBusy() || slideMotorL.isBusy())) {
+                telemetry.addData("Going Up to", targetPosR + " and " + targetPosL);
+                telemetry.addData("Progress", slideMotorR.getCurrentPosition() + " " + slideMotorL.getCurrentPosition());
+                telemetry.update();
+            }
+        }
+
+        slideMotorR.setPower(0);
+        slideMotorL.setPower(0);
+
+        slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override
     public void goDown(double position) {
+        int targetPosR;
+        int targetPosL;
+        double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
 
+        if (parent.opModeIsActive()) {
+            targetPosR = slideMotorR.getCurrentPosition() + (int) (ticksPerInchSlider * -position);
+            targetPosL = slideMotorL.getCurrentPosition() + (int) (ticksPerInchSlider * -position);
+
+            slideMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            slideMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            slideMotorR.setPower(speed * errorAdjustmentR);
+            slideMotorL.setPower(speed * errorAdjustmentL);
+
+            while (parent.opModeIsActive() &&
+                    (slideMotorR.isBusy() || slideMotorL.isBusy())) {
+                telemetry.addData("Going Down to", targetPosR + " and " + targetPosL);
+                telemetry.addData("Progress", slideMotorR.getCurrentPosition() + " " + slideMotorL.getCurrentPosition());
+                telemetry.update();
+            }
+        }
+
+        slideMotorR.setPower(0);
+        slideMotorL.setPower(0);
+
+        slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    @Override
-    public void freeMove() {
-
-    }
 }
