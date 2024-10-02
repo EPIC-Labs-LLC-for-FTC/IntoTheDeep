@@ -73,8 +73,8 @@ public class Slider extends AComponents implements ISlider{
 
             while (parent.opModeIsActive() &&
                     (slideMotorR.isBusy() || slideMotorL.isBusy())) {
-                telemetry.addData("Running up to", "sliderR: %7.3d  sliderL: %7.3d", targetPosR, targetPosL);
-                telemetry.addData("Progress", "sliderR: %7.3d  sliderL: %7.3d",
+                telemetry.addData("Running up to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
+                telemetry.addData("Progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
                         slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
                 telemetry.update();
             }
@@ -108,8 +108,8 @@ public class Slider extends AComponents implements ISlider{
 
             while (parent.opModeIsActive() &&
                     (slideMotorR.isBusy() || slideMotorL.isBusy())) {
-                telemetry.addData("Running down to", "sliderR: %7.3d  sliderL: %7.3d", targetPosR, targetPosL);
-                telemetry.addData("Progress", "sliderR: %7.3d  sliderL: %7.3d",
+                telemetry.addData("Running down to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
+                telemetry.addData("Progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
                         slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
                 telemetry.update();
             }
