@@ -133,7 +133,7 @@ public class Mecanum_Wheels {
                     (runtime.seconds() < timeoutS) &&
                     (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
                 // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
+                telemetry.addData("Path1", "Running to %7d :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
                 telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
                         frontleft.getCurrentPosition(),
                         frontright.getCurrentPosition(),
