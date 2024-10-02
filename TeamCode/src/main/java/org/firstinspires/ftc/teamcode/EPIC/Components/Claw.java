@@ -30,7 +30,7 @@ public class Claw extends AComponents implements IClaw{
 
         leftFinger.scaleRange(0, 0.125);
         rightFinger.scaleRange(0, 0.125);
-
+        //setPosition(1.0) will open the claws 45 degrees outwards
         leftFinger.setPosition(reset);
         rightFinger.setPosition(reset);
 
