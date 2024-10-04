@@ -11,8 +11,6 @@ public class Slider extends AComponents implements ISlider{
 
     private DcMotorEx slideMotorR;
     private DcMotorEx slideMotorL;
-    private final double inchesPerRotationSlider = 1;
-    //inchesPerRotationSlider will be changed to reflect actual slider movement after testing.
     public double speed = 1.0;
     public double errorAdjustmentR = 1.0;
     public double errorAdjustmentL = 1.0;
@@ -56,6 +54,8 @@ public class Slider extends AComponents implements ISlider{
     public void goUp(double position) {
         int targetPosR;
         int targetPosL;
+        double inchesPerRotationSlider = 1;
+        // inchesPerRotationSlider is a placeholder until we test the inches moved per full rotation
         double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
 
         if (parent.opModeIsActive()) {
@@ -73,7 +73,7 @@ public class Slider extends AComponents implements ISlider{
 
             while (parent.opModeIsActive() &&
                     (slideMotorR.isBusy() || slideMotorL.isBusy())) {
-                telemetry.addData("Running up to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
+                telemetry.addData("Running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
                 telemetry.addData("Progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
                         slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
                 telemetry.update();
@@ -89,37 +89,7 @@ public class Slider extends AComponents implements ISlider{
 
     @Override
     public void goDown(double position) {
-        int targetPosR;
-        int targetPosL;
-        double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
-
-        if (parent.opModeIsActive()) {
-            targetPosR = slideMotorR.getCurrentPosition() + (int) (ticksPerInchSlider * -position);
-            targetPosL = slideMotorL.getCurrentPosition() + (int) (ticksPerInchSlider * -position);
-
-            slideMotorR.setTargetPosition(targetPosR);
-            slideMotorL.setTargetPosition(targetPosL);
-
-            slideMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            slideMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            slideMotorR.setPower(speed * errorAdjustmentR);
-            slideMotorL.setPower(speed * errorAdjustmentL);
-
-            while (parent.opModeIsActive() &&
-                    (slideMotorR.isBusy() || slideMotorL.isBusy())) {
-                telemetry.addData("Running down to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
-                telemetry.addData("Progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
-                        slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
-                telemetry.update();
-            }
-        }
-
-        slideMotorR.setPower(0);
-        slideMotorL.setPower(0);
-
-        slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+      this.goUp(-position);
     }
 
 }
