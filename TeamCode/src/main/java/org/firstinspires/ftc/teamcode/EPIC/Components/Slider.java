@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Slider extends AComponents implements ISlider{
 
@@ -51,7 +49,7 @@ public class Slider extends AComponents implements ISlider{
     }
 
     @Override
-    public void goUp(double position) {
+    public void slide(double position) {
         int targetPosR;
         int targetPosL;
         double inchesPerRotationSlider = 1;
@@ -86,10 +84,4 @@ public class Slider extends AComponents implements ISlider{
         slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-
-    @Override
-    public void goDown(double position) {
-      this.goUp(-position);
-    }
-
 }
