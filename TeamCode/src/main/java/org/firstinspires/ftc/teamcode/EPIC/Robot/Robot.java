@@ -15,11 +15,19 @@ public class Robot {
     public Wrist odysseyWrist;
     public Mecanum_Wheels odysseyWheels;
 
-    public Robot(HardwareMap hardwareMap){
-        odysseyClaw = new Claw(hardwareMap);
-        odysseySlider = new Slider(hardwareMap);
-        odysseyArm = new Arm(hardwareMap);
-        odysseyWrist = new Wrist(hardwareMap);
-        odysseyWheels = new Mecanum_Wheels(hardwareMap);
+    public Robot(LinearOpMode parent){
+        odysseyClaw = new Claw(parent.hardwareMap);
+        odysseySlider = new Slider(parent.hardwareMap);
+        odysseyArm = new Arm(parent.hardwareMap);
+        odysseyWrist = new Wrist(parent.hardwareMap);
+        odysseyWheels = new Mecanum_Wheels(parent.hardwareMap);
+        odysseyClaw.setParent(parent);
+        odysseySlider.setParent(parent);
+        odysseyArm.setParent(parent);
+        odysseyWrist.setParent(parent);
+        odysseyClaw.setTelemetry(parent.telemetry);
+        odysseySlider.setTelemetry(parent.telemetry);
+        odysseyArm.setTelemetry(parent.telemetry);
+        odysseyWrist.setTelemetry(parent.telemetry);
     }
 }
