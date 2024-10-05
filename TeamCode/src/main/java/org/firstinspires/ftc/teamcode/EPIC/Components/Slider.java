@@ -50,6 +50,7 @@ public class Slider extends AComponents implements ISlider{
 
     @Override
     public void slide(double position) {
+        //A negative position should make the slider move down. Positive makes it move upwards.
         int targetPosR;
         int targetPosL;
         double inchesPerRotationSlider = 1;
