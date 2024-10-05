@@ -58,7 +58,9 @@ public class Claw extends AComponents implements IClaw{
         rightFinger.setPosition(-position);
     }
 
-    public void restClaw() {
-        this.close(reset);
+    public void relativeMove(double position) {
+        //Negative value for closing, positive for opening
+        leftFinger.setPosition(leftFinger.getPosition() + position);
+        rightFinger.setPosition(rightFinger.getPosition() + position);
     }
 }
