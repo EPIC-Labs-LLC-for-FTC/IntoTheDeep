@@ -30,4 +30,12 @@ public class Robot {
         odysseyArm.setTelemetry(parent.telemetry);
         odysseyWrist.setTelemetry(parent.telemetry);
     }
+
+    public void initialize() {
+        odysseyClaw.initialize();
+        odysseySlider.initialize();
+        odysseyArm.initialize();
+        odysseyWrist.initialize();
+        odysseyWheels.initialize();
+    }
 }
