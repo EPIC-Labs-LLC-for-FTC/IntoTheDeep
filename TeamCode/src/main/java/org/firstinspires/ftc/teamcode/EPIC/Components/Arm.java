@@ -28,13 +28,14 @@ public class Arm extends AComponents implements IArm{
         armMotorR.setDirection(DcMotorSimple.Direction.FORWARD);
         armMotorL.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        armMotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armMotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         if(IsAutonomous){
             //override settings for autonomous mode if needed
-            armMotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            armMotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

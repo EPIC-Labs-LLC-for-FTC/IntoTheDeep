@@ -28,12 +28,14 @@ public class Slider extends AComponents implements ISlider{
         slideMotorR.setDirection(DcMotorSimple.Direction.FORWARD);
         slideMotorL.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        if (IsAutonomous) {
-            slideMotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            slideMotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideMotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideMotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        if (IsAutonomous) {
+
         }
 
         slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
