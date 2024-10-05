@@ -49,4 +49,9 @@ public class Wrist extends AComponents implements IWrist{
         jointR.setPosition(position);
         jointL.setPosition(position);
     }
+
+    public void moveRelative(double position) {
+        jointR.setPosition(jointR.getPosition() + position);
+        jointL.setPosition(jointL.getPosition() + position);
+    }
 }

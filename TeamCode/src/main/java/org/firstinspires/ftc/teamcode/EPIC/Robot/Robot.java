@@ -25,10 +25,20 @@ public class Robot {
         odysseySlider.setParent(parent);
         odysseyArm.setParent(parent);
         odysseyWrist.setParent(parent);
+        odysseyWheels.setParent(parent);
         odysseyClaw.setTelemetry(parent.telemetry);
         odysseySlider.setTelemetry(parent.telemetry);
         odysseyArm.setTelemetry(parent.telemetry);
         odysseyWrist.setTelemetry(parent.telemetry);
+        odysseyWheels.setTelemetry(parent.telemetry);
+    }
+
+    public void setIsAutonomous(boolean isAutonomous){
+        odysseyClaw.setIsAutonomous(isAutonomous);
+        odysseySlider.setIsAutonomous(isAutonomous);
+        odysseyArm.setIsAutonomous(isAutonomous);
+        odysseyWrist.setIsAutonomous(isAutonomous);
+        odysseyWheels.setIsAutonomous(isAutonomous);
     }
 
     public void initialize() {
