@@ -6,10 +6,11 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.EPIC.Components.AComponents;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Mecanum_Wheels {
+public class Mecanum_Wheels extends AComponents {
     //Configuration used: 6wheelConfig
     public DcMotorEx frontright;
     public DcMotorEx frontleft;
@@ -19,7 +20,6 @@ public class Mecanum_Wheels {
 
     //public DcMotorEx xRail;
 
-    public boolean IsAutonomous = false;
 
     public double leftErrorAdjustment = 1.0;
     public double rightErrorAdjustment = 1.0;
@@ -29,13 +29,10 @@ public class Mecanum_Wheels {
 
 
 
-    public LinearOpMode parent;
 
     public int velocity = 200;
 
     private ElapsedTime runtime = new ElapsedTime();
-
-    public Telemetry telemetry;
 
     public Mecanum_Wheels(HardwareMap hardwareMap) {
         frontright = hardwareMap.get(DcMotorEx.class,"frontright");
@@ -47,6 +44,7 @@ public class Mecanum_Wheels {
     }
 
     //initialize for TeleOp
+    @Override
     public void initialize() {
         double reset = 0;
         frontright.setPower(reset);
@@ -60,11 +58,6 @@ public class Mecanum_Wheels {
 
         backleft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        frontleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         if(IsAutonomous)
         {
@@ -85,8 +78,13 @@ public class Mecanum_Wheels {
 
             backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
-    }
 
+        frontleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+    }
 
     public void encoderDrive(double speed,
                              double frontLeftInches, double backLeftInches, double frontRightInches,
@@ -132,8 +130,8 @@ public class Mecanum_Wheels {
                     (runtime.seconds() < timeoutS) &&
                     (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
                 // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
-                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
+                telemetry.addData("Path1", "Running to %1$7d :%2$7d :%3$7d :%4$7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
+                telemetry.addData("Path2", "Running at %1$7d :2$%7d :%3$7d :%4$7d",
                         frontleft.getCurrentPosition(),
                         frontright.getCurrentPosition(),
 
