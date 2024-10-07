@@ -17,10 +17,12 @@ public class Slider extends AComponents implements ISlider{
         //define devices here
         slideMotorR = hardwareMap.get(DcMotorEx.class, "slideMotorR");
         slideMotorL = hardwareMap.get(DcMotorEx.class, "slideMotorL");
+
     }
 
     @Override
     public void initialize() {
+
         double reset = 0;
         slideMotorR.setPower(reset);
         slideMotorL.setPower(reset);
@@ -86,5 +88,6 @@ public class Slider extends AComponents implements ISlider{
 
         slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 }
