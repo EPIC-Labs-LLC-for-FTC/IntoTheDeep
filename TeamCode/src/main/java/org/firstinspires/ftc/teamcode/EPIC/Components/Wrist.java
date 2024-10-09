@@ -54,15 +54,8 @@ public class Wrist extends AComponents implements IWrist{
         jointR.setPosition(jointR.getPosition() + position);
         jointL.setPosition(jointL.getPosition() + position);
     }
-    //Non-directional move commands use positive input to open claw. Negative to close.
     
     public void moveLeft(double position) {
-        jointR.setPosition(jointR.getPosition() - position);
-        jointL.setPosition(jointL.getPosition() + position);
-    }
-
-    public void moveRight(double position) {
-        jointR.setPosition(jointR.getPosition() + position);
-        jointL.setPosition(jointL.getPosition() - position);
+        position = -position;
     }
 }
