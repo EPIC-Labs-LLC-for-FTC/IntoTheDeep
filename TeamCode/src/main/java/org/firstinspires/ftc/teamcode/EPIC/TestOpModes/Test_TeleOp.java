@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Components.Slider;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Arm;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Slider;
+import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 
 
@@ -25,6 +26,8 @@ public class Test_TeleOp extends LinearOpMode {
 //        wheels.parent = this;
         //wheels.leftErrorAdjustment = 0.52;
         //wheels.rightErrorAdjustment = 0.52;
+        Robot odysseyBot = new Robot(this);
+
         MyTouchSensor touchSensor = new MyTouchSensor(hardwareMap);
         touchSensor.initialize();
         touchSensor.telemetry = telemetry;

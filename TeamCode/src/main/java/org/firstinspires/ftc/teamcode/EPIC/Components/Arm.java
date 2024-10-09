@@ -61,7 +61,12 @@ public class Arm extends AComponents implements IArm{
     }
 
     @Override
-    public void move(int position) {
-
+    public void move(double speed) {
+        /*
+        Negative speed input for running backwards. Method
+         will likely only be used for testing.
+        */
+        armMotorR.setPower(speed);
+        armMotorL.setPower(speed);
     }
 }
