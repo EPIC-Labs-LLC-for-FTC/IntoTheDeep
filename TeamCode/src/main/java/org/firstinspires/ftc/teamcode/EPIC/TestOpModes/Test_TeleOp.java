@@ -27,6 +27,8 @@ public class Test_TeleOp extends LinearOpMode {
         //wheels.leftErrorAdjustment = 0.52;
         //wheels.rightErrorAdjustment = 0.52;
         Robot odysseyBot = new Robot(this);
+        odysseyBot.setIsAutonomous(false);
+        odysseyBot.initialize();
 
         MyTouchSensor touchSensor = new MyTouchSensor(hardwareMap);
         touchSensor.initialize();
