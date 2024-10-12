@@ -17,10 +17,10 @@ public class Test_Auton extends LinearOpMode {
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         mecanum.leftErrorAdjustment = 1;
         //mecanum.
-        mecanum.parent = this;
-        mecanum.IsAutonomous = true;
+        mecanum.setParent(this);
+        mecanum.setIsAutonomous(true);
         mecanum.velocity = 400;
-        mecanum.telemetry = this.telemetry;
+        mecanum.setTelemetry(this.telemetry);
         mecanum.initialize();
 
         //Component Declaration

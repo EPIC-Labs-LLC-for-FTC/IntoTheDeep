@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public abstract class AComponents {
-    public boolean IsAutonomous = false;
-    public LinearOpMode parent;
-    public Telemetry telemetry;
+    protected boolean IsAutonomous = false;
+    protected LinearOpMode parent;
+    protected Telemetry telemetry;
 
     public void initialize() {
 

@@ -57,7 +57,7 @@ public class Slider extends AComponents implements ISlider{
         //A negative position should make the slider move down. Positive makes it move upwards.
         int targetPosR;
         int targetPosL;
-        double inchesPerRotationSlider = 1;
+        double inchesPerRotationSlider = 537.7;
         // inchesPerRotationSlider is a placeholder until we test the inches moved per full rotation
         double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
 
@@ -76,8 +76,8 @@ public class Slider extends AComponents implements ISlider{
 
             while (parent.opModeIsActive() &&
                     (slideMotorR.isBusy() || slideMotorL.isBusy())) {
-                telemetry.addData("Running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
-                telemetry.addData("Progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
+                telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
+                telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
                         slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
                 telemetry.update();
             }

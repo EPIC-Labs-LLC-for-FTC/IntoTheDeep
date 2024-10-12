@@ -13,6 +13,7 @@ public class Arm extends AComponents implements IArm{
     //Declare your servos, motors, sensors, other devices here
     private DcMotorEx armMotorR;
     private DcMotorEx armMotorL;
+    public double speed = 0.5;
 
     public Arm(HardwareMap hardwareMap) {
         //Instantiate your servos, motors, sensors, other devices here
@@ -51,17 +52,44 @@ public class Arm extends AComponents implements IArm{
     }
 
     @Override
-    public void liftUp(int position) {
+    public void move(int position) {
+        //Negative value lifts arm up, positive moves it down.
+        int targetPosR;
+        int targetPosL;
+        double degreesPerRotationArm = 537.7;
+        //degreesPerRotationArm is a placeholder until testing. 360 should be correct though.
+        double ticksPerDegree = 537.7 / degreesPerRotationArm;
 
+        targetPosR = armMotorR.getCurrentPosition() + (int) (position * ticksPerDegree);
+        targetPosL = armMotorL.getCurrentPosition() + (int) (position * ticksPerDegree);
+
+        armMotorR.setTargetPosition(targetPosR);
+        armMotorL.setTargetPosition(targetPosL);
+
+        armMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        armMotorR.setPower(speed);
+        armMotorL.setPower(speed);
+
+        while (parent.opModeIsActive() &&
+                (armMotorR.isBusy() || armMotorL.isBusy())) {
+            telemetry.addData("Arm running to", "armMotorR: %1$7.3d  armMotorL: %2$7.3d",
+                    targetPosR, targetPosL);
+            telemetry.addData("Arm progress", "armMotorR: %1$7.3d  armMotorL: %2$7.3d",
+                    armMotorR.getCurrentPosition(), armMotorL.getCurrentPosition());
+            telemetry.update();
+        }
+
+        armMotorR.setPower(0);
+        armMotorL.setPower(0);
+
+        armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override
-    public void putDown(int position) {
-
-    }
-
-    @Override
-    public void move(double speed) {
+    public void freeMove(double speed) {
         /*
         Negative speed input for running backwards. Method
          will likely only be used for testing.
