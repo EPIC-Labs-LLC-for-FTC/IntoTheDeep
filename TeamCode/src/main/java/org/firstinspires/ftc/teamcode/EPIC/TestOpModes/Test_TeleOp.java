@@ -87,9 +87,9 @@ public class Test_TeleOp extends LinearOpMode {
             rightx = gamepad1.right_stick_x;
             wrist.moveLeft(0.5);
             sleep(100);
-            arm.move(-500);
+            arm.move(-538);
             sleep(1000);
-            slider.slide(1000);
+            slider.slide(538);
             //wheels.move(lefty,righty,leftx,rightx);
             //if(touchSensor.isPressed()){
             telemetry.addData("My Touch Sensor is pressed? ", touchSensor.isPressed());
