@@ -43,18 +43,19 @@ public class Wrist extends AComponents implements IWrist{
         telemetry.update();
     }
 
-    @Override
     //Position should be from 0 to 1
-    public void move(double position) {
+    public void setPos(double position) {
         jointR.setPosition(position);
         jointL.setPosition(position);
     }
 
-    public void moveRelative(double position) {
+    @Override
+    public void move(double position) {
         jointR.setPosition(jointR.getPosition() + position);
         jointL.setPosition(jointL.getPosition() + position);
     }
-    public void moveLeft(double position){
+    
+    public void moveLeft(double position) {
         position = -position;
     }
 }
