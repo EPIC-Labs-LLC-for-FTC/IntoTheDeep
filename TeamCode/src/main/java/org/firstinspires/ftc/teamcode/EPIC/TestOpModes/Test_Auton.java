@@ -14,14 +14,14 @@ public class Test_Auton extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         double distance = 0;
-        Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
-        mecanum.leftErrorAdjustment = 1;
-        //mecanum.
-        mecanum.parent = this;
-        mecanum.IsAutonomous = true;
-        mecanum.velocity = 400;
-        mecanum.telemetry = this.telemetry;
-        mecanum.initialize();
+//        Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
+//        mecanum.leftErrorAdjustment = 1;
+//        //mecanum.
+//        mecanum.parent = this;
+//        mecanum.IsAutonomous = true;
+//        mecanum.velocity = 400;
+//        mecanum.telemetry = this.telemetry;
+//        mecanum.initialize();
 
         //Component Declaration
         //Arm declaration and initialization
@@ -49,7 +49,7 @@ public class Test_Auton extends LinearOpMode {
         sleep(100);
         //forward
         distance = 51;
-        mecanum.encoderDrive(0.8,distance,distance,distance,distance,2);
+        //mecanum.encoderDrive(0.8,distance,distance,distance,distance,2);
         //strafe left
 //        distance = 12.2;
 //        mecanum.encoderDrive(0.8,-distance,distance,distance,-distance,2);
