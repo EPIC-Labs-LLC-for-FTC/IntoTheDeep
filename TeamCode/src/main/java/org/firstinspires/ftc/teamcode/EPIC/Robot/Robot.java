@@ -52,11 +52,13 @@ public class Robot implements IColorListener, ITouchListener, IClawListener {
         this.telemetry = parent.telemetry;
         this.alliance = alliance;
         colorSensor = new MyColorRangeSensor(parent.hardwareMap,alliance);
+        colorSensor.parent = parent;
+        colorSensor.telemetry = parent.telemetry;
         colorSensor.addColorListener(this);
         touchSensor = new MyTouchSensor(parent.hardwareMap);
         touchSensor.initialize();
-        touchSensor.telemetry = telemetry;
         touchSensor.parent = parent;
+        touchSensor.telemetry = parent.telemetry;
         touchSensor.addTouchListener(this);
         odysseyClaw.addClawListener(this);
     }
