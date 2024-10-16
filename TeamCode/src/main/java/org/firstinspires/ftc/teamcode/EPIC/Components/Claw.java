@@ -38,8 +38,8 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void initialize() {
-        leftFinger.setDirection(Servo.Direction.FORWARD);
-        rightFinger.setDirection(Servo.Direction.REVERSE);
+        leftFinger.setDirection(Servo.Direction.REVERSE);
+        rightFinger.setDirection(Servo.Direction.FORWARD);
 
         leftFinger.scaleRange(0, 0.5);
         rightFinger.scaleRange(0, 0.5);
@@ -61,14 +61,14 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void open(double position) {
-        leftFinger.setPosition(position);
-        rightFinger.setPosition(position);
+        leftFinger.setPosition(leftFinger.getPosition()+position);
+        rightFinger.setPosition(rightFinger.getPosition()+position);
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
         fireOpenClaw(ceo);
     }
     @Override
     public void open() {
-        double position = 0;
+        double position = 1.0;
         leftFinger.setPosition(position);
         rightFinger.setPosition(position);
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
@@ -77,8 +77,8 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void close(double position) {
-        leftFinger.setPosition(-position);
-        rightFinger.setPosition(-position);
+        leftFinger.setPosition(leftFinger.getPosition()-position);
+        rightFinger.setPosition(rightFinger.getPosition()-position);
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
         fireCloseClaw(ceo);
     }
@@ -87,7 +87,7 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void close() {
-        double position = 0.5;
+        double position = 0;
         leftFinger.setPosition(position);
         rightFinger.setPosition(position);
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
