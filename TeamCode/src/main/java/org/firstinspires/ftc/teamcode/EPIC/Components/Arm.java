@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 
 public class Arm extends AComponents implements IArm{
 
@@ -14,6 +14,7 @@ public class Arm extends AComponents implements IArm{
     private DcMotorEx armMotorR;
     private DcMotorEx armMotorL;
     public double speed = 0.5;
+    public ArmStates stateArm;
 
     public Arm(HardwareMap hardwareMap) {
         //Instantiate your servos, motors, sensors, other devices here
@@ -52,8 +53,9 @@ public class Arm extends AComponents implements IArm{
     }
 
     @Override
-    public void move(int position) {
+    public void move(ArmStates state) {
         //Negative value lifts arm up, positive moves it down.
+        double position = state.getState() - stateArm.getState();
         int targetPosR;
         int targetPosL;
         double degreesPerRotationArm = 537.7;

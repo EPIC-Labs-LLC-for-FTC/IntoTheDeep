@@ -1,17 +1,16 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import static org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates.*;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ClawEventObject;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ColorEventObject;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IClawListener;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IColorListener;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +20,12 @@ public class Claw extends AComponents implements IClaw{
     private Servo leftFinger;
     private Servo rightFinger;
     public double reset = 0;
-    public double leftMaxPos = 0.5;
+    public double leftMaxPos = 1;
     public double leftMinPos = 0;
-    public double rightMaxPos = 0;
-    public double rightMinPos = 0.5;
+    public double rightMaxPos = 1;
+    public double rightMinPos = 0;
     private List<IClawListener> listeners;
+    public ClawStates stateClaw = null;
 
     //Declare your servos, motors, sensors, other devices here
 
@@ -50,12 +50,13 @@ public class Claw extends AComponents implements IClaw{
         if(IsAutonomous){
             //override settings for autonomous mode if needed
         }
+        stateClaw = CLAW_INITIALIZED;
         this.displayComponentValues();
     }
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Claw","Object Initialized");
+        telemetry.addData("Claw State", stateClaw);
         telemetry.update();
     }
 
@@ -63,6 +64,7 @@ public class Claw extends AComponents implements IClaw{
     public void open(double position) {
         leftFinger.setPosition(leftFinger.getPosition()+position);
         rightFinger.setPosition(rightFinger.getPosition()+position);
+        stateClaw = CLAW_OPEN;
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
         fireOpenClaw(ceo);
     }
@@ -71,6 +73,7 @@ public class Claw extends AComponents implements IClaw{
         double position = 1.0;
         leftFinger.setPosition(position);
         rightFinger.setPosition(position);
+        stateClaw = CLAW_OPEN;
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
         fireOpenClaw(ceo);
     }
@@ -90,6 +93,7 @@ public class Claw extends AComponents implements IClaw{
         double position = 0;
         leftFinger.setPosition(position);
         rightFinger.setPosition(position);
+        stateClaw = CLAW_CLOSED;
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
         fireCloseClaw(ceo);
     }
@@ -98,6 +102,7 @@ public class Claw extends AComponents implements IClaw{
         //Negative value for closing, positive for opening
         leftFinger.setPosition(leftFinger.getPosition() + positionL);
         rightFinger.setPosition(rightFinger.getPosition() + positionR);
+        stateClaw = null;
     }
 
     public double getLeftFingerPosition(){
