@@ -86,6 +86,8 @@ public class Arm extends AComponents implements IArm{
         armMotorR.setPower(0);
         armMotorL.setPower(0);
 
+        stateArm = state;
+
         armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
