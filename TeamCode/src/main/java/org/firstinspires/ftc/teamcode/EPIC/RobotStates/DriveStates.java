@@ -7,5 +7,5 @@ public enum DriveStates {
     MOVE_FORWARDS,
     ROTATING,
     STRAFING
-    
+
 }

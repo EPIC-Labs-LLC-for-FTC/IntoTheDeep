@@ -77,30 +77,21 @@ public class Test_TeleOp_Red extends LinearOpMode {
 
 
         while (opModeIsActive()){
-            robot.touchSensor.checkButtonPressed();
             //robot.colorSensor.getColor();
             lefty = gamepad1.left_stick_y;
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
-            //robot.odysseyWrist.moveLeft(0.5);
-            //sleep(100);
-            //robot.odysseyArm.liftUp(500);
-            //sleep(1000);
-            //robot.odysseySlider.slide(1000);
-            //wheels.move(lefty,righty,leftx,rightx);
+            robot.odysseyWheels.move(lefty,righty,leftx,rightx);
             //if(touchSensor.isPressed()){
             //telemetry.addData("My Touch Sensor is pressed? ", touchSensor.isPressed());
             //telemetry.addData("My Touch Sensor press value: ", touchSensor.getValue());
 
-            telemetry.addData("My Color Sensor is color? ", robot.colorSensor.getARGBColor());
-            telemetry.addData("My Color Sensor distance in Inches: ", robot.colorSensor.getDistanceInInches());
-            telemetry.addData("My Color Sensor distance in MMs: ", robot.colorSensor.getDistanceInMM());
+//            telemetry.addData("My Color Sensor is color? ", robot.colorSensor.getARGBColor());
+//            telemetry.addData("My Color Sensor distance in Inches: ", robot.colorSensor.getDistanceInInches());
+//            telemetry.addData("My Color Sensor distance in MMs: ", robot.colorSensor.getDistanceInMM());
             telemetry.update();
             sleep(2000);
-            robot.odysseyClaw.close();
-            sleep(2000);
-            robot.odysseyClaw.open();
             //}
         }
     }

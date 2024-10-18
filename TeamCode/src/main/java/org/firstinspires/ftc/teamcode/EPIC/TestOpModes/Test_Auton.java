@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Arm;
+import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 
 @Autonomous(name = "Test Auton")
 //@Disabled
@@ -14,36 +15,8 @@ public class Test_Auton extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         double distance = 0;
-//        Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
-//        mecanum.leftErrorAdjustment = 1;
-//        //mecanum.
-//        mecanum.parent = this;
-//        mecanum.IsAutonomous = true;
-//        mecanum.velocity = 400;
-//        mecanum.telemetry = this.telemetry;
-//        mecanum.initialize();
 
-        //Component Declaration
-        //Arm declaration and initialization
-        Arm arm = new Arm(hardwareMap);
-        arm.setParent(this);
-        arm.setTelemetry(this.telemetry);
-        arm.setIsAutonomous(true);
-        arm.initialize();
-
-        //Wrist declaration and initialization
-        Wrist wrist = new Wrist(hardwareMap);
-        wrist.setParent(this);
-        wrist.setTelemetry(this.telemetry);
-        wrist.setIsAutonomous(true);
-        wrist.initialize();
-
-        //Claw declaration and initialization
-        Claw claw = new Claw(hardwareMap);
-        claw.setParent(this);
-        claw.setTelemetry(this.telemetry);
-        claw.setIsAutonomous(true);
-        claw.initialize();
+        Robot odysseyRobot = new Robot(this, "Red");
 
         waitForStart();
         sleep(100);

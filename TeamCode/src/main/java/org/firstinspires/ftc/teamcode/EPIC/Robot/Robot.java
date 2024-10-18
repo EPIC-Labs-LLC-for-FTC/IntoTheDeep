@@ -51,15 +51,15 @@ public class Robot implements IColorListener, ITouchListener, IClawListener {
         this.parent = parent;
         this.telemetry = parent.telemetry;
         this.alliance = alliance;
-        colorSensor = new MyColorRangeSensor(parent.hardwareMap,alliance);
-        colorSensor.parent = parent;
-        colorSensor.telemetry = parent.telemetry;
-        colorSensor.addColorListener(this);
-        touchSensor = new MyTouchSensor(parent.hardwareMap);
-        touchSensor.initialize();
-        touchSensor.parent = parent;
-        touchSensor.telemetry = parent.telemetry;
-        touchSensor.addTouchListener(this);
+//        colorSensor = new MyColorRangeSensor(parent.hardwareMap,alliance);
+//        colorSensor.parent = parent;
+//        colorSensor.telemetry = parent.telemetry;
+//        colorSensor.addColorListener(this);
+//        touchSensor = new MyTouchSensor(parent.hardwareMap);
+//        touchSensor.initialize();
+//        touchSensor.parent = parent;
+//        touchSensor.telemetry = parent.telemetry;
+//        touchSensor.addTouchListener(this);
         odysseyClaw.addClawListener(this);
     }
 
@@ -139,7 +139,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    odysseyWheels.move(0, 0, 0, 0);
+//                    odysseyWheels.move(0, 0, 0, 0);
 
                 }
             };
