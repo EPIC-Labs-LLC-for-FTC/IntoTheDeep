@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
+
 public class Slider extends AComponents implements ISlider{
 
     private DcMotorEx slideMotorR;
@@ -12,6 +14,7 @@ public class Slider extends AComponents implements ISlider{
     public double speed = 1.0;
     public double errorAdjustmentR = 1.0;
     public double errorAdjustmentL = 1.0;
+    public SliderStates stateSlider = SliderStates.RETRACTED;
 
     public Slider(HardwareMap hardwareMap){
         //define devices here
@@ -53,8 +56,9 @@ public class Slider extends AComponents implements ISlider{
     }
 
     @Override
-    public void slide(double position) {
+    public void slide(SliderStates state) {
         //A negative position should make the slider move down. Positive makes it move upwards.
+        double position = state.getStateHeight() - stateSlider.getStateHeight();
         int targetPosR;
         int targetPosL;
         double inchesPerRotationSlider = 537.7;
