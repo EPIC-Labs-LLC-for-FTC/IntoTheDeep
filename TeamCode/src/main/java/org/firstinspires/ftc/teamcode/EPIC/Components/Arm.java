@@ -43,12 +43,13 @@ public class Arm extends AComponents implements IArm{
         armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        stateArm = ArmStates.ARM_NEUTRAL;
         this.displayComponentValues();
     }
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Arm","Object Initialized");
+        telemetry.addData("Arm",stateArm.toString());
         telemetry.update();
     }
 

@@ -14,7 +14,7 @@ public class Slider extends AComponents implements ISlider{
     public double speed = 1.0;
     public double errorAdjustmentR = 1.0;
     public double errorAdjustmentL = 1.0;
-    public SliderStates stateSlider = SliderStates.RETRACTED;
+    public SliderStates stateSlider;
 
     public Slider(HardwareMap hardwareMap){
         //define devices here
@@ -46,12 +46,13 @@ public class Slider extends AComponents implements ISlider{
         slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        stateSlider = SliderStates.RETRACTED;
         this.displayComponentValues();
     }
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Slider", "Object Initialized");
+        telemetry.addData("Slider", stateSlider.toString());
         telemetry.update();
     }
 
@@ -90,8 +91,9 @@ public class Slider extends AComponents implements ISlider{
         slideMotorR.setPower(0);
         slideMotorL.setPower(0);
 
+        stateSlider = state;
+
         slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
     }
 }

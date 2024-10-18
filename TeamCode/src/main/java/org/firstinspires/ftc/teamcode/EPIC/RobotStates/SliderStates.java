@@ -6,7 +6,6 @@ public enum SliderStates {
     LOW_HANG(20.0),
     RETRACTED(0.0);
 
-
     private double height;
 
     SliderStates(double height) {

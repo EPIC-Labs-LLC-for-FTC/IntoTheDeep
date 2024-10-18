@@ -56,7 +56,7 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Claw State", stateClaw);
+        telemetry.addData("Claw State", stateClaw.toString());
         telemetry.update();
     }
 
