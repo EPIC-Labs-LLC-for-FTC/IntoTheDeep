@@ -19,4 +19,4 @@ public enum SliderStates {
     public void setStateHeight(double height) {
         this.height = height;
     }
-    }
+}
