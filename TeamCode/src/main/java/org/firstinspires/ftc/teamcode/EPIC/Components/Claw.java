@@ -50,7 +50,7 @@ public class Claw extends AComponents implements IClaw{
         if(IsAutonomous){
             //override settings for autonomous mode if needed
         }
-        stateClaw = CLAW_INITIALIZED;
+        stateClaw = INITIALIZED;
         this.displayComponentValues();
     }
 
@@ -64,7 +64,7 @@ public class Claw extends AComponents implements IClaw{
     public void open(double position) {
         leftFinger.setPosition(leftFinger.getPosition()+position);
         rightFinger.setPosition(rightFinger.getPosition()+position);
-        stateClaw = CLAW_OPEN;
+        stateClaw = OPEN;
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
         fireOpenClaw(ceo);
     }
@@ -73,7 +73,7 @@ public class Claw extends AComponents implements IClaw{
         double position = 1.0;
         leftFinger.setPosition(position);
         rightFinger.setPosition(position);
-        stateClaw = CLAW_OPEN;
+        stateClaw = OPEN;
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
         fireOpenClaw(ceo);
     }
@@ -82,6 +82,7 @@ public class Claw extends AComponents implements IClaw{
     public void close(double position) {
         leftFinger.setPosition(leftFinger.getPosition()-position);
         rightFinger.setPosition(rightFinger.getPosition()-position);
+        stateClaw = CLOSED;
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
         fireCloseClaw(ceo);
     }
@@ -93,7 +94,7 @@ public class Claw extends AComponents implements IClaw{
         double position = 0;
         leftFinger.setPosition(position);
         rightFinger.setPosition(position);
-        stateClaw = CLAW_CLOSED;
+        stateClaw = CLOSED;
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());
         fireCloseClaw(ceo);
     }

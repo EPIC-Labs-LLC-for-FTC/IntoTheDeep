@@ -6,13 +6,15 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 
 public class Wrist extends AComponents implements IWrist{
     //Declare your servos, motors, sensors, other devices here
     private Servo jointR;
     private Servo jointL;
     private final double reset = 0;
+    public WristStates stateWrist;
+
     public Wrist(HardwareMap hardwareMap) {
         //Instantiate your servos, motors, sensors, other devices here
         jointR = hardwareMap.get(Servo.class, "jointR");
@@ -34,12 +36,13 @@ public class Wrist extends AComponents implements IWrist{
         if(IsAutonomous){
             //override settings for autonomous mode if needed
         }
+        stateWrist = WristStates.INITIALIZED;
         this.displayComponentValues();
     }
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Wrist","Object Initialized");
+        telemetry.addData("Wrist State",stateWrist.toString());
         telemetry.update();
     }
 
@@ -47,15 +50,23 @@ public class Wrist extends AComponents implements IWrist{
     public void setPos(double position) {
         jointR.setPosition(position);
         jointL.setPosition(position);
+        this.checkPos();
     }
 
     @Override
     public void move(double position) {
         jointR.setPosition(jointR.getPosition() + position);
         jointL.setPosition(jointL.getPosition() + position);
+        this.checkPos();
     }
-    
-    public void moveLeft(double position) {
-        position = -position;
+
+    public void checkPos() {
+        if (jointR.getPosition() == 0 && jointL.getPosition() == 0) {
+            stateWrist = WristStates.BACKWARDS;
+        } else if (jointR.getPosition() == 1.0 && jointL.getPosition() == 1.0) {
+            stateWrist = WristStates.FORWARDS;
+        } else {
+            stateWrist = WristStates.IDLE;
+        }
     }
 }

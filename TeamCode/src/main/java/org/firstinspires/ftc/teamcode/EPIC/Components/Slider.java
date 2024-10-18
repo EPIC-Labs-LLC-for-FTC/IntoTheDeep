@@ -52,7 +52,7 @@ public class Slider extends AComponents implements ISlider{
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Slider", stateSlider.toString());
+        telemetry.addData("Slider State", stateSlider.toString());
         telemetry.update();
     }
 

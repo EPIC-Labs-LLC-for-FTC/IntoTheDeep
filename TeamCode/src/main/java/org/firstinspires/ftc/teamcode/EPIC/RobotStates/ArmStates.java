@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.EPIC.RobotStates;
 
 public enum ArmStates {
-    ARM_DEPOSITING(-20.0),
-    ARM_LOWERED(120.0),
-    ARM_NEUTRAL(0.0);
+    DEPOSITING(-20.0),
+    LOWERED(120.0),
+    NEUTRAL(0.0);
 
     private double stateNum;
 
