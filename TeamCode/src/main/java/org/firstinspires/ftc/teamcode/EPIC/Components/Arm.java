@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
-import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 
 public class Arm extends AComponents implements IArm{
 
@@ -36,7 +35,7 @@ public class Arm extends AComponents implements IArm{
         armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        if(IsAutonomous){
+        if (IsAutonomous) {
             //override settings for autonomous mode if needed
         }
 

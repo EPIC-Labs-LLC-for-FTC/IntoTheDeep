@@ -5,5 +5,4 @@ public enum ClawStates {
     HOLDING_SAMPLE,
     INITIALIZED,
     OPEN
-
 }
