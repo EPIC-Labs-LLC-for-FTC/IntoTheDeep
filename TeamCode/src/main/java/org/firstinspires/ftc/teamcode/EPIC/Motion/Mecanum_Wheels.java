@@ -35,10 +35,10 @@ public class Mecanum_Wheels extends AComponents {
     private ElapsedTime runtime = new ElapsedTime();
 
     public Mecanum_Wheels(HardwareMap hardwareMap) {
-        frontright = hardwareMap.get(DcMotorEx.class,"frontright");
-        frontleft = hardwareMap.get(DcMotorEx.class,"frontleft");
-        backright = hardwareMap.get(DcMotorEx.class,"backright");
-        backleft = hardwareMap.get(DcMotorEx.class,"backleft");
+        frontright = hardwareMap.get(DcMotorEx.class,"frontRight");
+        frontleft = hardwareMap.get(DcMotorEx.class,"frontLeft");
+        backright = hardwareMap.get(DcMotorEx.class,"backRight");
+        backleft = hardwareMap.get(DcMotorEx.class,"backLeft");
 
         //xRail = hardwareMap.get(DcMotorEx.class, "xRail");
     }

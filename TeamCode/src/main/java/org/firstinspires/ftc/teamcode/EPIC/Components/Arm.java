@@ -47,7 +47,7 @@ public class Arm extends AComponents implements IArm{
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Arm State", stateArm.toString());
+        telemetry.addData("Arm State", "Initialized");
         telemetry.update();
     }
 
