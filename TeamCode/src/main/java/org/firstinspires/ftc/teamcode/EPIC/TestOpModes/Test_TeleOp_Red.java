@@ -91,7 +91,6 @@ public class Test_TeleOp_Red extends LinearOpMode {
 //            telemetry.addData("My Color Sensor distance in Inches: ", robot.colorSensor.getDistanceInInches());
 //            telemetry.addData("My Color Sensor distance in MMs: ", robot.colorSensor.getDistanceInMM());
             telemetry.update();
-            sleep(2000);
             //}
         }
     }
