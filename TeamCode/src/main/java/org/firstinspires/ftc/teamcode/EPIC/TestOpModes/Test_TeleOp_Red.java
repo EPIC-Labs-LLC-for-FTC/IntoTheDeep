@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 
@@ -56,8 +57,7 @@ public class Test_TeleOp_Red extends LinearOpMode {
 //        slider.setIsAutonomous(true);
 //
 //        slider.initialize();
-        Robot robot = new Robot(this,"Red");
-        robot.initialize();
+        Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
 
         while (opModeInInit()){
 
@@ -82,7 +82,7 @@ public class Test_TeleOp_Red extends LinearOpMode {
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
-            robot.odysseyWheels.move(lefty,righty,leftx,rightx);
+            wheels.move(lefty,righty,leftx,rightx);
             //if(touchSensor.isPressed()){
             //telemetry.addData("My Touch Sensor is pressed? ", touchSensor.isPressed());
             //telemetry.addData("My Touch Sensor press value: ", touchSensor.getValue());
