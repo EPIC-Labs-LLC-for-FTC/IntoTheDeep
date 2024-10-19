@@ -17,8 +17,8 @@ public class Wrist extends AComponents implements IWrist{
 
     public Wrist(HardwareMap hardwareMap) {
         //Instantiate your servos, motors, sensors, other devices here
-        jointR = hardwareMap.get(Servo.class, "JR");
-        jointL = hardwareMap.get(Servo.class, "JL");
+        jointR = hardwareMap.get(Servo.class, "jointR");
+        jointL = hardwareMap.get(Servo.class, "jointL");
     }
 
     @Override

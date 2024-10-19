@@ -17,8 +17,8 @@ public class Arm extends AComponents implements IArm{
 
     public Arm(HardwareMap hardwareMap) {
         //Instantiate your servos, motors, sensors, other devices here
-        armMotorR = hardwareMap.get(DcMotorEx.class, "AMR");
-        armMotorL = hardwareMap.get(DcMotorEx.class, "AML");
+        armMotorR = hardwareMap.get(DcMotorEx.class, "armMotorR");
+        armMotorL = hardwareMap.get(DcMotorEx.class, "armMotorL");
     }
     @Override
     public void initialize() {
@@ -41,7 +41,7 @@ public class Arm extends AComponents implements IArm{
 
         armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        
         this.displayComponentValues();
     }
 

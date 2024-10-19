@@ -18,8 +18,8 @@ public class Slider extends AComponents implements ISlider{
 
     public Slider(HardwareMap hardwareMap){
         //define devices here
-        slideMotorR = hardwareMap.get(DcMotorEx.class, "SMR");
-        slideMotorL = hardwareMap.get(DcMotorEx.class, "SML");
+        slideMotorR = hardwareMap.get(DcMotorEx.class, "slideMotorR");
+        slideMotorL = hardwareMap.get(DcMotorEx.class, "slideMotorL");
 
     }
 
