@@ -31,8 +31,8 @@ public class Claw extends AComponents implements IClaw{
 
     public Claw(HardwareMap hardwareMap) {
         //Instantiate your servos, motors, sensors, other devices here
-        leftFinger = hardwareMap.get(Servo.class, "leftFinger");
-        rightFinger = hardwareMap.get(Servo.class, "rightFinger");
+        leftFinger = hardwareMap.get(Servo.class, "LF");
+        rightFinger = hardwareMap.get(Servo.class, "RF");
         this.listeners = new ArrayList<>();
     }
 
