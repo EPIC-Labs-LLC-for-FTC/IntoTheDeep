@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.EPIC.Motion;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -158,11 +160,15 @@ public class Mecanum_Wheels extends AComponents {
 
     }
 
-    public void move(double lefty, double righty, double leftx, double rightx){
-        frontright.setPower((-lefty  - rightx - leftx)*rightErrorAdjustment); // should work same as above
-        frontleft.setPower((-lefty + rightx + leftx)*leftErrorAdjustment);
-        backright.setPower((-lefty - rightx + leftx)*rightErrorAdjustment);
-        backleft.setPower((-lefty + rightx - leftx)*leftErrorAdjustment);
+    public void move(double rightx, double leftx, double righty, double lefty){
+        frontright.setPower((-rightx - lefty - righty)*rightErrorAdjustment); // should work same as above
+        frontleft.setPower((-rightx + lefty + righty)*leftErrorAdjustment);
+        backright.setPower((-rightx - lefty + righty)*rightErrorAdjustment);
+        backleft.setPower((-rightx + lefty - righty)*leftErrorAdjustment);
 
+//        frontright.setPower(gamepad1.left_stick_y+gamepad1.right_stick_x);
+//        frontleft.setPower(gamepad1.left_stick_y-gamepad1.right_stick_x);
+//        backright.setPower(gamepad1.left_stick_y-gamepad1.right_stick_x);
+//        backleft.setPower(gamepad1.left_stick_y+gamepad1.right_stick_x);
     }
 }
