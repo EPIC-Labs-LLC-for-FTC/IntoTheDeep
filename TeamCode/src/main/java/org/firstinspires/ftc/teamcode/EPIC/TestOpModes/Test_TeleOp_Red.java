@@ -78,11 +78,11 @@ public class Test_TeleOp_Red extends LinearOpMode {
 
         while (opModeIsActive()){
             //robot.colorSensor.getColor();
-            rightx = gamepad1.right_stick_x;
-            righty = gamepad1.right_stick_y;
-            leftx = gamepad1.left_stick_x;
             lefty = gamepad1.left_stick_y;
-            wheels.move(rightx,leftx,righty,lefty);
+            leftx = gamepad1.left_stick_x;
+            righty = gamepad1.right_stick_y;
+            rightx = gamepad1.right_stick_x;
+            wheels.move(lefty,righty,leftx,rightx);
             //if(touchSensor.isPressed()){
             //telemetry.addData("My Touch Sensor is pressed? ", touchSensor.isPressed());
             //telemetry.addData("My Touch Sensor press value: ", touchSensor.getValue());
@@ -91,6 +91,7 @@ public class Test_TeleOp_Red extends LinearOpMode {
 //            telemetry.addData("My Color Sensor distance in Inches: ", robot.colorSensor.getDistanceInInches());
 //            telemetry.addData("My Color Sensor distance in MMs: ", robot.colorSensor.getDistanceInMM());
             telemetry.update();
+            sleep(2000);
             //}
         }
     }
