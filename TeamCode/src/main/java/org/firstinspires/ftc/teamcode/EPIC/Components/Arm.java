@@ -41,8 +41,7 @@ public class Arm extends AComponents implements IArm{
 
         armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        stateArm = ArmStates.NEUTRAL;
+        
         this.displayComponentValues();
     }
 
