@@ -57,7 +57,8 @@ public class Test_TeleOp_Red extends LinearOpMode {
 //        slider.setIsAutonomous(true);
 //
 //        slider.initialize();
-        Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
+        Robot odysseyRobot = new Robot(this, "Red");
+        odysseyRobot.initialize();
 
         while (opModeInInit()){
 
@@ -82,7 +83,7 @@ public class Test_TeleOp_Red extends LinearOpMode {
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
-            wheels.move(lefty,righty,leftx,rightx);
+            odysseyRobot.odysseyWheels.move(lefty,righty,leftx,rightx);
             //if(touchSensor.isPressed()){
             //telemetry.addData("My Touch Sensor is pressed? ", touchSensor.isPressed());
             //telemetry.addData("My Touch Sensor press value: ", touchSensor.getValue());
