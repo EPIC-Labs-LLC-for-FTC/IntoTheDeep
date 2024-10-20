@@ -60,7 +60,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener {
 //        touchSensor.parent = parent;
 //        touchSensor.telemetry = parent.telemetry;
 //        touchSensor.addTouchListener(this);
-        odysseyClaw.addClawListener(this);
+//        odysseyClaw.addClawListener(this);
     }
 
     public void setIsAutonomous(boolean isAutonomous){
