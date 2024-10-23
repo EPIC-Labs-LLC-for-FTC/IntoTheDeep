@@ -22,8 +22,7 @@ public class Test_Auton extends LinearOpMode {
         waitForStart();
         sleep(100);
 
-        odysseyRobot.odysseyArm.move();
-
+        odysseyRobot.odysseyWrist.setPos(0.5);
 
         //forward
         distance = 51;

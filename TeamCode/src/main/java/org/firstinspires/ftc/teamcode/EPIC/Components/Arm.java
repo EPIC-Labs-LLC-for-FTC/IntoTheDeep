@@ -79,7 +79,7 @@ public class Arm extends AComponents implements IArm{
                     targetPosR, targetPosL);
             telemetry.addData("Arm progress", "armMotorR: %1$7.3d  armMotorL: %2$7.3d",
                     armMotorR.getCurrentPosition(), armMotorL.getCurrentPosition());
-            telemetry.update();
+            //telemetry.update();
         }
 
         armMotorR.setPower(0);
