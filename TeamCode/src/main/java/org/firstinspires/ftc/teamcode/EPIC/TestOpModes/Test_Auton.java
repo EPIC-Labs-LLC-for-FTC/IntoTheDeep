@@ -22,7 +22,9 @@ public class Test_Auton extends LinearOpMode {
         waitForStart();
         sleep(100);
 
-        odysseyRobot.odysseySlider.slide();
+        odysseyRobot.odysseyArm.move();
+
+
         //forward
         distance = 51;
         //mecanum.encoderDrive(0.8,distance,distance,distance,distance,2);
