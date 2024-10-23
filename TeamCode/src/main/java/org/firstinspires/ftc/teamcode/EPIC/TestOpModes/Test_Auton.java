@@ -17,9 +17,12 @@ public class Test_Auton extends LinearOpMode {
         double distance = 0;
 
         Robot odysseyRobot = new Robot(this, "Red");
+        odysseyRobot.initialize();
 
         waitForStart();
         sleep(100);
+
+        odysseyRobot.odysseySlider.slide();
         //forward
         distance = 51;
         //mecanum.encoderDrive(0.8,distance,distance,distance,distance,2);

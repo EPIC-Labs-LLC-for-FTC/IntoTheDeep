@@ -17,8 +17,8 @@ public class Arm extends AComponents implements IArm{
 
     public Arm(HardwareMap hardwareMap) {
         //Instantiate your servos, motors, sensors, other devices here
-        armMotorR = hardwareMap.get(DcMotorEx.class, "armMotorR");
-        armMotorL = hardwareMap.get(DcMotorEx.class, "armMotorL");
+        armMotorR = hardwareMap.get(DcMotorEx.class, "AMR");
+        armMotorL = hardwareMap.get(DcMotorEx.class, "AML");
     }
     @Override
     public void initialize() {
