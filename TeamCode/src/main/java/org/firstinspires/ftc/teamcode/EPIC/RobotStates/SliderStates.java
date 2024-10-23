@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.EPIC.RobotStates;
 
 public enum SliderStates {
-    HIGH_BUCKET(43.0),
-    LOW_BUCKET(27.75),
-    LOW_HANG(20.0),
+    HIGH_BUCKET(25.0),
+    LOW_BUCKET(9.75),
+    LOW_HANG(2),
     RETRACTED(0.0);
 
     private double height;
