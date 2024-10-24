@@ -152,7 +152,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                    ArmStates newState = event.getNewState();
                    switch (newState) {
                        case LOWERED:
-                           
+
                            break;
                        case LOWERED_BACK:
 
