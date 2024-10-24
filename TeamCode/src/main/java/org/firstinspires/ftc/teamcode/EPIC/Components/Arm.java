@@ -106,6 +106,44 @@ public class Arm extends AComponents implements IArm{
         armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
+    public void move() {
+        // Negative value lifts arm up, positive moves it down.
+        double position = 90;
+        int targetPosR;
+        int targetPosL;
+        double degreesPerRotationArm = 537.7;
+        double ticksPerDegree = 537.7 / degreesPerRotationArm;
+
+        targetPosR = armMotorR.getCurrentPosition() + (int) (position * ticksPerDegree);
+        targetPosL = armMotorL.getCurrentPosition() + (int) (position * ticksPerDegree);
+
+        armMotorR.setTargetPosition(targetPosR);
+        armMotorL.setTargetPosition(targetPosL);
+
+        armMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        armMotorR.setPower(speed);
+        armMotorL.setPower(speed);
+
+        while (parent.opModeIsActive() &&
+                (armMotorR.isBusy() || armMotorL.isBusy())) {
+            telemetry.addData("Arm running to", "armMotorR: %1$7.3d  armMotorL: %2$7.3d",
+                    targetPosR, targetPosL);
+            telemetry.addData("Arm progress", "armMotorR: %1$7.3d  armMotorL: %2$7.3d",
+                    armMotorR.getCurrentPosition(), armMotorL.getCurrentPosition());
+            // telemetry.update();
+        }
+
+        armMotorR.setPower(0);
+        armMotorL.setPower(0);
+
+        notifyArmStateChange(new ArmEventObject(this, stateArm));
+
+        armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
     // New method to notify listeners of arm state changes
     private void notifyArmStateChange(ArmEventObject event) {
         for (IArmListener listener : listeners) {

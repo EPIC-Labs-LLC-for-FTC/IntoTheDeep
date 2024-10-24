@@ -5,20 +5,23 @@ import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Slider;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Arm;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ArmEventObject;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ClawEventObject;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ColorEventObject;
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IArmListener;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IClawListener;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IColorListener;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ITouchListener;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.TouchEventObject;
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyColorRangeSensor;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Robot implements IColorListener, ITouchListener, IClawListener {
+public class Robot implements IColorListener, ITouchListener, IClawListener, IArmListener {
     public Claw odysseyClaw;
     public Slider odysseySlider;
     public Arm odysseyArm;
@@ -38,28 +41,10 @@ public class Robot implements IColorListener, ITouchListener, IClawListener {
         odysseyArm = new Arm(parent.hardwareMap);
         odysseyWrist = new Wrist(parent.hardwareMap);
         odysseyWheels = new Mecanum_Wheels(parent.hardwareMap);
-        odysseyClaw.setParent(parent);
-        odysseySlider.setParent(parent);
-        odysseyArm.setParent(parent);
-        odysseyWrist.setParent(parent);
-        odysseyWheels.setParent(parent);
-        odysseyClaw.setTelemetry(parent.telemetry);
-        odysseySlider.setTelemetry(parent.telemetry);
-        odysseyArm.setTelemetry(parent.telemetry);
-        odysseyWrist.setTelemetry(parent.telemetry);
-        odysseyWheels.setTelemetry(parent.telemetry);
         this.parent = parent;
         this.telemetry = parent.telemetry;
         this.alliance = alliance;
-//        colorSensor = new MyColorRangeSensor(parent.hardwareMap,alliance);
-//        colorSensor.parent = parent;
-//        colorSensor.telemetry = parent.telemetry;
-//        colorSensor.addColorListener(this);
-//        touchSensor = new MyTouchSensor(parent.hardwareMap);
-//        touchSensor.initialize();
-//        touchSensor.parent = parent;
-//        touchSensor.telemetry = parent.telemetry;
-//        touchSensor.addTouchListener(this);
+        odysseyArm.addArmListener(this);
 //        odysseyClaw.addClawListener(this);
     }
 
@@ -73,6 +58,16 @@ public class Robot implements IColorListener, ITouchListener, IClawListener {
     }
 
     public void initialize() {
+        odysseyClaw.setParent(this.parent);
+        odysseySlider.setParent(this.parent);
+        odysseyArm.setParent(this.parent);
+        odysseyWrist.setParent(this.parent);
+        odysseyWheels.setParent(this.parent);
+        odysseyClaw.setTelemetry(this.telemetry);
+        odysseySlider.setTelemetry(this.telemetry);
+        odysseyArm.setTelemetry(this.telemetry);
+        odysseyWrist.setTelemetry(this.telemetry);
+        odysseyWheels.setTelemetry(this.telemetry);
         odysseyClaw.initialize();
         odysseySlider.initialize();
         odysseyArm.initialize();
@@ -145,6 +140,32 @@ public class Robot implements IColorListener, ITouchListener, IClawListener {
             };
             tc.start();
 
+        }
+
+    }
+
+    @Override
+    public void onArmMove(ArmEventObject event) {
+        if(this.parent.opModeIsActive()) {
+            Thread tc = new Thread() {
+               public void run() {
+                   ArmStates newState = event.getNewState();
+                   switch (newState) {
+                       case LOWERED:
+                           
+                           break;
+                       case LOWERED_BACK:
+
+                           break;
+                       case NEUTRAL:
+
+                           break;
+                       default:
+
+                           break;
+                   }
+               }
+            };
         }
 
     }
