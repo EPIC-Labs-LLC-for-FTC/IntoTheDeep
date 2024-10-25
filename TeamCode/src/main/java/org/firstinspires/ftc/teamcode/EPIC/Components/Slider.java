@@ -88,6 +88,9 @@ public class Slider extends AComponents implements ISlider{
             }
         }
 
+        slideMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        slideMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         slideMotorR.setPower(0);
         slideMotorL.setPower(0);
 
@@ -95,11 +98,13 @@ public class Slider extends AComponents implements ISlider{
 
         slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void slide() {
+    public void slide(double position) {
         //A negative position should make the slider move down. Positive makes it move upwards.
-        double position = 537.7*4;
         int targetPosR;
         int targetPosL;
         double inchesPerRotationSlider = 537.7;
@@ -128,10 +133,16 @@ public class Slider extends AComponents implements ISlider{
             }
         }
 
+        slideMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        slideMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         slideMotorR.setPower(0);
         slideMotorL.setPower(0);
 
         slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 }

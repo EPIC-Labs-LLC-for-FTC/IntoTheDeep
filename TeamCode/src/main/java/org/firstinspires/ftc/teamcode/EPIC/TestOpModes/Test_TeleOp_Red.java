@@ -95,9 +95,9 @@ public class Test_TeleOp_Red extends LinearOpMode {
                 }
                 odysseyRobot.odysseyArm.freeMove(0);
             } else if (gamepad1.x) {
-                odysseyRobot.odysseyWrist.setPos(1);
+                odysseyRobot.odysseySlider.slide(537.7);
             } else if (gamepad1.y) {
-                odysseyRobot.odysseyWrist.setPos(0);
+                odysseyRobot.odysseySlider.slide(-537.7);
             }
             //if(touchSensor.isPressed()){
             //telemetry.addData("My Touch Sensor is pressed? ", touchSensor.isPressed());
@@ -106,7 +106,7 @@ public class Test_TeleOp_Red extends LinearOpMode {
 //            telemetry.addData("My Color Sensor is color? ", robot.colorSensor.getARGBColor());
 //            telemetry.addData("My Color Sensor distance in Inches: ", robot.colorSensor.getDistanceInInches());
 //            telemetry.addData("My Color Sensor distance in MMs: ", robot.colorSensor.getDistanceInMM());
-            telemetry.update();
+            //telemetry.update();
         }
     }
 }

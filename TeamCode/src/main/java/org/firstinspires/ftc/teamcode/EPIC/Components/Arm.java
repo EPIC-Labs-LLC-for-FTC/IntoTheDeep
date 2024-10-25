@@ -38,7 +38,7 @@ public class Arm extends AComponents implements IArm{
         armMotorR.setPower(reset);
         armMotorL.setPower(reset);
 
-        armMotorR.setDirection(DcMotorSimple.Direction.FORWARD);
+        armMotorR.setDirection(DcMotorSimple.Direction.REVERSE);
         armMotorL.setDirection(DcMotorSimple.Direction.REVERSE);
 
         armMotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

@@ -38,12 +38,12 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void initialize() {
-        leftFinger.setDirection(Servo.Direction.REVERSE);
-        rightFinger.setDirection(Servo.Direction.FORWARD);
+        //leftFinger.setDirection(Servo.Direction.REVERSE);
+        //rightFinger.setDirection(Servo.Direction.FORWARD);
 
         leftFinger.scaleRange(0, 0.5);
         rightFinger.scaleRange(0, 0.5);
-        leftFinger.setPosition(reset);
+        leftFinger.setPosition(1);
         rightFinger.setPosition(reset);
 
         if(IsAutonomous){
