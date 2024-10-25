@@ -70,6 +70,9 @@ public class Slider extends AComponents implements ISlider{
             targetPosR = slideMotorR.getCurrentPosition() + (int) (ticksPerInchSlider * position);
             targetPosL = slideMotorL.getCurrentPosition() + (int) (ticksPerInchSlider * position);
 
+            slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
             slideMotorR.setTargetPosition(targetPosR);
             slideMotorL.setTargetPosition(targetPosL);
 
@@ -91,16 +94,11 @@ public class Slider extends AComponents implements ISlider{
         slideMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slideMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        slideMotorR.setPower(0);
-        slideMotorL.setPower(0);
-
-        stateSlider = state;
-
-        slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        slideMotorR.setPower(0);
+        slideMotorL.setPower(0);
     }
 
     public void slide(double position) {
@@ -114,6 +112,9 @@ public class Slider extends AComponents implements ISlider{
         if (parent.opModeIsActive()) {
             targetPosR = slideMotorR.getCurrentPosition() + (int) (ticksPerInchSlider * position);
             targetPosL = slideMotorL.getCurrentPosition() + (int) (ticksPerInchSlider * position);
+
+            slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             slideMotorR.setTargetPosition(targetPosR);
             slideMotorL.setTargetPosition(targetPosL);
@@ -136,13 +137,10 @@ public class Slider extends AComponents implements ISlider{
         slideMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slideMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        slideMotorR.setPower(0);
-        slideMotorL.setPower(0);
-
-        slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        slideMotorR.setPower(0);
+        slideMotorL.setPower(0);
     }
 }
