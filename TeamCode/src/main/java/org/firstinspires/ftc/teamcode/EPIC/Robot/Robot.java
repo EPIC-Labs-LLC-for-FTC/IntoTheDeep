@@ -61,7 +61,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
 
         odysseyArm.addArmListener(this);
 
-
+   
         odysseyWrist.addWristListener(this);
     }
 
