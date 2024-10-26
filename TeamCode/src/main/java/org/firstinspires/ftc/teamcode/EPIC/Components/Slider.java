@@ -129,21 +129,23 @@ public class Slider extends AComponents implements ISlider{
             slideMotorL.setPower(speed * errorAdjustmentL);
 
             while (parent.opModeIsActive() &&
-                    (slideMotorR.isBusy() || slideMotorL.isBusy()) && (runtime.seconds() < timeOutS)) { {
-                telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
-                telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
-                        slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
+                    (slideMotorR.isBusy() || slideMotorL.isBusy()) && (runtime.seconds() < timeOutS)) {
+                {
+                    telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
+                    telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
+                            slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
 //                telemetry.update();
+                }
             }
+
+            slideMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            slideMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+            slideMotorR.setPower(0);
+            slideMotorL.setPower(0);
         }
-
-        slideMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        slideMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        slideMotorR.setPower(0);
-        slideMotorL.setPower(0);
     }
 }
