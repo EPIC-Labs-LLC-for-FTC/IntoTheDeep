@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
 
@@ -15,6 +16,7 @@ public class Slider extends AComponents implements ISlider{
     public double errorAdjustmentR = 1.0;
     public double errorAdjustmentL = 1.0;
     public SliderStates stateSlider;
+    private ElapsedTime runtime;
 
     public Slider(HardwareMap hardwareMap){
         //define devices here
@@ -57,7 +59,7 @@ public class Slider extends AComponents implements ISlider{
     }
 
     @Override
-    public void slide(SliderStates state) {
+    public void slide(SliderStates state, double timeOutS) {
         //A negative position should make the slider move down. Positive makes it move upwards.
         double position = state.getStateHeight() - stateSlider.getStateHeight();
         int targetPosR;
@@ -79,11 +81,12 @@ public class Slider extends AComponents implements ISlider{
             slideMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             slideMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+            runtime.reset();
             slideMotorR.setPower(speed * errorAdjustmentR);
             slideMotorL.setPower(speed * errorAdjustmentL);
 
             while (parent.opModeIsActive() &&
-                    (slideMotorR.isBusy() || slideMotorL.isBusy())) {
+                    (slideMotorR.isBusy() || slideMotorL.isBusy()) && (runtime.seconds() < timeOutS)) {
 //                telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
 //                telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
 //                        slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
@@ -101,7 +104,7 @@ public class Slider extends AComponents implements ISlider{
         slideMotorL.setPower(0);
     }
 
-    public void slide(double position) {
+    public void slide(double position, double timeOutS) {
         //A negative position should make the slider move down. Positive makes it move upwards.
         int targetPosR;
         int targetPosL;
@@ -126,7 +129,7 @@ public class Slider extends AComponents implements ISlider{
             slideMotorL.setPower(speed * errorAdjustmentL);
 
             while (parent.opModeIsActive() &&
-                    (slideMotorR.isBusy() || slideMotorL.isBusy())) {
+                    (slideMotorR.isBusy() || slideMotorL.isBusy()) && (runtime.seconds() < timeOutS)) { {
                 telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
                 telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
                         slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
