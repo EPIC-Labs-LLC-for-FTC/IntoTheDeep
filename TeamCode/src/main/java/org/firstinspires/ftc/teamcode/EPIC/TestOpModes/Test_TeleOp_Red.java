@@ -95,9 +95,9 @@ public class Test_TeleOp_Red extends LinearOpMode {
                 }
                 odysseyRobot.odysseyArm.freeMove(0);
             } else if (gamepad1.x) {
-                odysseyRobot.odysseySlider.slide(537.7*4);
+                odysseyRobot.odysseySlider.slide(537.7*4, 6);
             } else if (gamepad1.y) {
-                odysseyRobot.odysseySlider.slide(-537.7);
+                odysseyRobot.odysseySlider.slide(-537.7, 6);
             }
             //if(touchSensor.isPressed()){
             //telemetry.addData("My Touch Sensor is pressed? ", touchSensor.isPressed());
