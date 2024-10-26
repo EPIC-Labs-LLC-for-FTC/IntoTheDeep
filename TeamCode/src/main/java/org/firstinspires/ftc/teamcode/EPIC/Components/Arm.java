@@ -24,11 +24,11 @@ public class Arm extends AComponents implements IArm{
     private List<IArmListener> listeners;
 
     public Arm(HardwareMap hardwareMap) {
-        // Instantiate your servos, motors, sensors, other devices here
+        // Instantiate servos, motors, sensors, other devices here
         armMotorR = hardwareMap.get(DcMotorEx.class, "AMR");
         armMotorL = hardwareMap.get(DcMotorEx.class, "AML");
 
-        // Initialize the listeners list
+        // Initializes the listeners list
         this.listeners = new ArrayList<>();
     }
 
