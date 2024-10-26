@@ -44,24 +44,11 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         odysseyArm = new Arm(parent.hardwareMap);
         odysseyWrist = new Wrist(parent.hardwareMap);
         odysseyWheels = new Mecanum_Wheels(parent.hardwareMap);
-        odysseyClaw.setParent(parent);
-        odysseySlider.setParent(parent);
-        odysseyArm.setParent(parent);
-        odysseyWrist.setParent(parent);
-        odysseyWheels.setParent(parent);
-        odysseyClaw.setTelemetry(parent.telemetry);
-        odysseySlider.setTelemetry(parent.telemetry);
-        odysseyArm.setTelemetry(parent.telemetry);
-        odysseyWrist.setTelemetry(parent.telemetry);
-        odysseyWheels.setTelemetry(parent.telemetry);
         this.parent = parent;
         this.telemetry = parent.telemetry;
         this.alliance = alliance;
-
-
+        
         odysseyArm.addArmListener(this);
-
-   
         odysseyWrist.addWristListener(this);
     }
 
@@ -75,6 +62,16 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
     }
 
     public void initialize() {
+        odysseyClaw.setParent(this.parent);
+        odysseySlider.setParent(this.parent);
+        odysseyArm.setParent(this.parent);
+        odysseyWrist.setParent(this.parent);
+        odysseyWheels.setParent(this.parent);
+        odysseyClaw.setTelemetry(this.telemetry);
+        odysseySlider.setTelemetry(this.telemetry);
+        odysseyArm.setTelemetry(this.telemetry);
+        odysseyWrist.setTelemetry(this.telemetry);
+        odysseyWheels.setTelemetry(this.telemetry);
         odysseyClaw.initialize();
         odysseySlider.initialize();
         odysseyArm.initialize();
@@ -85,13 +82,13 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
     @Override
     public void colorPicker(ColorEventObject event) {
         if (this.parent.opModeIsActive()) {
-            double distance = event.getDistance();
-            telemetry.addData("distance", distance);
-            telemetry.addData("color", event.getColor());
-            telemetry.update();
-            parent.sleep(1000);
-            // odysseyWheels.encoderDrive(0.6, distance, distance, distance, distance, 1);
-            parent.sleep(2000);
+//            double distance = event.getDistance();
+//            telemetry.addData("distance", distance);
+//            telemetry.addData("color", event.getColor());
+//            telemetry.update();
+//            parent.sleep(1000);
+//            // odysseyWheels.encoderDrive(0.6, distance, distance, distance, distance, 1);
+//            parent.sleep(2000);
         }
     }
 
@@ -116,7 +113,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         if (this.parent.opModeIsActive()) {
             Thread tc = new Thread() {
                 public void run() {
-                    // Add code to open the claw if needed
+
                 }
             };
             tc.start();
