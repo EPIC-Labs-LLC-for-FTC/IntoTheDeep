@@ -1,22 +1,10 @@
-package org.firstinspires.ftc.teamcode.EPIC.Robot;
+package org.firstinspires.ftc.teamcode.EPIC;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
-import org.firstinspires.ftc.teamcode.EPIC.Components.Slider;
-import org.firstinspires.ftc.teamcode.EPIC.Components.Arm;
-import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ClawEventObject;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ColorEventObject;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IClawListener;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IColorListener;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ITouchListener;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.TouchEventObject;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ArmEventObject;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IArmListener;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IWristListener;
-import org.firstinspires.ftc.teamcode.EPIC.EventListeners.WristEventObject;
+import org.firstinspires.ftc.teamcode.EPIC.Components.*;
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.*;
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyColorRangeSensor;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
@@ -24,7 +12,8 @@ import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Robot implements IColorListener, ITouchListener, IClawListener, IArmListener, IWristListener { // Implement IWristListener
+public class Robot implements IColorListener, ITouchListener, IClawListener, IArmListener, IWristListener, ISliderListener {
+
     public Claw odysseyClaw;
     public Slider odysseySlider;
     public Arm odysseyArm;
@@ -58,11 +47,9 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         this.telemetry = parent.telemetry;
         this.alliance = alliance;
 
-
-        odysseyArm.addArmListener(this);
-
-   
-        odysseyWrist.addWristListener(this);
+        odysseyArm.addArmListener(this);        // Add arm listener
+        odysseyWrist.addWristListener(this);    // Add wrist listener
+        odysseySlider.addSliderListener(this);  // Add slider listener
     }
 
     public void setIsAutonomous(boolean isAutonomous) {
@@ -90,8 +77,6 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
             telemetry.addData("color", event.getColor());
             telemetry.update();
             parent.sleep(1000);
-            // odysseyWheels.encoderDrive(0.6, distance, distance, distance, distance, 1);
-            parent.sleep(2000);
         }
     }
 
@@ -161,7 +146,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
     }
 
     @Override
-    public void onWristMove(WristEventObject event) { // Implementing onWristMove method
+    public void onWristMove(WristEventObject event) {
         WristStates newState = event.getNewState();
         switch (newState) {
             case INITIALIZING:
@@ -187,4 +172,24 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                 break;
         }
     }
+
+    @Override
+    public void onSliderMove(SliderEventObject event) {
+        SliderStates newState = event.getSliderState();
+        switch (newState) {
+            case RETRACTED:
+                System.out.println("Slider is fully retracted.");
+                break;
+            case EXTENDED:
+                System.out.println("Slider is fully extended.");
+                break;
+            case MOVING:
+                System.out.println("Slider is moving.");
+                break;
+            default:
+                System.out.println("Slider moved to an unknown state.");
+                break;
+        }
+    }
 }
+

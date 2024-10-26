@@ -5,10 +5,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ISliderListener;
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.SliderEventObject;
 
-public class Slider extends AComponents implements ISlider{
+import java.util.ArrayList;
+import java.util.List;
+
+public class Slider extends AComponents implements ISlider {
 
     private DcMotorEx slideMotorR;
     private DcMotorEx slideMotorL;
@@ -18,16 +22,17 @@ public class Slider extends AComponents implements ISlider{
     public SliderStates stateSlider;
     private ElapsedTime runtime;
 
-    public Slider(HardwareMap hardwareMap){
-        //define devices here
+    // List to store slider listeners
+    private List<ISliderListener> listeners = new ArrayList<>();
+
+    public Slider(HardwareMap hardwareMap) {
+        // Define devices here
         slideMotorR = hardwareMap.get(DcMotorEx.class, "SMR");
         slideMotorL = hardwareMap.get(DcMotorEx.class, "SML");
-
     }
 
     @Override
     public void initialize() {
-
         double reset = 0;
         slideMotorR.setPower(reset);
         slideMotorL.setPower(reset);
@@ -40,10 +45,6 @@ public class Slider extends AComponents implements ISlider{
 
         slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        if (IsAutonomous) {
-
-        }
 
         slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -58,14 +59,30 @@ public class Slider extends AComponents implements ISlider{
         telemetry.update();
     }
 
+    // Method to add slider listener
+    public void addSliderListener(ISliderListener listener) {
+        listeners.add(listener);
+    }
+
+    // Method to remove slider listener
+    public void removeSliderListener(ISliderListener listener) {
+        listeners.remove(listener);
+    }
+
+    // Notify all listeners of a slider state change
+    private void fireSliderEvent(SliderStates newState) {
+        SliderEventObject event = new SliderEventObject(this, newState);
+        for (ISliderListener listener : listeners) {
+            listener.onSliderMove(event);
+        }
+    }
+
     @Override
     public void slide(SliderStates state, double timeOutS) {
-        //A negative position should make the slider move down. Positive makes it move upwards.
         double position = state.getStateHeight() - stateSlider.getStateHeight();
         int targetPosR;
         int targetPosL;
         double inchesPerRotationSlider = 537.7;
-        // inchesPerRotationSlider is a placeholder until we test the inches moved per full rotation
         double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
 
         if (parent.opModeIsActive()) {
@@ -87,9 +104,6 @@ public class Slider extends AComponents implements ISlider{
 
             while (parent.opModeIsActive() &&
                     (slideMotorR.isBusy() || slideMotorL.isBusy()) && (runtime.seconds() < timeOutS)) {
-//                telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
-//                telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
-//                        slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
                 telemetry.update();
             }
         }
@@ -102,14 +116,16 @@ public class Slider extends AComponents implements ISlider{
 
         slideMotorR.setPower(0);
         slideMotorL.setPower(0);
+
+        // After sliding, update state and notify listeners
+        stateSlider = state;
+        fireSliderEvent(state);  // Fire the event to notify listeners of the new state
     }
 
     public void slide(double position, double timeOutS) {
-        //A negative position should make the slider move down. Positive makes it move upwards.
         int targetPosR;
         int targetPosL;
         double inchesPerRotationSlider = 537.7;
-        // inchesPerRotationSlider is a placeholder until we test the inches moved per full rotation
         double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
 
         if (parent.opModeIsActive()) {
@@ -130,12 +146,10 @@ public class Slider extends AComponents implements ISlider{
 
             while (parent.opModeIsActive() &&
                     (slideMotorR.isBusy() || slideMotorL.isBusy()) && (runtime.seconds() < timeOutS)) {
-                {
-                    telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
-                    telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
-                            slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
-//                telemetry.update();
-                }
+                telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
+                telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
+                        slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
+                telemetry.update();
             }
 
             slideMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
