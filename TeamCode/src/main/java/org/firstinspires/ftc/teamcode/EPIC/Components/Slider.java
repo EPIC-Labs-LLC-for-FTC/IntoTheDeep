@@ -16,7 +16,12 @@ public class Slider extends AComponents implements ISlider{
     public double errorAdjustmentR = 1.0;
     public double errorAdjustmentL = 1.0;
     public SliderStates stateSlider;
+<<<<<<< Updated upstream
     private ElapsedTime runtime;
+=======
+    private ElapsedTime runtime = new ElapsedTime();
+    private double holdPower = 0.2;
+>>>>>>> Stashed changes
 
     public Slider(HardwareMap hardwareMap){
         //define devices here
@@ -52,6 +57,10 @@ public class Slider extends AComponents implements ISlider{
         this.displayComponentValues();
     }
 
+    public void setPower(double power){
+        slideMotorL.setPower(power);
+        slideMotorR.setPower(power);
+    }
     @Override
     public void displayComponentValues() {
         telemetry.addData("Slider State", "INITIALIZED");
@@ -84,56 +93,74 @@ public class Slider extends AComponents implements ISlider{
             runtime.reset();
             slideMotorR.setPower(speed * errorAdjustmentR);
             slideMotorL.setPower(speed * errorAdjustmentL);
-
+            runtime.reset();
             while (parent.opModeIsActive() &&
+<<<<<<< Updated upstream
                     (slideMotorR.isBusy() || slideMotorL.isBusy()) && (runtime.seconds() < timeOutS)) {
+=======
+                    (runtime.seconds() < 2.0) &&
+                    (slideMotorR.isBusy() || slideMotorL.isBusy())) {
+>>>>>>> Stashed changes
 //                telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
 //                telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
 //                        slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
                 telemetry.update();
             }
         }
-
-        slideMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        slideMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
         slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        slideMotorR.setPower(0);
-        slideMotorL.setPower(0);
+        slideMotorR.setPower(holdPower);
+        slideMotorL.setPower(holdPower);
     }
 
+<<<<<<< Updated upstream
     public void slide(double position, double timeOutS) {
+=======
+    public int getLeftPosition(){
+        return slideMotorL.getCurrentPosition();
+    }
+
+    public int getRightPosition(){
+        return slideMotorR.getCurrentPosition();
+    }
+    public void slide(double position) {
+>>>>>>> Stashed changes
         //A negative position should make the slider move down. Positive makes it move upwards.
         int targetPosR;
         int targetPosL;
-        double inchesPerRotationSlider = 537.7;
+        //double inchesPerRotationSlider = 537.7;
         // inchesPerRotationSlider is a placeholder until we test the inches moved per full rotation
-        double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
+        //double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
 
         if (parent.opModeIsActive()) {
-            targetPosR = slideMotorR.getCurrentPosition() + (int) (ticksPerInchSlider * position);
-            targetPosL = slideMotorL.getCurrentPosition() + (int) (ticksPerInchSlider * position);
+            //targetPosR = slideMotorR.getCurrentPosition() + (int) (ticksPerInchSlider * position);
+            //targetPosL = slideMotorL.getCurrentPosition() + (int) (ticksPerInchSlider * position);
 
-            slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            //slideMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //slideMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            slideMotorR.setTargetPosition(targetPosR);
-            slideMotorL.setTargetPosition(targetPosL);
+            runtime.reset();
 
-            slideMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            slideMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            slideMotorR.setTargetPosition((int)position);
+            slideMotorL.setTargetPosition((int)position);
 
             slideMotorR.setPower(speed * errorAdjustmentR);
             slideMotorL.setPower(speed * errorAdjustmentL);
-
             while (parent.opModeIsActive() &&
+<<<<<<< Updated upstream
                     (slideMotorR.isBusy() || slideMotorL.isBusy()) && (runtime.seconds() < timeOutS)) {
                 {
                     telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
                     telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
                             slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
+=======
+                    (runtime.seconds() < 2.0) &&
+                    (slideMotorR.isBusy() || slideMotorL.isBusy())) {
+                //telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
+                //telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
+                  //      slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
+>>>>>>> Stashed changes
 //                telemetry.update();
                 }
             }
@@ -147,5 +174,18 @@ public class Slider extends AComponents implements ISlider{
             slideMotorR.setPower(0);
             slideMotorL.setPower(0);
         }
+<<<<<<< Updated upstream
+=======
+
+
+        //slideMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //slideMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        slideMotorR.setPower(holdPower);
+        slideMotorL.setPower(holdPower);
+
+        //slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+>>>>>>> Stashed changes
     }
 }
