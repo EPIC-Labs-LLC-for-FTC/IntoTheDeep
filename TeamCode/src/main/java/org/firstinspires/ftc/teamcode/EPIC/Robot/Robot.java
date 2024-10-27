@@ -47,9 +47,10 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         this.parent = parent;
         this.telemetry = parent.telemetry;
         this.alliance = alliance;
-        
+
         odysseyArm.addArmListener(this);
         odysseyWrist.addWristListener(this);
+        odysseyArm.addArmListener(this);
     }
 
     public void setIsAutonomous(boolean isAutonomous) {
@@ -145,11 +146,11 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
             case LOWERED:
                 System.out.println("Arm is in lowered position, ready to grab sample.");
                 break;
-            case LOWERED_BACK:
-                System.out.println("Arm is in lowered back position, ready to deposit.");
+            case INITIALIZED:
+                System.out.println("Arm is initialized");
                 break;
-            case NEUTRAL:
-                System.out.println("Arm is back to neutral after depositing.");
+            case DEPOSITING:
+
                 break;
             default:
                 System.out.println("Arm moved to an unknown state.");
@@ -166,12 +167,6 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                 break;
             case IDLE:
                 System.out.println("Wrist is idle.");
-                break;
-            case DEPOSITING:
-                System.out.println("Wrist needs to deposit a sample.");
-                break;
-            case PICKING_UP:
-                System.out.println("Wrist needs to pick up a sample.");
                 break;
             case ROTATED_FORWARDS:
                 System.out.println("Wrist rotated forwards.");

@@ -85,28 +85,18 @@ public class Test_TeleOp_Red extends LinearOpMode {
             rightx = gamepad1.right_stick_x;
             odysseyRobot.odysseyWheels.move(lefty,righty,leftx,rightx);
             if (gamepad1.a) {
-                while (gamepad1.a) {
-                    odysseyRobot.odysseyArm.freeMove(0.25);
-                }
-                odysseyRobot.odysseyArm.freeMove(0);
+                odysseyRobot.odysseyWrist.setPos(0);
             } else if (gamepad1.b) {
-                while (gamepad1.b) {
-                    odysseyRobot.odysseyArm.freeMove(-0.25);
-                }
-                odysseyRobot.odysseyArm.freeMove(0);
+                odysseyRobot.odysseyWrist.setPos(0.5);
             } else if (gamepad1.x) {
-                odysseyRobot.odysseySlider.slide(537.7*4);
+                odysseyRobot.odysseyWrist.setPos(1);
             } else if (gamepad1.y) {
-                odysseyRobot.odysseySlider.slide(-537.7);
+                odysseyRobot.odysseyClaw.close(0.575);
             }
-            //if(touchSensor.isPressed()){
-            //telemetry.addData("My Touch Sensor is pressed? ", touchSensor.isPressed());
-            //telemetry.addData("My Touch Sensor press value: ", touchSensor.getValue());
 
-//            telemetry.addData("My Color Sensor is color? ", robot.colorSensor.getARGBColor());
-//            telemetry.addData("My Color Sensor distance in Inches: ", robot.colorSensor.getDistanceInInches());
-//            telemetry.addData("My Color Sensor distance in MMs: ", robot.colorSensor.getDistanceInMM());
-            //telemetry.update();
+            telemetry.addData("JR", odysseyRobot.odysseyWrist.getJointRPos());
+            telemetry.addData("JL", odysseyRobot.odysseyWrist.getJointRPos());
+            telemetry.update();
         }
     }
 }

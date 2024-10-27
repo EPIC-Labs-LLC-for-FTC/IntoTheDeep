@@ -79,7 +79,7 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void close(double position) {
-        leftFinger.setPosition(leftFinger.getPosition()-position);
+        leftFinger.setPosition(position);
         rightFinger.setPosition(1-position);
         stateClaw = CLOSED;
         ClawEventObject ceo = new ClawEventObject(this,leftFinger.getPosition(),rightFinger.getPosition());

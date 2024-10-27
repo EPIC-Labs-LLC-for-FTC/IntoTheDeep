@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.EPIC.Components.Arm2;
+import org.firstinspires.ftc.teamcode.EPIC.Components.Arm;
 
 
 @TeleOp(name = "Test_TeleOp_Arm")
