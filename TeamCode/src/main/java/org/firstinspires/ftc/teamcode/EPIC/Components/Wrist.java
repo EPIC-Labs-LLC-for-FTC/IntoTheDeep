@@ -25,12 +25,10 @@ public class Wrist extends AComponents {
 
     @Override
     public void initialize() {
-        jointR.setDirection(Servo.Direction.FORWARD);
-        jointL.setDirection(Servo.Direction.REVERSE);
         jointR.scaleRange(0, 0.5);
         jointL.scaleRange(0, 0.5);
-        jointR.setPosition(0);
-        jointL.setPosition(0);
+        jointR.setPosition(0.5);
+        jointL.setPosition(0.5);
         stateWrist = WristStates.INITIALIZING;
 
         // Notifies listeners about the initialization
@@ -45,7 +43,7 @@ public class Wrist extends AComponents {
     }
 
     public void setPos(double position) {
-        jointR.setPosition(position);
+        jointR.setPosition(1-position);
         jointL.setPosition(position);
         checkPos();
     }
@@ -62,6 +60,14 @@ public class Wrist extends AComponents {
 
     public void removeWristListener(IWristListener listener) {
         listeners.remove(listener);
+    }
+
+    public double getJointRPos () {
+        return jointR.getPosition();
+    }
+
+    public double getJointLPos () {
+        return jointL.getPosition();
     }
 
     public void checkPos() {

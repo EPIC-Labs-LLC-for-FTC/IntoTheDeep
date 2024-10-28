@@ -34,20 +34,9 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         odysseyArm = new Arm(parent.hardwareMap);
         odysseyWrist = new Wrist(parent.hardwareMap);
         odysseyWheels = new Mecanum_Wheels(parent.hardwareMap);
-        odysseyClaw.setParent(parent);
-        odysseySlider.setParent(parent);
-        odysseyArm.setParent(parent);
-        odysseyWrist.setParent(parent);
-        odysseyWheels.setParent(parent);
-        odysseyClaw.setTelemetry(parent.telemetry);
-        odysseySlider.setTelemetry(parent.telemetry);
-        odysseyArm.setTelemetry(parent.telemetry);
-        odysseyWrist.setTelemetry(parent.telemetry);
-        odysseyWheels.setTelemetry(parent.telemetry);
         this.parent = parent;
         this.telemetry = parent.telemetry;
         this.alliance = alliance;
-
         odysseyArm.addArmListener(this);        // Add arm listener
         odysseyWrist.addWristListener(this);    // Add wrist listener
         odysseySlider.addSliderListener(this);  // Add slider listener
@@ -63,6 +52,16 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
     }
 
     public void initialize() {
+        odysseyClaw.setParent(this.parent);
+        odysseySlider.setParent(this.parent);
+        odysseyArm.setParent(this.parent);
+        odysseyWrist.setParent(this.parent);
+        odysseyWheels.setParent(this.parent);
+        odysseyClaw.setTelemetry(this.telemetry);
+        odysseySlider.setTelemetry(this.telemetry);
+        odysseyArm.setTelemetry(this.telemetry);
+        odysseyWrist.setTelemetry(this.telemetry);
+        odysseyWheels.setTelemetry(this.telemetry);
         odysseyClaw.initialize();
         odysseySlider.initialize();
         odysseyArm.initialize();
@@ -73,11 +72,13 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
     @Override
     public void colorPicker(ColorEventObject event) {
         if (this.parent.opModeIsActive()) {
-            double distance = event.getDistance();
-            telemetry.addData("distance", distance);
-            telemetry.addData("color", event.getColor());
-            telemetry.update();
-            parent.sleep(1000);
+//            double distance = event.getDistance();
+//            telemetry.addData("distance", distance);
+//            telemetry.addData("color", event.getColor());
+//            telemetry.update();
+//            parent.sleep(1000);
+//            // odysseyWheels.encoderDrive(0.6, distance, distance, distance, distance, 1);
+//            parent.sleep(2000);
         }
     }
 
@@ -102,7 +103,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         if (this.parent.opModeIsActive()) {
             Thread tc = new Thread() {
                 public void run() {
-                    // Add code to open the claw if needed
+
                 }
             };
             tc.start();
@@ -129,48 +130,56 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
 
     @Override
     public void onArmMove(ArmEventObject event) {
-        ArmStates newState = event.getNewState();
-        switch (newState) {
-            case LOWERED:
-                System.out.println("Arm is in lowered position, ready to grab sample.");
-                break;
-            case LOWERED_BACK:
-                System.out.println("Arm is in lowered back position, ready to deposit.");
-                break;
-            case NEUTRAL:
-                System.out.println("Arm is back to neutral after depositing.");
-                break;
-            default:
-                System.out.println("Arm moved to an unknown state.");
-                break;
+        if (parent.opModeIsActive()) {
+            ArmStates newState = event.getNewState();
+            Thread tc = new Thread() {
+                public void run() {
+                    switch (newState) {
+                        case LOWERED:
+                            System.out.println("Arm is in lowered position, ready to grab sample.");
+                            break;
+                        case INITIALIZED:
+                            System.out.println("Arm is initialized");
+                            break;
+                        case DEPOSITING:
+
+                            break;
+                        default:
+                            System.out.println("Arm moved to an unknown state.");
+                            break;
+                    }
+                }
+            };
+            tc.start();
         }
     }
 
     @Override
     public void onWristMove(WristEventObject event) {
-        WristStates newState = event.getNewState();
-        switch (newState) {
-            case INITIALIZING:
-                System.out.println("Wrist is initializing.");
-                break;
-            case IDLE:
-                System.out.println("Wrist is idle.");
-                break;
-            case DEPOSITING:
-                System.out.println("Wrist needs to deposit a sample.");
-                break;
-            case PICKING_UP:
-                System.out.println("Wrist needs to pick up a sample.");
-                break;
-            case ROTATED_FORWARDS:
-                System.out.println("Wrist rotated forwards.");
-                break;
-            case ROTATED_BACKWARDS:
-                System.out.println("Wrist rotated backwards.");
-                break;
-            default:
-                System.out.println("Wrist moved to an unknown state.");
-                break;
+        if (parent.opModeIsActive()) {// Implementing onWristMove method
+            WristStates newState = event.getNewState();
+            Thread tc = new Thread() {
+                public void run () {
+                    switch (newState) {
+                        case INITIALIZING:
+                            System.out.println("Wrist is initializing.");
+                            break;
+                        case IDLE:
+                            System.out.println("Wrist is idle.");
+                            break;
+                        case ROTATED_FORWARDS:
+                            System.out.println("Wrist rotated forwards.");
+                            break;
+                        case ROTATED_BACKWARDS:
+                            System.out.println("Wrist rotated backwards.");
+                            break;
+                        default:
+                            System.out.println("Wrist moved to an unknown state.");
+                            break;
+                    }
+                }
+            };
+            tc.start();
         }
     }
 
