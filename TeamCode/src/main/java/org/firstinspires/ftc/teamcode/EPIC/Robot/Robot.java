@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.EPIC;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.EPIC.Components.*;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.*;
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
@@ -175,20 +176,28 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
 
     @Override
     public void onSliderMove(SliderEventObject event) {
-        SliderStates newState = event.getSliderState();
-        switch (newState) {
-            case RETRACTED:
-                System.out.println("Slider is fully retracted.");
-                break;
-            case EXTENDED:
-                System.out.println("Slider is fully extended.");
-                break;
-            case MOVING:
-                System.out.println("Slider is moving.");
-                break;
-            default:
-                System.out.println("Slider moved to an unknown state.");
-                break;
+        if (parent.opModeIsActive()) { // Ensure the opMode is active
+            SliderStates newState = event.getSliderState();
+
+            Thread tc = new Thread() {
+                public void run() {
+                    switch (newState) {
+                        case RETRACTED:
+                            System.out.println("Slider is fully retracted.");
+                            break;
+                        case EXTENDED:
+                            System.out.println("Slider is fully extended.");
+                            break;
+                        case MOVING:
+                            System.out.println("Slider is moving.");
+                            break;
+                        default:
+                            System.out.println("Slider moved to an unknown state.");
+                            break;
+                    }
+                }
+            };
+            tc.start();
         }
     }
 }
