@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
-import org.firstinspires.ftc.teamcode.EPIC.Robot;
+import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 
 
