@@ -141,42 +141,56 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
 
     @Override
     public void onArmMove(ArmEventObject event) {
-        ArmStates newState = event.getNewState();
-        switch (newState) {
-            case LOWERED:
-                System.out.println("Arm is in lowered position, ready to grab sample.");
-                break;
-            case INITIALIZED:
-                System.out.println("Arm is initialized");
-                break;
-            case DEPOSITING:
+        if (parent.opModeIsActive()) {
+            ArmStates newState = event.getNewState();
+            Thread tc = new Thread() {
+                public void run() {
+                    switch (newState) {
+                        case LOWERED:
+                            System.out.println("Arm is in lowered position, ready to grab sample.");
+                            break;
+                        case INITIALIZED:
+                            System.out.println("Arm is initialized");
+                            break;
+                        case DEPOSITING:
 
-                break;
-            default:
-                System.out.println("Arm moved to an unknown state.");
-                break;
+                            break;
+                        default:
+                            System.out.println("Arm moved to an unknown state.");
+                            break;
+                    }
+                }
+            };
+            tc.start();
         }
     }
 
     @Override
-    public void onWristMove(WristEventObject event) { // Implementing onWristMove method
-        WristStates newState = event.getNewState();
-        switch (newState) {
-            case INITIALIZING:
-                System.out.println("Wrist is initializing.");
-                break;
-            case IDLE:
-                System.out.println("Wrist is idle.");
-                break;
-            case ROTATED_FORWARDS:
-                System.out.println("Wrist rotated forwards.");
-                break;
-            case ROTATED_BACKWARDS:
-                System.out.println("Wrist rotated backwards.");
-                break;
-            default:
-                System.out.println("Wrist moved to an unknown state.");
-                break;
+    public void onWristMove(WristEventObject event) {
+        if (parent.opModeIsActive()) {// Implementing onWristMove method
+            WristStates newState = event.getNewState();
+            Thread tc = new Thread() {
+                public void run () {
+                    switch (newState) {
+                        case INITIALIZING:
+                            System.out.println("Wrist is initializing.");
+                            break;
+                        case IDLE:
+                            System.out.println("Wrist is idle.");
+                            break;
+                        case ROTATED_FORWARDS:
+                            System.out.println("Wrist rotated forwards.");
+                            break;
+                        case ROTATED_BACKWARDS:
+                            System.out.println("Wrist rotated backwards.");
+                            break;
+                        default:
+                            System.out.println("Wrist moved to an unknown state.");
+                            break;
+                    }
+                }
+            };
+            tc.start();
         }
     }
 }
