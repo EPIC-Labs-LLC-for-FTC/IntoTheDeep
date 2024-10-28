@@ -8,7 +8,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.EPIC.Components.AComponents;
 
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IMecanumListener;
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.MecanumEventObject;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.DriveStates;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Mecanum_Wheels extends AComponents {
     //Configuration used: 6wheelConfig
@@ -17,6 +22,8 @@ public class Mecanum_Wheels extends AComponents {
     public DcMotorEx backright;
     public DcMotorEx backleft;
     double backcorrection = 1.0;
+    public DriveStates stateMecanum;
+    private List<IMecanumListener> listeners;
 
     //public DcMotorEx xRail;
 
@@ -39,6 +46,8 @@ public class Mecanum_Wheels extends AComponents {
         frontleft = hardwareMap.get(DcMotorEx.class,"frontLeft");
         backright = hardwareMap.get(DcMotorEx.class,"backRight");
         backleft = hardwareMap.get(DcMotorEx.class,"backLeft");
+
+        this.listeners = new ArrayList<>();
 
         //xRail = hardwareMap.get(DcMotorEx.class, "xRail");
     }
@@ -164,5 +173,19 @@ public class Mecanum_Wheels extends AComponents {
         backright.setPower((-lefty - rightx + leftx)*rightErrorAdjustment);
         backleft.setPower((-lefty + rightx - leftx)*leftErrorAdjustment);
 
+    }
+
+    public void addMecanumListener (IMecanumListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeMecanumListener (IMecanumListener listener) {
+        listeners.remove(listener);
+    }
+
+    public void fireMecanumActivity (MecanumEventObject event) {
+        for (IMecanumListener listener : listeners) {
+            listener.mecanumActivity(event);
+        }
     }
 }

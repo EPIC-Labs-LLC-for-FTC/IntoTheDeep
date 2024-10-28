@@ -3,22 +3,23 @@ package org.firstinspires.ftc.teamcode.EPIC.EventListeners;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Slider;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
 
-public class SliderEventObject {
-    private final Slider source;
+import java.util.EventObject;
+
+public class SliderEventObject extends EventObject {
+    /**
+     * Constructs a prototypical Event.
+     *
+     * @param source The object on which the Event initially occurred.
+     * @throws IllegalArgumentException if source is null.
+     */
     private final SliderStates newState;
 
     // Constructor
-    public SliderEventObject(Slider source, SliderStates newState) {
-        this.source = source;
+    public SliderEventObject(Object source, SliderStates newState) {
+        super(source);
         this.newState = newState;
     }
 
-    // Method to get the source of the event
-    public Slider getSource() {
-        return source;
-    }
-
-    // Method to get the new state of the slider
     public SliderStates getSliderState() {
         return newState;
     }

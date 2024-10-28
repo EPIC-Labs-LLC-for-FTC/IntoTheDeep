@@ -3,17 +3,20 @@ package org.firstinspires.ftc.teamcode.EPIC.EventListeners;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 
-public class WristEventObject {
-    private Wrist source;
+import java.util.EventObject;
+
+public class WristEventObject extends EventObject {
+    /**
+     * Constructs a prototypical Event.
+     *
+     * @param source The object on which the Event initially occurred.
+     * @throws IllegalArgumentException if source is null.
+     */
     private WristStates newState;
 
-    public WristEventObject(Wrist source, WristStates newState) {
-        this.source = source;
+    public WristEventObject(Object source, WristStates newState) {
+        super(source);
         this.newState = newState;
-    }
-
-    public Wrist getSource() {
-        return source;
     }
 
     public WristStates getNewState() {

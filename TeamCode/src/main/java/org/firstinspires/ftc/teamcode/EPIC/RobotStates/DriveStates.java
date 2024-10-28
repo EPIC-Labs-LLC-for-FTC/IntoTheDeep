@@ -5,7 +5,6 @@ public enum DriveStates {
     INITIALIZED,
     MOVE_BACKWARDS,
     MOVE_FORWARDS,
-    ROTATING,
+    ROTATED,
     STRAFING
-
 }

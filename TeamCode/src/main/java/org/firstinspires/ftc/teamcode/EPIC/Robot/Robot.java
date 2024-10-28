@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Components.*;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.*;
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.DriveStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyColorRangeSensor;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Robot implements IColorListener, ITouchListener, IClawListener, IArmListener, IWristListener, ISliderListener {
+public class Robot implements IColorListener, ITouchListener, IClawListener, IArmListener, IWristListener, ISliderListener, IMecanumListener {
 
     public Claw odysseyClaw;
     public Slider odysseySlider;
@@ -39,7 +40,8 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         this.alliance = alliance;
         odysseyArm.addArmListener(this);        // Add arm listener
         odysseyWrist.addWristListener(this);    // Add wrist listener
-        odysseySlider.addSliderListener(this);  // Add slider listener
+        odysseySlider.addSliderListener(this);
+        odysseyWheels.addMecanumListener(this);
     }
 
     public void setIsAutonomous(boolean isAutonomous) {
@@ -207,6 +209,41 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                 }
             };
             tc.start();
+        }
+    }
+
+    @Override
+    public void mecanumActivity(MecanumEventObject event) {
+        if (parent.opModeIsActive()) {
+            DriveStates newState = event.getNewState();
+
+            Thread tc = new Thread() {
+                public void run () {
+                    switch (newState) {
+                        case IDLE:
+
+                            break;
+                        case ROTATED:
+
+                            break;
+                        case STRAFING:
+
+                            break;
+                        case INITIALIZED:
+
+                            break;
+                        case MOVE_FORWARDS:
+
+                            break;
+                        case MOVE_BACKWARDS:
+
+                            break;
+                        default:
+
+                            break;
+                    }
+                }
+            };
         }
     }
 }

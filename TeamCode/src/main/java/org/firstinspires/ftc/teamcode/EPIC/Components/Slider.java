@@ -76,9 +76,9 @@ public class Slider extends AComponents implements ISlider {
 
     // Notify all listeners of a slider state change
     private void fireSliderEvent(SliderStates newState) {
-        SliderEventObject event = new SliderEventObject(this, newState);
+        SliderEventObject seo = new SliderEventObject(this, newState);
         for (ISliderListener listener : listeners) {
-            listener.onSliderMove(event);
+            listener.onSliderMove(seo);
         }
     }
 

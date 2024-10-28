@@ -97,20 +97,17 @@ public class Arm extends AComponents implements IArm{
             // telemetry.update();
         }
 
-        armMotorR.setPower(0);
-        armMotorL.setPower(0);
+        armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        armMotorR.setPower(holdPower);
+        armMotorL.setPower(holdPower);
 
         // Update the arm state
         stateArm = state;
 
         // Notify listeners about the state change
         notifyArmStateChange(new ArmEventObject(this, stateArm));
-
-        armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void move(int pos){
