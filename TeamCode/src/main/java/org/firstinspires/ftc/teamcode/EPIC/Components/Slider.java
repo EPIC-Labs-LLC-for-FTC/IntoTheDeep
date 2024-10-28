@@ -121,6 +121,10 @@ public class Slider extends AComponents implements ISlider {
 
         slideMotorR.setPower(holdPower);
         slideMotorL.setPower(holdPower);
+
+        stateSlider = state;
+
+        fireSliderEvent(stateSlider);
     }
 
     public int getLeftPosition(){
@@ -130,6 +134,7 @@ public class Slider extends AComponents implements ISlider {
     public int getRightPosition(){
         return slideMotorR.getCurrentPosition();
     }
+
     public void slide(double position) {
         //A negative position should make the slider move down. Positive makes it move upwards.
         int targetPosR;
