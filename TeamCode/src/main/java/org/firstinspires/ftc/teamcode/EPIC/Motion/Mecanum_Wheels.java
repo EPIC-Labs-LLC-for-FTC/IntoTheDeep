@@ -212,4 +212,12 @@ public class Mecanum_Wheels extends AComponents {
         fireMecanumActivity(new MecanumEventObject(this, stateMecanum));
         encoderDrive(speed, -distance, distance, distance, -distance, timeOutS);
     }
+
+    public void clockwise (double speed, double distance, double timeOutS) {
+        encoderDrive(speed, distance, distance, -distance, -distance, timeOutS);
+    }
+
+    public void counterClockwise (double speed, double distance, double timeOutS) {
+        encoderDrive(speed, -distance, -distance, distance, distance, timeOutS);
+    }
 }
