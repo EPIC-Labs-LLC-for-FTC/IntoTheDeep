@@ -226,7 +226,10 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                         case ROTATED:
 
                             break;
-                        case STRAFING:
+                        case STRAFING_RIGHT:
+
+                            break;
+                        case STRAFING_LEFT:
 
                             break;
                         case INITIALIZED:
@@ -248,4 +251,3 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         }
     }
 }
-

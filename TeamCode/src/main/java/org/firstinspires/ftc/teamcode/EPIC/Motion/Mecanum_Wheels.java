@@ -188,4 +188,28 @@ public class Mecanum_Wheels extends AComponents {
             listener.mecanumActivity(event);
         }
     }
+
+    public void moveForwards (double speed, double distance, double timeOutS) {
+        stateMecanum = DriveStates.MOVE_FORWARDS;
+        fireMecanumActivity(new MecanumEventObject(this, stateMecanum));
+        encoderDrive(speed, distance, distance, distance, distance, timeOutS);
+    }
+
+    public void moveBackwards (double speed, double distance, double timeOutS) {
+        stateMecanum = DriveStates.MOVE_BACKWARDS;
+        fireMecanumActivity(new MecanumEventObject(this, stateMecanum));
+        encoderDrive(speed, -distance, -distance, -distance, -distance, timeOutS);
+    }
+
+    public void strafeRight (double speed, double distance, double timeOutS) {
+        stateMecanum = DriveStates.STRAFING_RIGHT;
+        fireMecanumActivity(new MecanumEventObject(this, stateMecanum));
+        encoderDrive(speed, distance, -distance, -distance, distance, timeOutS);
+    }
+
+    public void strafeLeft (double speed, double distance, double timeOutS) {
+        stateMecanum = DriveStates.STRAFING_LEFT;
+        fireMecanumActivity(new MecanumEventObject(this, stateMecanum));
+        encoderDrive(speed, -distance, distance, distance, -distance, timeOutS);
+    }
 }

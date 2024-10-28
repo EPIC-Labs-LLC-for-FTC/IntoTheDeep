@@ -6,5 +6,6 @@ public enum DriveStates {
     MOVE_BACKWARDS,
     MOVE_FORWARDS,
     ROTATED,
-    STRAFING
+    STRAFING_RIGHT,
+    STRAFING_LEFT
 }
