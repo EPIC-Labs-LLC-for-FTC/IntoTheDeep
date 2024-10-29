@@ -79,15 +79,10 @@ public class Test_TeleOp_ArmOnly extends LinearOpMode {
             if(dl1){
                 armPos += 10;
                 arm.move(armPos);
-
-                telemetry.addData("left arm", arm.getLeftMotorPos());
-                telemetry.addData("right arm", arm.getRightMotorPos());
             }
             else if(dr1) {
                 armPos -= 10;
                 arm.move(armPos);
-                telemetry.addData("left arm", arm.getLeftMotorPos());
-                telemetry.addData("right arm", arm.getRightMotorPos());
             } else if (dup1) {
 
             }
@@ -103,18 +98,12 @@ public class Test_TeleOp_ArmOnly extends LinearOpMode {
 
                 armPos += 50;
                 arm.move(armPos);
-
-                telemetry.addData("left arm", arm.getLeftMotorPos());
-                telemetry.addData("right arm", arm.getRightMotorPos());
                 sleep(2000);
             } else if (gamepad1.b) {
 
 
                 armPos -= 50;
                 arm.move(armPos);
-
-                telemetry.addData("left arm", arm.getLeftMotorPos());
-                telemetry.addData("right arm", arm.getRightMotorPos());
                 sleep(2000);
             } else if (gamepad1.x) {
 

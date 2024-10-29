@@ -91,7 +91,7 @@ public class Test_TeleOp_Red extends LinearOpMode {
             } else if (gamepad1.x) {
                 odysseyRobot.odysseyWrist.setPos(1);
             } else if (gamepad1.y) {
-                odysseyRobot.odysseyClaw.close(0.575);
+                
             }
 
             telemetry.addData("JR", odysseyRobot.odysseyWrist.getJointRPos());
