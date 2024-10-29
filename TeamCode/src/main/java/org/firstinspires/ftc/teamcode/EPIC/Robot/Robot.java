@@ -38,10 +38,6 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         this.parent = parent;
         this.telemetry = parent.telemetry;
         this.alliance = alliance;
-        odysseyArm.addArmListener(this);        // Add arm listener
-        odysseyWrist.addWristListener(this);    // Add wrist listener
-        odysseySlider.addSliderListener(this);
-        odysseyWheels.addMecanumListener(this);
     }
 
     public void setIsAutonomous(boolean isAutonomous) {
@@ -64,6 +60,11 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         odysseyArm.setTelemetry(this.telemetry);
         odysseyWrist.setTelemetry(this.telemetry);
         odysseyWheels.setTelemetry(this.telemetry);
+        odysseyArm.addArmListener(this);        
+        odysseyWrist.addWristListener(this);
+        odysseySlider.addSliderListener(this);
+        odysseyWheels.addMecanumListener(this);
+        odysseyClaw.addClawListener(this);
         odysseyClaw.initialize();
         odysseySlider.initialize();
         odysseyArm.initialize();
