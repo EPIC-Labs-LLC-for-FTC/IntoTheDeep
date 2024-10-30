@@ -18,9 +18,11 @@ public class Arm extends AComponents implements IArm{
     // Declare your servos, motors, sensors, other devices here
     private DcMotorEx armMotorR;
     private DcMotorEx armMotorL;
-    public double speed = 0.3;
+    public double speed = 0.5;
     public ArmStates stateArm;
-    private double holdPower = 0.2;
+    private double holdPower = 0.1;
+    private double errorMultiplierR = 0.192;
+    private double errorMultiplierL = 1;
 
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -83,8 +85,8 @@ public class Arm extends AComponents implements IArm{
         armMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        armMotorR.setPower(speed);
-        armMotorL.setPower(speed);
+        armMotorR.setPower(speed*errorMultiplierR);
+        armMotorL.setPower(speed*errorMultiplierL);
 
         while (parent.opModeIsActive() &&
                 (armMotorR.isBusy() || armMotorL.isBusy())) {
@@ -98,8 +100,8 @@ public class Arm extends AComponents implements IArm{
         armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        armMotorR.setPower(holdPower);
-        armMotorL.setPower(holdPower);
+        armMotorR.setPower(holdPower*errorMultiplierR);
+        armMotorL.setPower(holdPower*errorMultiplierL);
 
         // Update the arm state
         stateArm = state;
@@ -124,10 +126,10 @@ public class Arm extends AComponents implements IArm{
         armMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         runtime.reset();
 
-        armMotorR.setPower(speed);
-        armMotorL.setPower(speed);
+        armMotorR.setPower(speed*errorMultiplierR);
+        armMotorL.setPower(speed*errorMultiplierL);
         while (parent.opModeIsActive() &&
-                (runtime.seconds() < 2.0) &&
+                (runtime.seconds() < 5.0) &&
                 (armMotorR.isBusy() || armMotorL.isBusy())) {
 //            telemetry.addData("Arm running to", "armMotorR: %1$7.3d  armMotorL: %2$7.3d",
 //                    pos, pos);
@@ -144,8 +146,8 @@ public class Arm extends AComponents implements IArm{
         armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        armMotorR.setPower(holdPower);
-        armMotorL.setPower(holdPower);
+        armMotorR.setPower(holdPower*errorMultiplierR);
+        armMotorL.setPower(holdPower*errorMultiplierL);
         //armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //notifyArmStateChange(new ArmEventObject(this, stateArm));

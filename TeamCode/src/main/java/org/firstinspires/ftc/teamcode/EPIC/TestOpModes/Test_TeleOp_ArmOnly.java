@@ -77,8 +77,9 @@ public class Test_TeleOp_ArmOnly extends LinearOpMode {
             ddown1 = gamepad1.dpad_down;
 
             if(dl1){
-                armPos += 10;
+                armPos = 1000;
                 arm.move(armPos);
+                sleep(2000);
             }
             else if(dr1) {
                 armPos -= 10;
@@ -96,13 +97,13 @@ public class Test_TeleOp_ArmOnly extends LinearOpMode {
 //                odysseyRobot.odysseyArm.freeMove(0);
                 //odysseyRobot.odysseyClaw.open(0.575);
 
-                armPos += 50;
+                armPos += 200;
                 arm.move(armPos);
                 sleep(2000);
             } else if (gamepad1.b) {
 
 
-                armPos -= 50;
+                armPos -= 200;
                 arm.move(armPos);
                 sleep(2000);
             } else if (gamepad1.x) {
