@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Arm;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 
 @Autonomous(name = "Test Auton")
 //@Disabled
@@ -21,8 +22,6 @@ public class Test_Auton extends LinearOpMode {
 
         waitForStart();
         sleep(100);
-
-        odysseyRobot.odysseyWrist.setPos(0.5);
 
         //forward
         distance = 51;

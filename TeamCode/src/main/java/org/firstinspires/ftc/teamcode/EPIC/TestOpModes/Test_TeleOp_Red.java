@@ -84,19 +84,7 @@ public class Test_TeleOp_Red extends LinearOpMode {
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
             odysseyRobot.odysseyWheels.move(lefty,righty,leftx,rightx);
-            if (gamepad1.a) {
-                odysseyRobot.odysseyWrist.setPos(0);
-            } else if (gamepad1.b) {
-                odysseyRobot.odysseyWrist.setPos(0.5);
-            } else if (gamepad1.x) {
-                odysseyRobot.odysseyWrist.setPos(1);
-            } else if (gamepad1.y) {
-                
-            }
-
-            telemetry.addData("JR", odysseyRobot.odysseyWrist.getJointRPos());
-            telemetry.addData("JL", odysseyRobot.odysseyWrist.getJointRPos());
-            telemetry.update();
+            
         }
     }
 }

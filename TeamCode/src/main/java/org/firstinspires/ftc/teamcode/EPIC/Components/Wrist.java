@@ -27,12 +27,8 @@ public class Wrist extends AComponents {
     public void initialize() {
         jointR.scaleRange(0, 0.5);
         jointL.scaleRange(0, 0.5);
-        jointR.setPosition(0.5);
-        jointL.setPosition(0.5);
-        stateWrist = WristStates.INITIALIZING;
-
-        // Notifies listeners about the initialization
-        notifyWristStateChange(new WristEventObject(this, stateWrist));
+        jointR.setPosition(WristStates.INITIALIZING.getPos());
+        jointL.setPosition(WristStates.INITIALIZING.getPos());
     }
 
     // New method to notify listeners of wrist state changes
@@ -42,10 +38,12 @@ public class Wrist extends AComponents {
         }
     }
 
-    public void setPos(double position) {
-        jointR.setPosition(1-position);
-        jointL.setPosition(position);
-        checkPos();
+    public void setPos(WristStates state) {
+        double targetPos = state.getPos();
+        jointR.setPosition(targetPos);
+        jointL.setPosition(targetPos);
+        stateWrist = state;
+        this.notifyWristStateChange(new WristEventObject(this, stateWrist));
     }
 
     @Override
@@ -68,18 +66,5 @@ public class Wrist extends AComponents {
 
     public double getJointLPos () {
         return jointL.getPosition();
-    }
-
-    public void checkPos() {
-        if (jointR.getPosition() == 0 && jointL.getPosition() == 0) {
-            stateWrist = WristStates.ROTATED_BACKWARDS;
-        } else if (jointR.getPosition() == 1.0 && jointL.getPosition() == 1.0) {
-            stateWrist = WristStates.ROTATED_FORWARDS;
-        } else {
-            stateWrist = WristStates.IDLE;
-        }
-
-        // Notifies listeners about the state change
-        notifyWristStateChange(new WristEventObject(this, stateWrist));
     }
 }
