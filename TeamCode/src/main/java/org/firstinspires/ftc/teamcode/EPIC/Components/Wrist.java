@@ -12,7 +12,7 @@ import java.util.List;
 public class Wrist extends AComponents {
     private Servo jointR;
     private Servo jointL;
-    private WristStates stateWrist;
+    public WristStates stateWrist;
 
     // New list to hold wrist listeners
     private List<IWristListener> listeners;

@@ -65,14 +65,6 @@ public class Claw extends AComponents implements IClaw{
         fireClaw(new ClawEventObject(this, stateClaw));
     }
 
-    public double getLeftFingerPosition(){
-        return leftFinger.getPosition();
-    }
-
-    public double getRightFingerPosition() {
-        return rightFinger.getPosition();
-    }
-
     public void addClawListener(IClawListener listener) {
         listeners.add(listener);
     }

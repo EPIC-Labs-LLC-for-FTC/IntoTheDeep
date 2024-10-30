@@ -21,7 +21,7 @@ public class Slider extends AComponents implements ISlider {
     public double errorAdjustmentL = 1.0;
     public SliderStates stateSlider;
     private ElapsedTime runtime = new ElapsedTime();
-    private double holdPower = 0.2;
+    private double holdPower = 0.1;
 
     // List to store slider listeners
     private List<ISliderListener> listeners = new ArrayList<>();
@@ -108,7 +108,7 @@ public class Slider extends AComponents implements ISlider {
             slideMotorL.setPower(speed * errorAdjustmentL);
             runtime.reset();
             while (parent.opModeIsActive() &&
-                    (runtime.seconds() < 2.0) &&
+                    (runtime.seconds() < timeOutS) &&
                     (slideMotorR.isBusy() || slideMotorL.isBusy())) {
 //                telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
 //                telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
@@ -116,6 +116,10 @@ public class Slider extends AComponents implements ISlider {
                 telemetry.update();
             }
         }
+
+        slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 

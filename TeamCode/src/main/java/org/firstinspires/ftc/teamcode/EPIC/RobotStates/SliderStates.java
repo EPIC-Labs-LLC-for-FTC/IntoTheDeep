@@ -4,9 +4,7 @@ public enum                                                                     
     HIGH_BUCKET(25.0),
     LOW_BUCKET(9.75),
     LOW_HANG(2),
-    RETRACTED(0.0),
-    MOVING(-1.0), // Added MOVING state
-    EXTENDED(30.0);
+    RETRACTED(0.0);
 
     private double height;
 

@@ -110,7 +110,17 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                 public void run() {
                     switch (newState) {
                         case OPEN:
-                            telemetry.addData("Claw Thread", "Ready to pickup sample");
+                            if (odysseyWrist.stateWrist == WristStates.DEPOSITING_SAMPLE) {
+                                telemetry.addData("Claw Thread", "Sample deposited");
+                                try {
+                                    Thread.sleep(250);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                odysseyWrist.setPos(WristStates.NEUTRAL);
+                            } else if (odysseyWrist.stateWrist == WristStates.PICKING_UP_SAMPLE) {
+                                telemetry.addData("Claw Thread", "Ready to pickup sample");
+                            }
                             break;
                         case HOLDING_SAMPLE_PORTRAIT:
                             break;
@@ -153,6 +163,9 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                                 throw new RuntimeException(e);
                             }
                             break;
+                        case NEUTRAL:
+                            telemetry.addData("Arm Thread", "Arm is neutral");
+                            break;
                         default:
                             System.out.println("Arm moved to an unknown state.");
                             break;
@@ -170,8 +183,14 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
             Thread tc = new Thread() {
                 public void run () {
                     switch (newState) {
-                        case INITIALIZING:
-
+                        case NEUTRAL:
+                            telemetry.addData("Wrist Thread", "Wrist at rest");
+                            odysseyArm.move(ArmStates.NEUTRAL);
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                             break;
                         case DEPOSITING_SAMPLE:
                             telemetry.addData("Wrist Thread", "Ready to deposit sample");
@@ -204,13 +223,14 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                 public void run() {
                     switch (newState) {
                         case RETRACTED:
-                            System.out.println("Slider is fully retracted.");
+                            telemetry.addData("Slider Thread", "Slider is retracted");
                             break;
-                        case EXTENDED:
-                            System.out.println("Slider is fully extended.");
+                        case HIGH_BUCKET:
+                            telemetry.addData("Slider Thread", "Slider is at high bucket");
                             break;
-                        case MOVING:
-                            System.out.println("Slider is moving.");
+                        case LOW_HANG:
+                            telemetry.addData("Slider Thread", "Slider ready to hang! " +
+                                    " Get in position for hanging quick");
                             break;
                         default:
                             System.out.println("Slider moved to an unknown state.");
