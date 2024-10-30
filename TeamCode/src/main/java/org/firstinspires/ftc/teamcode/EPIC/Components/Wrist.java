@@ -27,8 +27,7 @@ public class Wrist extends AComponents {
     public void initialize() {
         jointR.scaleRange(0, 0.5);
         jointL.scaleRange(0, 0.5);
-        jointR.setPosition(WristStates.INITIALIZING.getPos());
-        jointL.setPosition(WristStates.INITIALIZING.getPos());
+        setPos(WristStates.INITIALIZING);
     }
 
     // New method to notify listeners of wrist state changes

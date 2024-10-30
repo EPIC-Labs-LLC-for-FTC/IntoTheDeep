@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 
 
@@ -85,6 +86,11 @@ public class Test_TeleOp_Red extends LinearOpMode {
             rightx = gamepad1.right_stick_x;
             odysseyRobot.odysseyWheels.move(lefty,righty,leftx,rightx);
 
+            if (gamepad1.a) {
+                odysseyRobot.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
+            } else if (gamepad1.b) {
+                odysseyRobot.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+            }
         }
     }
 }
