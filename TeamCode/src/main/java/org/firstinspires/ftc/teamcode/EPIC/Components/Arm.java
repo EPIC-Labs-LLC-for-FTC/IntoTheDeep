@@ -97,6 +97,9 @@ public class Arm extends AComponents implements IArm{
             // telemetry.update();
         }
 
+        armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -138,19 +141,14 @@ public class Arm extends AComponents implements IArm{
 //            // telemetry.update();
         }
 
+        armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-
-//        armMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        armMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//
         armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         armMotorR.setPower(holdPower*errorMultiplierR);
         armMotorL.setPower(holdPower*errorMultiplierL);
-        //armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //notifyArmStateChange(new ArmEventObject(this, stateArm));
     }
 
     public int getLeftMotorPos(){

@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Components.*;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.*;
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.DriveStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
@@ -102,29 +103,22 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
     }
 
     @Override
-    public void openClaw(ClawEventObject event) {
+    public void runClaw(ClawEventObject event) {
         if (this.parent.opModeIsActive()) {
+            ClawStates newState = event.getNewState();
             Thread tc = new Thread() {
                 public void run() {
-
-                }
-            };
-            tc.start();
-        }
-    }
-
-    @Override
-    public void closeClaw(ClawEventObject event) {
-        if (this.parent.opModeIsActive()) {
-            Thread tc = new Thread() {
-                public void run() {
-                    // odysseyWheels.move(0.6, 0, 0, 0);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                    switch (newState) {
+                        case OPEN:
+                            telemetry.addData("Claw", "Ready to pickup sample");
+                            break;
+                        case HOLDING_SAMPLE_PORTRAIT:
+                            break;
+                        case HOLDING_SAMPLE_LANDSCAPE:
+                            break;
+                        default:
+                            break;
                     }
-                    // odysseyWheels.move(0, 0, 0, 0);
                 }
             };
             tc.start();
@@ -139,7 +133,8 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                 public void run() {
                     switch (newState) {
                         case LOWERED:
-                            System.out.println("Arm is in lowered position, ready to grab sample.");
+                            telemetry.addData("Arm", "Ready to pickup sample");
+                            odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
                             break;
                         case INITIALIZED:
                             System.out.println("Arm is initialized");
@@ -165,13 +160,14 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                 public void run () {
                     switch (newState) {
                         case INITIALIZING:
-                            System.out.println("Wrist is initializing.");
+
                             break;
                         case DEPOSITING_SAMPLE:
 
                             break;
                         case PICKING_UP_SAMPLE:
-
+                            telemetry.addData("Wrist", "Ready to pickup sample");
+                            odysseyClaw.move(ClawStates.OPEN);
                             break;
                         default:
 

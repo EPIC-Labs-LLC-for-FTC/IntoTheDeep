@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 
 @TeleOp(name = "TeleOp_Red")
 public class TeleOp_Red extends LinearOpMode {
@@ -32,6 +33,12 @@ public class TeleOp_Red extends LinearOpMode {
 
         while (opModeIsActive()) {
             dt.start();
+            if (gamepad1.a) {
+                odyssey.odysseyArm.move(ArmStates.LOWERED);
+                sleep(2000);
+            }
+
+            telemetry.update();
         }
     }
 }

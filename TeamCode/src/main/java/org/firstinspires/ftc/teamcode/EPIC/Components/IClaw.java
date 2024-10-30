@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
+
 public interface IClaw {
-    void open(double position);
-    void close(double position);
-    void open();
-    void close();
+    void move(ClawStates state);
 }

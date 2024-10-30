@@ -132,7 +132,7 @@ public class Test_TeleOp_ArmAndClaw extends LinearOpMode {
                 //odysseyRobot.odysseyArm.freeMove(0);
 
                 //portrait
-                odysseyRobot.odysseyClaw.close(0.5);
+                //odysseyRobot.odysseyClaw.close(0.5);
 //                armPos -= 10;
 //                odysseyRobot.odysseyArm.move(armPos);
 //
@@ -143,9 +143,9 @@ public class Test_TeleOp_ArmAndClaw extends LinearOpMode {
                 //odysseyRobot.odysseySlider.slide(537.7*4);
                 //odysseyRobot.odysseyClaw.close(0.7);
 
-                odysseyRobot.odysseyClaw.close(0.7);
+                //odysseyRobot.odysseyClaw.close(0.7);
             } else if (gamepad1.y) {
-                odysseyRobot.odysseyClaw.open(0.85);
+                //odysseyRobot.odysseyClaw.open(0.85);
 
 //                odysseyRobot.odysseySlider.slide(0);
 //                sleep(2000);

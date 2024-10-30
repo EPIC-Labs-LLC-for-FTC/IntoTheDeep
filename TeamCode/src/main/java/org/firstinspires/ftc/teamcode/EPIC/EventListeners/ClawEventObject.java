@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.EPIC.EventListeners;
 
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
+
 import java.util.EventObject;
 
 public class ClawEventObject extends EventObject {
@@ -9,19 +11,13 @@ public class ClawEventObject extends EventObject {
      * @param source The object on which the Event initially occurred.
      * @throws IllegalArgumentException if source is null.
      */
-    private double leftFingerPosition = 0;
-    private double rightFingerPosition = 0;
-    public ClawEventObject(Object source,double leftFingerPosition, double rightFingerPosition) {
+    ClawStates newState;
+    public ClawEventObject(Object source, ClawStates state) {
         super(source);
-        this.leftFingerPosition = leftFingerPosition;
-        this.rightFingerPosition = rightFingerPosition;
+        this.newState = state;
     }
 
-    public double getRightFingerPosition() {
-        return rightFingerPosition;
-    }
-
-    public double getLeftFingerPosition() {
-        return leftFingerPosition;
+    public ClawStates getNewState() {
+        return newState;
     }
 }
