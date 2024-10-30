@@ -84,7 +84,7 @@ public class Test_TeleOp_Red extends LinearOpMode {
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
             odysseyRobot.odysseyWheels.move(lefty,righty,leftx,rightx);
-            
+
         }
     }
 }

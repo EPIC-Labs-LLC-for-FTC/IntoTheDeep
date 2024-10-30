@@ -167,17 +167,14 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                         case INITIALIZING:
                             System.out.println("Wrist is initializing.");
                             break;
-                        case IDLE:
-                            System.out.println("Wrist is idle.");
+                        case DEPOSITING_SAMPLE:
+
                             break;
-                        case ROTATED_FORWARDS:
-                            System.out.println("Wrist rotated forwards.");
-                            break;
-                        case ROTATED_BACKWARDS:
-                            System.out.println("Wrist rotated backwards.");
+                        case PICKING_UP_SAMPLE:
+
                             break;
                         default:
-                            System.out.println("Wrist moved to an unknown state.");
+                            
                             break;
                     }
                 }
