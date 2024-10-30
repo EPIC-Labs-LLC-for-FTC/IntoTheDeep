@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 
 @TeleOp(name = "TeleOp_Red")
 public class TeleOp_Red extends LinearOpMode {
@@ -31,11 +32,21 @@ public class TeleOp_Red extends LinearOpMode {
 
         waitForStart();
 
+        dt.start();
+
         while (opModeIsActive()) {
-            dt.start();
-            if (gamepad1.a) {
+            if (gamepad2.a) {
                 odyssey.odysseyArm.move(ArmStates.LOWERED);
-                sleep(2000);
+                sleep(5000);
+            } else if (gamepad2.dpad_left) {
+                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
+                sleep(500);
+            } else if (gamepad2.dpad_right) {
+                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
+                sleep(500);
+            } else if (gamepad2.b) {
+                odyssey.odysseyArm.move(ArmStates.DEPOSITING);
+                sleep(5000);
             }
 
             telemetry.update();

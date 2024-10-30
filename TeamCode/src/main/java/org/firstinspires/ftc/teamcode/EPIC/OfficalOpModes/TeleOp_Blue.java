@@ -30,8 +30,10 @@ public class TeleOp_Blue extends LinearOpMode {
 
         waitForStart();
 
+        dt.start();
+
         while (opModeIsActive()) {
-            dt.start();
+
         }
     }
 }
