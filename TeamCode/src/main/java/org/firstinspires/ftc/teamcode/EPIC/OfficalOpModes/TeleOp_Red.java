@@ -12,6 +12,18 @@ public class TeleOp_Red extends LinearOpMode {
         Robot odyssey = new Robot(this, "Red");
         odyssey.initialize();
 
+        Thread dt = new Thread() {
+            public void run() {
+                while (opModeIsActive()) {
+                    double lefty = gamepad1.left_stick_y;
+                    double leftx = gamepad1.left_stick_x;
+                    double righty = gamepad1.right_stick_y;
+                    double rightx = gamepad1.right_stick_x;
+                    odyssey.odysseyWheels.move(lefty, righty, leftx, rightx);
+                }
+            }
+        };
+
         while (opModeInInit()) {
 
         }
@@ -19,7 +31,7 @@ public class TeleOp_Red extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-
+            dt.start();
         }
     }
 }

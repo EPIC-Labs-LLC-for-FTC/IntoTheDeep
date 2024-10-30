@@ -25,8 +25,6 @@ public class Wrist extends AComponents {
 
     @Override
     public void initialize() {
-        jointR.scaleRange(0, 0.5);
-        jointL.scaleRange(0, 0.5);
         setPos(WristStates.INITIALIZING);
     }
 

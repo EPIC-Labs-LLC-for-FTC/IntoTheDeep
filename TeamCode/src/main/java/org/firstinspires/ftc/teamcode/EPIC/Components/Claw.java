@@ -41,8 +41,6 @@ public class Claw extends AComponents implements IClaw{
         leftFinger.setDirection(Servo.Direction.FORWARD);
         rightFinger.setDirection(Servo.Direction.FORWARD);
 
-        //leftFinger.scaleRange(0, 1);
-        //rightFinger.scaleRange(0, 1);
         leftFinger.setPosition(0.5);
         rightFinger.setPosition(0.5);
 

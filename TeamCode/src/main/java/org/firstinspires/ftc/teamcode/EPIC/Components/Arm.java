@@ -73,11 +73,9 @@ public class Arm extends AComponents implements IArm{
         double position = state.getState() - stateArm.getState();
         int targetPosR;
         int targetPosL;
-        double degreesPerRotationArm = 537.7;
-        double ticksPerDegree = 537.7 / degreesPerRotationArm;
 
-        targetPosR = armMotorR.getCurrentPosition() + (int) (position * ticksPerDegree);
-        targetPosL = armMotorL.getCurrentPosition() + (int) (position * ticksPerDegree);
+        targetPosR = armMotorR.getCurrentPosition() + (int) position;
+        targetPosL = armMotorL.getCurrentPosition() + (int) position;
 
         armMotorR.setTargetPosition(targetPosR);
         armMotorL.setTargetPosition(targetPosL);

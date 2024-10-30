@@ -18,5 +18,4 @@ public enum ArmStates {
     public void setState(double stateNum) {
         this.stateNum = stateNum;
     }
-
 }
