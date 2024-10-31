@@ -21,7 +21,7 @@ public class Slider extends AComponents implements ISlider {
     public double errorAdjustmentL = 1.0;
     public SliderStates stateSlider;
     private ElapsedTime runtime = new ElapsedTime();
-    private double holdPower = 0;
+    private double holdPower = 0.1;
 
     // List to store slider listeners
     private List<ISliderListener> listeners = new ArrayList<>();
@@ -115,16 +115,19 @@ public class Slider extends AComponents implements ISlider {
             }
         }
 
-        slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        slideMotorR.setPower(holdPower);
-        slideMotorL.setPower(holdPower);
-
         this.stateSlider = state;
+        if(state==SliderStates.RETRACTED){
+
+
+            slideMotorR.setPower(0);
+            slideMotorL.setPower(0);
+        }
+        else{
+
+
+            slideMotorR.setPower(holdPower);
+            slideMotorL.setPower(holdPower);
+        }
 
         fireSliderEvent(this.stateSlider);
     }
@@ -167,12 +170,6 @@ public class Slider extends AComponents implements ISlider {
 //                telemetry.update();
                 }
             }
-
-            slideMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            slideMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-            slideMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            slideMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             slideMotorR.setPower(holdPower);
             slideMotorL.setPower(holdPower);

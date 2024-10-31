@@ -18,9 +18,9 @@ public class Arm extends AComponents implements IArm{
     // Declare your servos, motors, sensors, other devices here
     private DcMotorEx armMotorR;
     private DcMotorEx armMotorL;
-    public double speed = 0.5;
+    public double speed = 1;
     public ArmStates stateArm;
-    private double holdPower = 0;
+    private double holdPower = 0.1;
     private double errorMultiplierR = 0.192;
     private double errorMultiplierL = 1;
 
@@ -95,17 +95,20 @@ public class Arm extends AComponents implements IArm{
             telemetry.update();
         }
 
-        armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        armMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        armMotorR.setPower(holdPower*errorMultiplierR);
-        armMotorL.setPower(holdPower*errorMultiplierL);
-
         // Update the arm state
         this.stateArm = state;
+        if(stateArm==ArmStates.DEPOSITING){
+
+
+            armMotorR.setPower(0);
+            armMotorL.setPower(0);
+        }
+        else {
+
+
+            armMotorR.setPower(holdPower*errorMultiplierR);
+            armMotorL.setPower(holdPower*errorMultiplierL);
+        }
 
         // Notify listeners about the state change
         notifyArmStateChange(new ArmEventObject(this, this.stateArm));
