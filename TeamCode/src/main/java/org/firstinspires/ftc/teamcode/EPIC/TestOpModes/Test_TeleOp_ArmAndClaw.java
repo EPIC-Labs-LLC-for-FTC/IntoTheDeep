@@ -159,8 +159,6 @@ public class Test_TeleOp_ArmAndClaw extends LinearOpMode {
 //            telemetry.addData("My Color Sensor distance in Inches: ", robot.colorSensor.getDistanceInInches());
 //            telemetry.addData("My Color Sensor distance in MMs: ", robot.colorSensor.getDistanceInMM());
 
-            telemetry.addData("left finger",odysseyRobot.odysseyClaw.getLeftFingerPosition());
-            telemetry.addData("right finger",odysseyRobot.odysseyClaw.getRightFingerPosition());
             telemetry.addData("left arm",odysseyRobot.odysseyArm.getLeftMotorPos());
             telemetry.addData("right arm",odysseyRobot.odysseyArm.getRightMotorPos());
             telemetry.addData("left slider",odysseyRobot.odysseySlider.getLeftPosition());
