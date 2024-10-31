@@ -46,7 +46,7 @@ public class TeleOp_Blue extends LinearOpMode {
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
-                    } else {
+                    } else if ((gamepad1.left_bumper || gamepad1.right_bumper) && (odyssey.odysseyArm.stateArm == ArmStates.DEPOSITING)) {
                         telemetry.addData("Slider Thread", "Arm is in the way! Please move it!");
                     }
                 }
