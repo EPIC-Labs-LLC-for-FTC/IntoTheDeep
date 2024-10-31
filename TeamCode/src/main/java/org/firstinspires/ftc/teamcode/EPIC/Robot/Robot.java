@@ -198,6 +198,9 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
+                            if ((odysseyClaw.stateClaw != ClawStates.OPEN) && (odysseyArm.stateArm == ArmStates.READY_TO_DEPOSIT)) {
+                                odysseyArm.move(ArmStates.DEPOSITING, 2);
+                            }
                             break;
                         case PICKING_UP_SAMPLE:
                             telemetry.addData("Wrist Thread", "Ready to pickup sample");

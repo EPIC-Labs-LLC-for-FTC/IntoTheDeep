@@ -31,10 +31,12 @@ public class TeleOp_Red extends LinearOpMode {
         Thread slider = new Thread() {
             public void run() {
                 while (opModeIsActive()) {
-                    if (gamepad1.left_bumper) {
+                    if (gamepad1.left_bumper && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
                         odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET, 7);
-                    } else if (gamepad1.right_bumper) {
+                    } else if (gamepad1.right_bumper && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
                         odyssey.odysseySlider.slide(SliderStates.RETRACTED, 7);
+                    } else {
+                        telemetry.addData("Slider Thread", "Arm is in the way! Please move it!");
                     }
                 }
             }
