@@ -34,8 +34,18 @@ public class TeleOp_Blue extends LinearOpMode {
                 while (opModeIsActive()) {
                     if (gamepad1.left_bumper && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
                         odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET, 7);
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else if (gamepad1.right_bumper && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
                         odyssey.odysseySlider.slide(SliderStates.RETRACTED, 7);
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else {
                         telemetry.addData("Slider Thread", "Arm is in the way! Please move it!");
                     }
@@ -55,18 +65,25 @@ public class TeleOp_Blue extends LinearOpMode {
         while (opModeIsActive()) {
             if (gamepad2.x) {
                 odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
+                sleep(100);
             } else if (gamepad2.y) {
                 odyssey.odysseyClaw.move(ClawStates.OPEN);
+                sleep(100);
             } else if (gamepad2.a) {
                 odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
+                sleep(100);
             } else if (gamepad2.dpad_up) {
                 odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
+                sleep(100);
             } else if (gamepad2.dpad_down) {
                 odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+                sleep(100);
             } else if (gamepad2.left_bumper) {
                 odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT, 6);
+                sleep(2000);
             } else if (gamepad2.right_bumper) {
                 odyssey.odysseyArm.move(ArmStates.LOWERED, 6);
+                sleep(2000);
             }
 
             telemetry.update();

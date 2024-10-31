@@ -204,6 +204,9 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                             break;
                         case PICKING_UP_SAMPLE:
                             telemetry.addData("Wrist Thread", "Ready to pickup sample");
+                        case INITIALIZING:
+
+                            break;
                         default:
 
                             break;
