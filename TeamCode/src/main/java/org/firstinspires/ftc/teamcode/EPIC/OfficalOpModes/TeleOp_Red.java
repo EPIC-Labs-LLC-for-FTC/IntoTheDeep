@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 
 @TeleOp(name = "TeleOp_Red")
 public class TeleOp_Red extends LinearOpMode {
@@ -27,6 +28,18 @@ public class TeleOp_Red extends LinearOpMode {
             }
         };
 
+        Thread slider = new Thread() {
+            public void run() {
+                while (opModeIsActive()) {
+                    if (gamepad1.left_bumper) {
+                        odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET, 7);
+                    } else if (gamepad1.right_bumper) {
+                        odyssey.odysseySlider.slide(SliderStates.RETRACTED, 7);
+                    }
+                }
+            }
+        };
+
         while (opModeInInit()) {
 
         }
@@ -34,30 +47,23 @@ public class TeleOp_Red extends LinearOpMode {
         waitForStart();
 
         dt.start();
+        slider.start();
 
         while (opModeIsActive()) {
-            if (gamepad2.a) {
-                odyssey.odysseyArm.move(ArmStates.LOWERED, 10);
-                sleep(5000);
-            } else if (gamepad2.dpad_left) {
+            if (gamepad2.x) {
                 odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
-                sleep(500);
-            } else if (gamepad2.dpad_right) {
-                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
-                sleep(500);
-            } else if (gamepad2.b) {
-                odyssey.odysseyArm.move(ArmStates.DEPOSITING, 2);
-                sleep(5000);
-            } else if (gamepad2.dpad_up) {
-                odyssey.odysseyClaw.move(ClawStates.OPEN);
-            } else if (gamepad2.x) {
-                odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET, 10);
-                sleep(1000);
-                odyssey.odysseySlider.slide(SliderStates.RETRACTED, 10);
             } else if (gamepad2.y) {
-                odyssey.odysseySlider.slide(SliderStates.LOW_HANG, 5);
-                sleep(5000);
-                odyssey.odysseySlider.slide(SliderStates.RETRACTED, 12);
+                odyssey.odysseyClaw.move(ClawStates.OPEN);
+            } else if (gamepad2.a) {
+                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
+            } else if (gamepad2.dpad_up) {
+                odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
+            } else if (gamepad2.dpad_down) {
+                odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+            } else if (gamepad2.left_bumper) {
+                odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT, 6);
+            } else if (gamepad2.right_bumper) {
+                odyssey.odysseyArm.move(ArmStates.LOWERED, 6);
             }
 
             telemetry.update();

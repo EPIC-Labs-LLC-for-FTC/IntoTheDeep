@@ -21,7 +21,7 @@ public class Slider extends AComponents implements ISlider {
     public double errorAdjustmentL = 1.0;
     public SliderStates stateSlider;
     private ElapsedTime runtime = new ElapsedTime();
-    private double holdPower = 0.1;
+    private double holdPower = 0;
 
     // List to store slider listeners
     private List<ISliderListener> listeners = new ArrayList<>();
