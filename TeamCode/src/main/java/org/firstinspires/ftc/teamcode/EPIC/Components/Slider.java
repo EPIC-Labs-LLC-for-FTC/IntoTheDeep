@@ -87,12 +87,10 @@ public class Slider extends AComponents implements ISlider {
         double position = state.getStateHeight() - stateSlider.getStateHeight();
         int targetPosR;
         int targetPosL;
-        double inchesPerRotationSlider = 537.7;
-        double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
 
         if (parent.opModeIsActive()) {
-            targetPosR = slideMotorR.getCurrentPosition() + (int) (ticksPerInchSlider * position);
-            targetPosL = slideMotorL.getCurrentPosition() + (int) (ticksPerInchSlider * position);
+            targetPosR = slideMotorR.getCurrentPosition() + (int) (position);
+            targetPosL = slideMotorL.getCurrentPosition() + (int) (position);
 
             slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -126,9 +124,9 @@ public class Slider extends AComponents implements ISlider {
         slideMotorR.setPower(holdPower);
         slideMotorL.setPower(holdPower);
 
-        stateSlider = state;
+        this.stateSlider = state;
 
-        fireSliderEvent(stateSlider);
+        fireSliderEvent(this.stateSlider);
     }
 
     public int getLeftPosition(){

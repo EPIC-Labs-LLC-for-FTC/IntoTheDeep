@@ -25,7 +25,7 @@ public class Claw extends AComponents implements IClaw{
     public double rightMaxPos = 1;
     public double rightMinPos = 0;
     private List<IClawListener> listeners;
-    public ClawStates stateClaw = null;
+    public ClawStates stateClaw;
 
     //Declare your servos, motors, sensors, other devices here
 
@@ -52,7 +52,7 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Claw State", stateClaw.toString());
+        telemetry.addData("Claw State", "Claw Initialized");
         telemetry.update();
     }
 
@@ -61,8 +61,8 @@ public class Claw extends AComponents implements IClaw{
         double targetPos = state.getClawPos();
         leftFinger.setPosition(targetPos);
         rightFinger.setPosition(1-targetPos);
-        stateClaw = state;
-        fireClaw(new ClawEventObject(this, stateClaw));
+        this.stateClaw = state;
+        fireClaw(new ClawEventObject(this, this.stateClaw));
     }
 
     public void addClawListener(IClawListener listener) {

@@ -37,7 +37,7 @@ public class TeleOp_Red extends LinearOpMode {
 
         while (opModeIsActive()) {
             if (gamepad2.a) {
-                odyssey.odysseyArm.move(ArmStates.LOWERED);
+                odyssey.odysseyArm.move(ArmStates.LOWERED, 10);
                 sleep(5000);
             } else if (gamepad2.dpad_left) {
                 odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
@@ -46,7 +46,7 @@ public class TeleOp_Red extends LinearOpMode {
                 odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
                 sleep(500);
             } else if (gamepad2.b) {
-                odyssey.odysseyArm.move(ArmStates.DEPOSITING);
+                odyssey.odysseyArm.move(ArmStates.DEPOSITING, 2);
                 sleep(5000);
             } else if (gamepad2.dpad_up) {
                 odyssey.odysseyClaw.move(ClawStates.OPEN);

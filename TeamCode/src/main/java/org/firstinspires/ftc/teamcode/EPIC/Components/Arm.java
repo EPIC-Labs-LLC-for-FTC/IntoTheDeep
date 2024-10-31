@@ -20,10 +20,9 @@ public class Arm extends AComponents implements IArm{
     private DcMotorEx armMotorL;
     public double speed = 0.5;
     public ArmStates stateArm;
-    private double holdPower = 0.1;
+    private double holdPower = 0;
     private double errorMultiplierR = 0.192;
     private double errorMultiplierL = 1;
-
 
     private ElapsedTime runtime = new ElapsedTime();
     // New list to hold arm listeners
@@ -60,6 +59,8 @@ public class Arm extends AComponents implements IArm{
         armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        stateArm = ArmStates.INITIALIZED;
+
         this.displayComponentValues();
     }
 
@@ -70,7 +71,7 @@ public class Arm extends AComponents implements IArm{
     }
 
     @Override
-    public void move(ArmStates state) {
+    public void move(ArmStates state, double timeOutS) {
         // Negative value lifts arm up, positive moves it down.
         double position = state.getState() - stateArm.getState();
         int targetPosR;
@@ -87,14 +88,11 @@ public class Arm extends AComponents implements IArm{
 
         armMotorR.setPower(speed*errorMultiplierR);
         armMotorL.setPower(speed*errorMultiplierL);
-
+        runtime.reset();
         while (parent.opModeIsActive() &&
-                (armMotorR.isBusy() || armMotorL.isBusy())) {
-            telemetry.addData("Arm running to", "armMotorR: %1$7.3d  armMotorL: %2$7.3d",
-                    targetPosR, targetPosL);
-            telemetry.addData("Arm progress", "armMotorR: %1$7.3d  armMotorL: %2$7.3d",
-                    armMotorR.getCurrentPosition(), armMotorL.getCurrentPosition());
-            // telemetry.update();
+                (armMotorR.isBusy() || armMotorL.isBusy()) && runtime.seconds() < timeOutS) {
+            telemetry.addData("L. Arm", this.getLeftMotorPos());
+            telemetry.update();
         }
 
         armMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -107,10 +105,10 @@ public class Arm extends AComponents implements IArm{
         armMotorL.setPower(holdPower*errorMultiplierL);
 
         // Update the arm state
-        stateArm = state;
+        this.stateArm = state;
 
         // Notify listeners about the state change
-        notifyArmStateChange(new ArmEventObject(this, stateArm));
+        notifyArmStateChange(new ArmEventObject(this, this.stateArm));
     }
 
     public void move(int pos){

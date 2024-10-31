@@ -25,6 +25,8 @@ public class Wrist extends AComponents {
 
     @Override
     public void initialize() {
+        jointR.setDirection(Servo.Direction.FORWARD);
+        jointL.setDirection(Servo.Direction.REVERSE);
         setPos(WristStates.INITIALIZING);
     }
 
@@ -39,13 +41,13 @@ public class Wrist extends AComponents {
         double targetPos = state.getPos();
         jointR.setPosition(targetPos);
         jointL.setPosition(targetPos);
-        stateWrist = state;
-        this.notifyWristStateChange(new WristEventObject(this, stateWrist));
+        this.stateWrist = state;
+        this.notifyWristStateChange(new WristEventObject(this, this.stateWrist));
     }
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Wrist State", stateWrist.toString());
+        telemetry.addData("Wrist State", this.stateWrist.toString());
         telemetry.update();
     }
 

@@ -61,7 +61,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         odysseyArm.setTelemetry(this.telemetry);
         odysseyWrist.setTelemetry(this.telemetry);
         odysseyWheels.setTelemetry(this.telemetry);
-        odysseyArm.addArmListener(this);        
+        odysseyArm.addArmListener(this);
         odysseyWrist.addWristListener(this);
         odysseySlider.addSliderListener(this);
         odysseyWheels.addMecanumListener(this);
@@ -111,13 +111,13 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                     switch (newState) {
                         case OPEN:
                             if (odysseyWrist.stateWrist == WristStates.DEPOSITING_SAMPLE) {
-                                telemetry.addData("Claw Thread", "Sample deposited");
                                 try {
-                                    Thread.sleep(250);
+                                    Thread.sleep(2000);
                                 } catch (InterruptedException e) {
                                     throw new RuntimeException(e);
                                 }
-                                odysseyWrist.setPos(WristStates.NEUTRAL);
+                                telemetry.addData("Claw Thread", "Sample deposited");
+                                odysseyArm.move(ArmStates.READY_TO_DEPOSIT, 5);
                             } else if (odysseyWrist.stateWrist == WristStates.PICKING_UP_SAMPLE) {
                                 telemetry.addData("Claw Thread", "Ready to pickup sample");
                             }
@@ -154,9 +154,18 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                         case INITIALIZED:
                             System.out.println("Arm is initialized");
                             break;
-                        case DEPOSITING:
+                        case READY_TO_DEPOSIT:
                             telemetry.addData("Arm Thread", "Ready to deposit sample");
+                            telemetry.update();
                             odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        case DEPOSITING:
+                            odysseyClaw.move(ClawStates.OPEN);
                             try {
                                 Thread.sleep(1000);
                             } catch (InterruptedException e) {
@@ -185,7 +194,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                     switch (newState) {
                         case NEUTRAL:
                             telemetry.addData("Wrist Thread", "Wrist at rest");
-                            odysseyArm.move(ArmStates.NEUTRAL);
+                            odysseyArm.move(ArmStates.NEUTRAL, 5);
                             try {
                                 Thread.sleep(1000);
                             } catch (InterruptedException e) {
@@ -194,6 +203,16 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                             break;
                         case DEPOSITING_SAMPLE:
                             telemetry.addData("Wrist Thread", "Ready to deposit sample");
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            if (odysseyClaw.stateClaw != ClawStates.OPEN) {
+                                odysseyArm.move(ArmStates.DEPOSITING, 10);
+                            } else {
+                                odysseySlider.slide(SliderStates.HIGH_BUCKET, 10);
+                            }
                             break;
                         case PICKING_UP_SAMPLE:
                             telemetry.addData("Wrist Thread", "Ready to pickup sample");
