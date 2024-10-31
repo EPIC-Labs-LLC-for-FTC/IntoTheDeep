@@ -1,5 +1,12 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
 public interface IWrist {
-    void move(double position);
+
+    void horizontal();
+    void vertical1();
+    void vertical2();
+    void plus();
+    void minus();
+
+
 }
