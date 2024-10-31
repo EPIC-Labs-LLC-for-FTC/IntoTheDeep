@@ -23,7 +23,7 @@ public class Arm extends AComponents implements IArm{
     private double holdPower = 0.1;
     private double errorMultiplierR = 0.192;
     private double errorMultiplierL = 1;
-
+    private double adjustments = 0;
     private ElapsedTime runtime = new ElapsedTime();
     // New list to hold arm listeners
     private List<IArmListener> listeners;
@@ -70,6 +70,14 @@ public class Arm extends AComponents implements IArm{
         telemetry.update();
     }
 
+    public double getAdjustments(){
+        return adjustments;
+    }
+
+    public void setAdjustments(double adjustment){
+        adjustments+= adjustment;
+    }
+
     @Override
     public void move(ArmStates state, double timeOutS) {
         // Negative value lifts arm up, positive moves it down.
@@ -79,7 +87,10 @@ public class Arm extends AComponents implements IArm{
 
         targetPosR = armMotorR.getCurrentPosition() + (int) position;
         targetPosL = armMotorL.getCurrentPosition() + (int) position;
-
+        if(stateArm==ArmStates.LOWERED){
+            targetPosR += adjustments;
+            targetPosL += adjustments;
+        }
         armMotorR.setTargetPosition(targetPosR);
         armMotorL.setTargetPosition(targetPosL);
 

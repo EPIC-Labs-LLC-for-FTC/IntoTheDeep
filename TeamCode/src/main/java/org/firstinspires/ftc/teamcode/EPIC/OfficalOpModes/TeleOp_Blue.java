@@ -78,6 +78,10 @@ public class TeleOp_Blue extends LinearOpMode {
             } else if (gamepad2.dpad_down) {
                 odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
                 sleep(100);
+            } else if (gamepad2.dpad_left) {
+                odyssey.odysseyArm.setAdjustments(10);
+            } else if (gamepad2.dpad_right) {
+                odyssey.odysseyArm.setAdjustments(-5);
             } else if (gamepad2.left_bumper) {
                 odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT, 6);
                 sleep(2000);
