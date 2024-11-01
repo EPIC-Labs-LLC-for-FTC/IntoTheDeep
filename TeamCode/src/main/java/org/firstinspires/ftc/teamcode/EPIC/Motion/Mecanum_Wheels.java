@@ -23,6 +23,7 @@ public class Mecanum_Wheels extends AComponents {
     public DcMotorEx backleft;
     double backcorrection = 1.0;
     public DriveStates stateMecanum;
+    private double power = 1;
     private List<IMecanumListener> listeners;
 
     //public DcMotorEx xRail;
@@ -168,11 +169,15 @@ public class Mecanum_Wheels extends AComponents {
     }
 
     public void move(double lefty, double righty, double leftx, double rightx){
-        frontright.setPower((-lefty  - rightx - leftx)*rightErrorAdjustment); // should work same as above
-        frontleft.setPower((-lefty + rightx + leftx)*leftErrorAdjustment);
-        backright.setPower((-lefty - rightx + leftx)*rightErrorAdjustment);
-        backleft.setPower((-lefty + rightx - leftx)*leftErrorAdjustment);
+        frontright.setPower((-lefty  - rightx - leftx)*rightErrorAdjustment*power); // should work same as above
+        frontleft.setPower((-lefty + rightx + leftx)*leftErrorAdjustment*power);
+        backright.setPower((-lefty - rightx + leftx)*rightErrorAdjustment*power);
+        backleft.setPower((-lefty + rightx - leftx)*leftErrorAdjustment*power);
 
+    }
+
+    public void setPower(double speed){
+        power = speed;
     }
 
     public void addMecanumListener (IMecanumListener listener) {

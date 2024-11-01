@@ -122,6 +122,12 @@ public class Slider extends AComponents implements ISlider {
             slideMotorR.setPower(0);
             slideMotorL.setPower(0);
         }
+        else if(state==SliderStates.LOW_HANG){
+
+
+            slideMotorR.setPower(0.6);
+            slideMotorL.setPower(0.6);
+        }
         else{
 
 

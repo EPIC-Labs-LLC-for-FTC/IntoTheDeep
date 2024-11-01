@@ -32,7 +32,21 @@ public class TeleOp_Blue extends LinearOpMode {
         Thread slider = new Thread() {
             public void run() {
                 while (opModeIsActive()) {
-                    if (gamepad1.left_bumper && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
+                    if (gamepad1.dpad_up && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
+                        odyssey.odysseySlider.slide(SliderStates.LOW_HANG_START, 7);
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad1.dpad_down && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
+                        odyssey.odysseySlider.slide(SliderStates.LOW_HANG, 7);
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad1.left_bumper && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
                         odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET, 7);
                         try {
                             Thread.sleep(1000);
@@ -88,6 +102,12 @@ public class TeleOp_Blue extends LinearOpMode {
             } else if (gamepad2.right_bumper) {
                 odyssey.odysseyArm.move(ArmStates.LOWERED, 6);
                 sleep(2000);
+            } else if (gamepad1.a) {
+                odyssey.odysseyWheels.setPower(0.2);
+            } else if (gamepad1.b) {
+                odyssey.odysseyWheels.setPower(0.6);
+            } else if (gamepad1.x) {
+                odyssey.odysseyWheels.setPower(1);
             }
 
             telemetry.update();

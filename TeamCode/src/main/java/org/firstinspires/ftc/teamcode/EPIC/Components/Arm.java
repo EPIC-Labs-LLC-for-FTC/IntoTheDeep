@@ -108,7 +108,7 @@ public class Arm extends AComponents implements IArm{
 
         // Update the arm state
         this.stateArm = state;
-        if(stateArm==ArmStates.DEPOSITING){
+        if(stateArm==ArmStates.DEPOSITING || stateArm==ArmStates.LOWERED){
 
 
             armMotorR.setPower(0);
