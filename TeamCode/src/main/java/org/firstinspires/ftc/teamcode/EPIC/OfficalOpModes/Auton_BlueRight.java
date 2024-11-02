@@ -18,7 +18,8 @@ public class Auton_BlueRight extends LinearOpMode {
         }
 
         waitForStart();
-
+        double distance = 30;
+        odyssey.odysseyWheels.encoderDrive(0.6,distance,-distance,-distance,distance,6);
         while (opModeIsActive()) {
 
         }

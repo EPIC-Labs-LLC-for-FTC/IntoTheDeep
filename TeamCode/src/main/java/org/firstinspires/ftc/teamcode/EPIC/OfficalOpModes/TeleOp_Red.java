@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.EPIC.OfficalOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 
 @TeleOp(name = "TeleOp_Red")
+@Disabled
 public class TeleOp_Red extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

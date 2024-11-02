@@ -19,6 +19,7 @@ public class Test_Auton extends LinearOpMode {
 
         Robot odysseyRobot = new Robot(this, "Red");
         odysseyRobot.initialize();
+        sleep(1000);
 
         waitForStart();
         sleep(100);

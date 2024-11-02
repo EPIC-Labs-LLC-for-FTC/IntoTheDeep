@@ -83,6 +83,10 @@ public class TeleOp_Blue extends LinearOpMode {
             } else if (gamepad2.y) {
                 odyssey.odysseyClaw.move(ClawStates.OPEN);
                 sleep(100);
+            } else if (gamepad2.b) {
+                //odyssey.odysseyClaw.move(ClawStates.OPEN);
+                odyssey.odysseyArm.move(ArmStates.SAMPLELOW,6);
+                sleep(100);
             } else if (gamepad2.a) {
                 odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
                 sleep(100);
@@ -98,10 +102,10 @@ public class TeleOp_Blue extends LinearOpMode {
                 odyssey.odysseyArm.setAdjustments(-5);
             } else if (gamepad2.left_bumper) {
                 odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT, 6);
-                sleep(2000);
+                sleep(1000);
             } else if (gamepad2.right_bumper) {
                 odyssey.odysseyArm.move(ArmStates.LOWERED, 6);
-                sleep(2000);
+                sleep(1000);
             } else if (gamepad1.a) {
                 odyssey.odysseyWheels.setPower(0.2);
             } else if (gamepad1.b) {
