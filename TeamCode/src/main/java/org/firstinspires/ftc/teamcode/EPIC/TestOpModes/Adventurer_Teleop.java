@@ -28,11 +28,17 @@ public class Adventurer_Teleop extends LinearOpMode {
     private FtcDashboard dash = FtcDashboard.getInstance();
     private List<Action> runningActions = new ArrayList<>();
     private PIDController controller;
+    private PIDController controller2;
 
     public static double p1 = 0.02, i1 = 0, d1 = 0.00015;
+    public static double p2 = 0.017, i2 = 0, d2 = 0.0001;
+
     public static double f1 = -0.2;
+    public static double f2 = -0.02;
     public static int target1 = 0;
+    public static int target2 = 0;
     private final double tick_in_degrees1 = 2786.2/360;
+    private final double tick_in_degrees2 = 537.7/360;
 
     public DcMotorEx frontLeft = null;
     public DcMotorEx frontRight = null;
@@ -147,28 +153,18 @@ public class Adventurer_Teleop extends LinearOpMode {
     }
 
     public void slideManual() {
-        if (gamepad2.right_trigger > 0) {
-            slideRight.setPower(1);
-            slideLeft.setPower(1);
-        } else if (gamepad2.left_trigger > 0) {
-            slideRight.setPower(-1);
-            slideLeft.setPower(-1);
-        } else {
-            slideRight.setPower(0);
-            slideLeft.setPower(0);
+        if (gamepad2.right_trigger > 0.2) {
+            target2 = target2 - 10;
+        } else if (gamepad2.left_trigger > 0.2) {
+            target2 = target2 + 10;
         }
     }
 
     public void armManual() {
         if (gamepad2.right_bumper) {
-            armRight.setPower(1);
-            armLeft.setPower(1);
+            target1 = target1 - 10;
         } else if (gamepad2.left_bumper) {
-            armRight.setPower(-1);
-            armLeft.setPower(-1);
-        } else {
-            armRight.setPower(0);
-            armLeft.setPower(0);
+            target1 = target1 + 10;
         }
     }
 
@@ -177,8 +173,8 @@ public class Adventurer_Teleop extends LinearOpMode {
             clawRight.setPosition(0.5);
             clawLeft.setPosition(0.5);
         } else if (gamepad2.b) {
-            clawRight.setPosition(0.9);
-            clawLeft.setPosition(0.9);
+            clawRight.setPosition(0.8);
+            clawLeft.setPosition(0.8);
         }
     }
 
@@ -186,6 +182,8 @@ public class Adventurer_Teleop extends LinearOpMode {
         if (gamepad2.y) {
             armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             armLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
     }
 
@@ -203,6 +201,7 @@ public class Adventurer_Teleop extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         controller = new PIDController(p1, i1, d1);
+        controller2 = new PIDController(p2, i2, d2);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -234,6 +233,9 @@ public class Adventurer_Teleop extends LinearOpMode {
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        target1 = 0;
+        target2 = 0;
+
         waitForStart();
         sleep(100);
 
@@ -251,13 +253,29 @@ public class Adventurer_Teleop extends LinearOpMode {
 
                 telemetry.addData("Arm Position", armPos);
                 telemetry.addData("Arm Target", target1);
+                telemetry.addData("Arm Power", power1);
+
+                //////////////////////////////////////////////////////////////////
+
+                controller2.setPID(p2, d2, i2);
+                 int slidePos = slideRight.getCurrentPosition();
+                 double pid2 = controller2.calculate(slidePos, target2);
+                 double ff2 = Math.cos(Math.toRadians(target2 / tick_in_degrees2)) * f2;
+
+                double power2 = pid2 + ff2;
+
+                slideRight.setPower(power2);
+                slideLeft.setPower(power2);
+
+                telemetry.addData("Slide Position", slidePos);
+                telemetry.addData("Slide Target", target2);
+                telemetry.addData("Slide Power", power2);
                 telemetry.update();
  
                 driverControl();
                 armManual();
                 slideManual();
                 claw();
-                reset();
 
             }
 
