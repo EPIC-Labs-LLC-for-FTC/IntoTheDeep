@@ -15,6 +15,7 @@ public class Test_TeleOp_Red extends LinearOpMode {
     double leftx;
     double righty;
     double rightx;
+    int slidePos;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -64,19 +65,7 @@ public class Test_TeleOp_Red extends LinearOpMode {
         while (opModeInInit()){
 
         }
-
-
-        boolean dup2;
-        boolean ddown2;
-        boolean y2;
-        boolean a2;
-        boolean x2;
-
-
-
-
         waitForStart();
-
 
         while (opModeIsActive()){
             //robot.colorSensor.getColor();
@@ -87,10 +76,14 @@ public class Test_TeleOp_Red extends LinearOpMode {
             odysseyRobot.odysseyWheels.move(lefty,righty,leftx,rightx);
 
             if (gamepad1.a) {
-                odysseyRobot.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
+                slidePos += 50;
+                odysseyRobot.odysseySlider.slide(slidePos);
             } else if (gamepad1.b) {
-                odysseyRobot.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+                slidePos -= 50;
+                odysseyRobot.odysseySlider.slide(slidePos);
             }
+
+            telemetry.update();
         }
     }
 }

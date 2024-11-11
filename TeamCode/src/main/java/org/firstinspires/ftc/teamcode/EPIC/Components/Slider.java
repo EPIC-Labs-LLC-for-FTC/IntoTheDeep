@@ -154,26 +154,26 @@ public class Slider extends AComponents implements ISlider {
         // inchesPerRotationSlider is a placeholder until we test the inches moved per full rotation
         //double ticksPerInchSlider = 537.7 / inchesPerRotationSlider;
         if (parent.opModeIsActive()) {
-            //targetPosR = slideMotorR.getCurrentPosition() + (int) (ticksPerInchSlider * position);
-            //targetPosL = slideMotorL.getCurrentPosition() + (int) (ticksPerInchSlider * position);
+            targetPosR = slideMotorR.getCurrentPosition() + (int) (position);
+            targetPosL = slideMotorL.getCurrentPosition() + (int) (position);
+
+            slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            slideMotorR.setTargetPosition(targetPosR);
+            slideMotorL.setTargetPosition(targetPosL);
 
             slideMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             slideMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             runtime.reset();
 
-            slideMotorR.setTargetPosition((int)position);
-            slideMotorL.setTargetPosition((int)position);
-
             slideMotorR.setPower(speed * errorAdjustmentR);
             slideMotorL.setPower(speed * errorAdjustmentL);
             while (parent.opModeIsActive() &&
-                    (runtime.seconds() < 2.0) &&
+                    (runtime.seconds() < 8.0) &&
                     (slideMotorR.isBusy() || slideMotorL.isBusy())) {
-                //telemetry.addData("Slider running to", "sliderR: %1$7.3d  sliderL: %2$7.3d", targetPosR, targetPosL);
-                //telemetry.addData("Slider progress", "sliderR: %1$7.3d  sliderL: %2$7.3d",
-                  //      slideMotorR.getCurrentPosition(), slideMotorL.getCurrentPosition());
-//                telemetry.update();
+                    telemetry.addData("SliderPos", slideMotorR.getCurrentPosition());
                 }
             }
 
