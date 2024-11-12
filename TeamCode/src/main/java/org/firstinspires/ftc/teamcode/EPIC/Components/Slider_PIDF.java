@@ -23,7 +23,7 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
     private DcMotorEx slideMotorL;
     public SliderStates stateSlider;
 
-    private final double ticksPerDegrees = 537.7/360;
+    public static double gravConstant = 0;
 
     public Slider_PIDF(HardwareMap hardwareMap) {
         sliderController = new PIDController(p, i, d);
@@ -58,15 +58,15 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
         sliderController.setPID(p, i, d);
         int sliderPos = slideMotorR.getCurrentPosition();
         double pid = sliderController.calculate(sliderPos, targetPos);
-        double ff = Math.cos(Math.toRadians(targetPos / ticksPerDegrees)) * f;
 
-        double power = pid + ff;
+        double power = pid + gravConstant;
 
         slideMotorR.setPower(power);
         slideMotorL.setPower(power);
 
         telemetry.addData("Pos: ", sliderPos);
         telemetry.addData("TargetPos: ", targetPos);
+        telemetry.addData("Gravity Constant: ", gravConstant);
         telemetry.update();
     }
 
