@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IWristListener; // Import the new interface
@@ -9,7 +11,7 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Wrist extends AComponents {
+public class Wrist extends AComponents implements IWrist {
     private Servo jointR;
     private Servo jointL;
     public WristStates stateWrist;
@@ -37,6 +39,7 @@ public class Wrist extends AComponents {
         }
     }
 
+    @Override
     public void setPos(WristStates state) {
         double targetPos = state.getPos();
         jointR.setPosition(targetPos);
