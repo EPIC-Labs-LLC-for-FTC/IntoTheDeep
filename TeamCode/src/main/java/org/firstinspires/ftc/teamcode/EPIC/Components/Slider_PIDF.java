@@ -14,16 +14,14 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
     public PIDController sliderController;
 
     public static double p = 0, i = 0, d = 0, f = 0;
-
+    //f acts as gravitational constant
     public int targetPos;
 
-    private double reset = 0;
+    private final double reset = 0;
 
     private DcMotorEx slideMotorR;
     private DcMotorEx slideMotorL;
     public SliderStates stateSlider;
-
-    public static double gravConstant = 0;
 
     public Slider_PIDF(HardwareMap hardwareMap) {
         sliderController = new PIDController(p, i, d);
@@ -59,14 +57,14 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
         int sliderPos = slideMotorR.getCurrentPosition();
         double pid = sliderController.calculate(sliderPos, targetPos);
 
-        double power = pid + gravConstant;
+        double power = pid + f;
 
         slideMotorR.setPower(power);
         slideMotorL.setPower(power);
 
         telemetry.addData("Pos: ", sliderPos);
         telemetry.addData("TargetPos: ", targetPos);
-        telemetry.addData("Gravity Constant: ", gravConstant);
+        telemetry.addData("Gravity FeedForward: ", f);
         telemetry.update();
     }
 
