@@ -21,7 +21,7 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     private final DcMotorEx armMotorL;
     public ArmStates stateArm;
 
-    private final double ticksPerDegrees = 537.7/360;
+    private final double ticksPerDegrees = 1425.1/360;
 
     public Arm_PIDF(HardwareMap hardwareMap) {
         armController = new PIDController(p, i, d);
