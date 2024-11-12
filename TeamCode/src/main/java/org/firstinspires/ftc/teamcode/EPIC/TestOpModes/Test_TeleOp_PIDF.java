@@ -14,7 +14,11 @@ public class Test_TeleOp_PIDF extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Arm_PIDF arm = new Arm_PIDF(hardwareMap);
+        arm.setParent(this);
+        arm.setTelemetry(this.telemetry);
         Slider_PIDF slider = new Slider_PIDF(hardwareMap);
+        slider.setParent(this);
+        slider.setTelemetry(this.telemetry);
         arm.initialize();
         slider.initialize();
 
@@ -24,7 +28,8 @@ public class Test_TeleOp_PIDF extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()){
-
+            arm.runPIDF();
+            slider.runPIDF();
         }
     }
 }
