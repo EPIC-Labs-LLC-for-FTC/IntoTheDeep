@@ -110,16 +110,18 @@ android {
     sourceSets.main {
         jni.srcDirs = []
         jniLibs.srcDir rootProject.file('libs')
-
+	}
         packagingOptions {
             pickFirst '**/*.so'
         }
         ndkVersion '21.3.6528147'
 
+    
+}
+
+
+
 
         repositories {
             mavenCentral()
         }
-
-    }
-}
