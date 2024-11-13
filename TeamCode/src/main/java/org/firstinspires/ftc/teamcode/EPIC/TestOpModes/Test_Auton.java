@@ -16,6 +16,13 @@ public class Test_Auton extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         double distance = 0;
+        Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
+        mecanum.leftErrorAdjustment = 1;
+        mecanum.parent = this;
+        mecanum.IsAutonomous = true;
+        mecanum.velocity = 400;
+        mecanum.telemetry = this.telemetry;
+        mecanum.initialize();
 
         Robot odysseyRobot = new Robot(this, "Red");
         odysseyRobot.initialize();
