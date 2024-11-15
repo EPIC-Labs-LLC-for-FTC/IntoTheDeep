@@ -12,12 +12,12 @@ import org.firstinspires.ftc.teamcode.components.Slides;
 @TeleOp(name = "Expedition_TeleOp1")
 public class Expedition_TeleOp1 extends LinearOpMode {
 
-    public ColorSensor colorSensor = null;
+    //public ColorSensor colorSensor = null;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        colorSensor = hardwareMap.get(ColorSensor.class,"colorSensor");
+        //colorSensor = hardwareMap.get(ColorSensor.class,"colorSensor");
 
         Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
         wheels.telemetry = telemetry;

@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Mecanum_Wheels {
 
@@ -42,6 +43,10 @@ public class Mecanum_Wheels {
     public LinearOpMode parent;
 
     public Telemetry telemetry;
+
+    public double mecanumWheelCircumference = 12; //inches
+
+    private ElapsedTime runtime = new ElapsedTime();
 
     public Mecanum_Wheels(HardwareMap hardwareMap) {
 
@@ -172,6 +177,78 @@ public class Mecanum_Wheels {
 
     }
 
+
+    public void encoderDrive(double speed,
+                             double frontLeftInches, double backLeftInches, double frontRightInches,
+                             double backRightInches, double timeoutS) {
+        int new_frontLeftTarget;
+        int new_frontRightTarget;
+        int new_backLeftTarget;
+        int new_backRightTarget;
+        double ticksPerInchMecanum = (537.7 / mecanumWheelCircumference);
+        // Ensure that the opmode is still active.
+        if (parent.opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            new_frontLeftTarget = leftFront.getCurrentPosition() + (int) (frontLeftInches * ticksPerInchMecanum);
+            new_frontRightTarget = rightFront.getCurrentPosition() + (int) (frontRightInches * ticksPerInchMecanum);
+
+            new_backLeftTarget = leftBack.getCurrentPosition() + (int) (backLeftInches * ticksPerInchMecanum);
+            new_backRightTarget = rightBack.getCurrentPosition() + (int) (backRightInches * ticksPerInchMecanum);
+            leftFront.setTargetPosition(new_frontLeftTarget);
+            rightFront.setTargetPosition(new_frontRightTarget);
+
+
+            leftBack.setTargetPosition(new_backLeftTarget);
+            rightBack.setTargetPosition(new_backRightTarget);
+
+            // Turn On RUN_TO_POSITION
+            leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            leftFront.setPower(speed*leftErrorAdjustment);
+            rightFront.setPower(speed*rightErrorAdjustment);
+
+            leftBack.setPower(speed*leftErrorAdjustment);
+            rightBack.setPower(speed*rightErrorAdjustment);
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (parent.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (leftFront.isBusy() || rightFront.isBusy() || leftBack.isBusy() || rightBack.isBusy())) {
+                // Display it for the driver.
+                telemetry.addData("Path1", "Running to %1$7d :%2$7d :%3$7d :%4$7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
+                telemetry.addData("Path2", "Running at %1$7d :2$%7d :%3$7d :%4$7d",
+                        leftFront.getCurrentPosition(),
+                        rightFront.getCurrentPosition(),
+
+                        leftBack.getCurrentPosition(),
+                        rightBack.getCurrentPosition());
+                telemetry.update();
+            }
+        }
+        // Stop all motion;
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+
+        leftBack.setPower(0);
+        rightBack.setPower(0);
+
+        // Turn off RUN_TO_POSITION
+        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //  sleep(250);   // optional pause after each move
+
+    }
     public void strafeDiagonal(String direction, double maxStrafeSpeed, double distance, double heading) {
         int moveCounts = (int)(distance * COUNTS_PER_INCH);
         maxStrafeSpeed = Math.abs(maxStrafeSpeed);
