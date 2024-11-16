@@ -84,19 +84,15 @@ public class Slider extends AComponents implements ISlider {
 
     @Override
     public void slide(SliderStates state, double timeOutS) {
-        double position = state.getStateHeight() - stateSlider.getStateHeight();
-        int targetPosR;
-        int targetPosL;
+        int targetPos = (int) (state.getStateHeight() - stateSlider.getStateHeight());
 
         if (parent.opModeIsActive()) {
-            targetPosR = slideMotorR.getCurrentPosition() + (int) (position);
-            targetPosL = slideMotorL.getCurrentPosition() + (int) (position);
 
             slideMotorR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             slideMotorL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            slideMotorR.setTargetPosition(targetPosR);
-            slideMotorL.setTargetPosition(targetPosL);
+            slideMotorR.setTargetPosition(targetPos);
+            slideMotorL.setTargetPosition(targetPos);
 
             slideMotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             slideMotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -171,7 +167,7 @@ public class Slider extends AComponents implements ISlider {
             slideMotorR.setPower(speed * errorAdjustmentR);
             slideMotorL.setPower(speed * errorAdjustmentL);
             while (parent.opModeIsActive() &&
-                    (runtime.seconds() < 8.0) &&
+                    (runtime.seconds() < 4.0) &&
                     (slideMotorR.isBusy() || slideMotorL.isBusy())) {
                     telemetry.addData("SliderPos", slideMotorR.getCurrentPosition());
                 }
