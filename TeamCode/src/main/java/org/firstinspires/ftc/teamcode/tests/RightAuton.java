@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.tests;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.components.Arm;
 import org.firstinspires.ftc.teamcode.components.Claw;
 import org.firstinspires.ftc.teamcode.components.Mecanum_Wheels;
@@ -62,8 +63,10 @@ public class RightAuton extends LinearOpMode {
         distance = 30;
         //wheels.encoderDrive(0.6,distance,-distance,-distance,distance,6);
 
-            telemetry.addData("Robot Heading = %4.0f", wheels.getHeading());
-            telemetry.update();
+    telemetry.addData("Robot Heading = %4.0f", wheels.getHeading());
+            Telemetry.update();
+
+
         //}
     }
 }
