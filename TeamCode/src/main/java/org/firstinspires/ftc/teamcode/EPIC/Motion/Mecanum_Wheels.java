@@ -173,7 +173,6 @@ public class Mecanum_Wheels extends AComponents {
         frontleft.setPower((-lefty + rightx + leftx)*leftErrorAdjustment*power);
         backright.setPower((-lefty - rightx + leftx)*rightErrorAdjustment*power);
         backleft.setPower((-lefty + rightx - leftx)*leftErrorAdjustment*power);
-
     }
 
     public void setPower(double speed){
