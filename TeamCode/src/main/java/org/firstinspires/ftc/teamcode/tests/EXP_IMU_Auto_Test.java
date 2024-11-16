@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.components.Mecanum_Wheels;
-
+@Disabled
 @Autonomous(name = "EXP_IMU_TEST")
 public class EXP_IMU_Auto_Test extends LinearOpMode {
 
