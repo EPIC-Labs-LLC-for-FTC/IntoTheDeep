@@ -160,7 +160,7 @@ public class Mecanum_Wheels {
 
             turnSpeed = getSteeringCorrection(heading, P_DRIVE_GAIN);
 
-            moveRobot(driveSpeed, turnSpeed);
+            moveRobot(maxStrafeSpeed, turnSpeed);
 
         }
 
@@ -170,62 +170,6 @@ public class Mecanum_Wheels {
         leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-    }
-
-    public void strafeDiagonal(String direction, double maxStrafeSpeed, double distance, double heading) {
-        int moveCounts = (int)(distance * COUNTS_PER_INCH);
-        maxStrafeSpeed = Math.abs(maxStrafeSpeed);
-
-        switch (direction.toLowerCase()) {
-            case "northeast":
-                leftBack.setTargetPosition(leftBack.getCurrentPosition() + moveCounts);
-                rightFront.setTargetPosition(rightFront.getCurrentPosition() + moveCounts);
-                leftFront.setTargetPosition(leftFront.getCurrentPosition());
-                rightBack.setTargetPosition(rightBack.getCurrentPosition());
-                break;
-
-            case "northwest":
-                leftFront.setTargetPosition(leftFront.getCurrentPosition() + moveCounts);
-                rightBack.setTargetPosition(rightBack.getCurrentPosition() + moveCounts);
-                rightFront.setTargetPosition(rightFront.getCurrentPosition());
-                leftBack.setTargetPosition(leftBack.getCurrentPosition());
-                break;
-
-            case "southeast":
-                leftFront.setTargetPosition(leftFront.getCurrentPosition() - moveCounts);
-                rightBack.setTargetPosition(rightBack.getCurrentPosition() - moveCounts);
-                rightFront.setTargetPosition(rightFront.getCurrentPosition());
-                leftBack.setTargetPosition(leftBack.getCurrentPosition());
-                break;
-
-            case "southwest":
-                leftBack.setTargetPosition(leftBack.getCurrentPosition() - moveCounts);
-                rightFront.setTargetPosition(rightFront.getCurrentPosition() - moveCounts);
-                leftFront.setTargetPosition(leftFront.getCurrentPosition());
-                rightBack.setTargetPosition(rightBack.getCurrentPosition());
-                break;
-
-        }
-
-        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        while (parent.opModeIsActive() && (leftFront.isBusy() && rightFront.isBusy() && leftBack.isBusy() && rightBack.isBusy())) {
-            driveSpeed = maxStrafeSpeed;
-
-            turnSpeed = getSteeringCorrection(heading, P_DRIVE_GAIN);
-
-            moveRobot(driveSpeed, turnSpeed);
-        }
-
-        moveRobot(0, 0);
-
-        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void turnToHeading(double maxTurnSpeed, double heading) {

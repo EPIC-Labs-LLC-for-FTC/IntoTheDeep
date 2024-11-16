@@ -20,6 +20,9 @@ public class EXP_IMU_Auto_Test extends LinearOpMode {
 
             wheels.initialize();
 
+            telemetry.addData("Robot Heading = %4.0f", wheels.getHeading());
+            telemetry.update();
+
         }
 
         waitForStart();
@@ -36,14 +39,6 @@ public class EXP_IMU_Auto_Test extends LinearOpMode {
             wheels.strafe(1,10,0);
             sleep(500);
             wheels.strafe(1,-10,0);
-            sleep(500);
-            wheels.strafeDiagonal("northeast", 1,10,0);
-            sleep(500);
-            wheels.strafeDiagonal("southwest", 1,10,0);
-            sleep(500);
-            wheels.strafeDiagonal("northwest", 1,10,0);
-            sleep(500);
-            wheels.strafeDiagonal("southeast", 1,10,0);
 
             telemetry.addData("Robot Heading = %4.0f", wheels.getHeading());
             telemetry.update();
