@@ -20,8 +20,8 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     private final double ticksPerDegrees = 1425.1/360;
 
     public Arm_PIDF(HardwareMap hardwareMap) {
-        armMotorR = hardwareMap.get(DcMotorEx.class, "SMR");
-        armMotorL = hardwareMap.get(DcMotorEx.class, "SML");
+        armMotorR = hardwareMap.get(DcMotorEx.class, "AMR");
+        armMotorL = hardwareMap.get(DcMotorEx.class, "AML");
     }
 
     @Override
