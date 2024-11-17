@@ -70,8 +70,8 @@ public class MecanumDrive {
         public double trackWidthTicks = 0;
 
         // feedforward parameters (in tick units)
-        public double kS = 0;
-        public double kV = 0;
+        public double kS = 0.9966390625916794;
+        public double kV = 0.1385864227505719;
         public double kA = 0;
 
         // path profile parameters (in inches)
@@ -140,8 +140,6 @@ public class MecanumDrive {
 
             imu = lazyImu.get();
 
-            // TODO: reverse encoders if needed
-            //   leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         }
 
         @Override

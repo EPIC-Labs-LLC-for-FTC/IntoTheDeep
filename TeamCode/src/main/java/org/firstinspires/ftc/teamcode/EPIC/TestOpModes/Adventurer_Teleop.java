@@ -197,6 +197,23 @@ public class Adventurer_Teleop extends LinearOpMode {
         }
     }
 
+    public void singleMotor() {
+        if (gamepad2.a) {
+            frontLeft.setPower(1);
+        } else if (gamepad2.b) {
+            frontRight.setPower(1);
+        } else if (gamepad2.x) {
+            backLeft.setPower(1);
+        } else if (gamepad2.y) {
+            backRight.setPower(1);
+        } else {
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+        }
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
 
