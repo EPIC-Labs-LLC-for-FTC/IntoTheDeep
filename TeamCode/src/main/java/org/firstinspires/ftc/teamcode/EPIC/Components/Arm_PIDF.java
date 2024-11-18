@@ -13,22 +13,16 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     public PIDController armController;
 
-    public static double p = 0, i = 0, d = 0, f = 0;
-
-    public int targetPos;
-
     private final DcMotorEx armMotorR;
     private final DcMotorEx armMotorL;
     public ArmStates stateArm;
 
     private final double ticksPerDegrees = 1425.1/360;
+    private int targetPos;
 
     public Arm_PIDF(HardwareMap hardwareMap) {
-        armController = new PIDController(p, i, d);
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-
-        armMotorR = hardwareMap.get(DcMotorEx.class, "SMR");
-        armMotorL = hardwareMap.get(DcMotorEx.class, "SML");
+        armMotorR = hardwareMap.get(DcMotorEx.class, "AMR");
+        armMotorL = hardwareMap.get(DcMotorEx.class, "AML");
     }
 
     @Override
@@ -37,14 +31,16 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
         telemetry.update();
     }
 
-    @Override
-    public void initialize() {
+    public void initialize(double p, double i, double d) {
+        armController = new PIDController(p, i, d);
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
         double reset = 0;
         armMotorR.setPower(reset);
         armMotorL.setPower(reset);
 
         armMotorR.setDirection(DcMotorSimple.Direction.FORWARD);
-        armMotorL.setDirection(DcMotorSimple.Direction.FORWARD);
+        armMotorL.setDirection(DcMotorSimple.Direction.REVERSE);
 
         armMotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -55,20 +51,19 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     }
 
     @Override
-    public void runPIDF() {
+    public void runPIDF(double p, double i, double d, double f, int target) {
         armController.setPID(p, i, d);
         int armPos = armMotorR.getCurrentPosition();
-        double pid = armController.calculate(armPos, targetPos);
-        double ff = Math.cos(Math.toRadians(targetPos / ticksPerDegrees)) * f;
+        double pid = armController.calculate(armPos, target);
+        double ff = Math.cos(Math.toRadians(target / ticksPerDegrees)) * f;
 
-        double power = pid + ff;
+        double power = (pid/2) + ff;
 
         armMotorR.setPower(power);
         armMotorL.setPower(power);
 
-        telemetry.addData("Pos: ", armPos);
-        telemetry.addData("TargetPos: ", targetPos);
-        telemetry.update();
+        telemetry.addData("ArmPos: ", armPos);
+        telemetry.addData("ArmTargetPos: ", target);
     }
 
     @Override

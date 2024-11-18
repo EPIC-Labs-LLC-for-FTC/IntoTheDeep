@@ -12,6 +12,7 @@ public class Test_TeleOp_DT extends LinearOpMode {
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         mecanum.setParent(this);
         mecanum.setTelemetry(this.telemetry);
+        mecanum.initialize();
 
         while (opModeInInit()) {
 

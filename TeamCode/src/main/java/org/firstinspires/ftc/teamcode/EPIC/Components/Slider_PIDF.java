@@ -13,10 +13,6 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
 public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
     public PIDController sliderController;
 
-    public static double p = 0, i = 0, d = 0, f = 0;
-    //f acts as gravitational constant
-    public int targetPos;
-
     private final double reset = 0;
 
     private DcMotorEx slideMotorR;
@@ -24,15 +20,14 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
     public SliderStates stateSlider;
 
     public Slider_PIDF(HardwareMap hardwareMap) {
-        sliderController = new PIDController(p, i, d);
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-
         slideMotorR = hardwareMap.get(DcMotorEx.class, "SMR");
         slideMotorL = hardwareMap.get(DcMotorEx.class, "SML");
     }
 
-    @Override
-    public void initialize() {
+    public void initialize(double p, double i, double d) {
+        sliderController = new PIDController(p, i, d);
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
         slideMotorR.setPower(reset);
         slideMotorL.setPower(reset);
 
@@ -52,19 +47,18 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
     }
 
     @Override
-    public void runPIDF() {
+    public void runPIDF(double p, double i, double d, double f, int target) {
         sliderController.setPID(p, i, d);
         int sliderPos = slideMotorR.getCurrentPosition();
-        double pid = sliderController.calculate(sliderPos, targetPos);
+        double pid = sliderController.calculate(sliderPos, target);
 
-        double power = pid + f;
+        double power = (pid/2) + f;
 
         slideMotorR.setPower(power);
         slideMotorL.setPower(power);
 
-        telemetry.addData("Pos: ", sliderPos);
-        telemetry.addData("TargetPos: ", targetPos);
-        telemetry.addData("Gravity FeedForward: ", f);
+        telemetry.addData("SliderPos: ", sliderPos);
+        telemetry.addData("SliderTargetPos: ", target);
         telemetry.update();
     }
 

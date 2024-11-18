@@ -5,8 +5,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public abstract class AComponents {
     protected boolean IsAutonomous = false;
-    protected LinearOpMode parent;
-    protected Telemetry telemetry;
+    public LinearOpMode parent;
+    public Telemetry telemetry;
 
     public void initialize() {
 
