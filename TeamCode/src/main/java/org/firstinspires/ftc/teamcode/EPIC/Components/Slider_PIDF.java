@@ -52,14 +52,13 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
         int sliderPos = slideMotorR.getCurrentPosition();
         double pid = sliderController.calculate(sliderPos, target);
 
-        double power = pid + f;
+        double power = (pid/2) + f;
 
         slideMotorR.setPower(power);
         slideMotorL.setPower(power);
 
         telemetry.addData("SliderPos: ", sliderPos);
         telemetry.addData("SliderTargetPos: ", target);
-        telemetry.addData("Gravity FeedForward: ", f);
         telemetry.update();
     }
 

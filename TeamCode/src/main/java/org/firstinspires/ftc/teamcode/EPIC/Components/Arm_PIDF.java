@@ -18,6 +18,7 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     public ArmStates stateArm;
 
     private final double ticksPerDegrees = 1425.1/360;
+    private int targetPos;
 
     public Arm_PIDF(HardwareMap hardwareMap) {
         armMotorR = hardwareMap.get(DcMotorEx.class, "AMR");
@@ -52,22 +53,17 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     @Override
     public void runPIDF(double p, double i, double d, double f, int target) {
         armController.setPID(p, i, d);
-        int armPosR = armMotorR.getCurrentPosition();
-        int armPosL = armMotorL.getCurrentPosition();
-        double pidR = armController.calculate(armPosR, target);
-        double pidL = armController.calculate(armPosL, target);
+        int armPos = armMotorR.getCurrentPosition();
+        double pid = armController.calculate(armPos, target);
         double ff = Math.cos(Math.toRadians(target / ticksPerDegrees)) * f;
 
-        double powerR = pidR + ff;
-        double powerL = pidL + ff;
+        double power = (pid/2) + ff;
 
-        armMotorR.setPower(powerR);
-        armMotorL.setPower(powerL);
+        armMotorR.setPower(power);
+        armMotorL.setPower(power);
 
-        telemetry.addData("ArmPosR: ", armPosR);
-        telemetry.addData("ArmPosL", armPosL);
+        telemetry.addData("ArmPos: ", armPos);
         telemetry.addData("ArmTargetPos: ", target);
-        telemetry.update();
     }
 
     @Override
