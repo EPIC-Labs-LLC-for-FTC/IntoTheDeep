@@ -8,7 +8,12 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ArmEventObject;
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IArmListener;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     public PIDController armController;
@@ -16,6 +21,7 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     private final DcMotorEx armMotorR;
     private final DcMotorEx armMotorL;
     public ArmStates stateArm;
+    private List<IArmListener> listeners;
 
     private final double ticksPerDegrees = 1425.1/360;
     private int targetPos;
@@ -23,6 +29,8 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     public Arm_PIDF(HardwareMap hardwareMap) {
         armMotorR = hardwareMap.get(DcMotorEx.class, "AMR");
         armMotorL = hardwareMap.get(DcMotorEx.class, "AML");
+
+        listeners = new ArrayList<>();
     }
 
     @Override
@@ -50,6 +58,20 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
         this.displayComponentValues();
     }
 
+    public void addArmListener(IArmListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeArmListener(IArmListener listener) {
+        listeners.remove(listener);
+    }
+
+    private void notifyArmStateChange(ArmEventObject event) {
+        for (IArmListener listener : listeners) {
+            listener.onArmMove(event);
+        }
+    }
+
     @Override
     public void runPIDF(double p, double i, double d, double f, int target) {
         armController.setPID(p, i, d);
@@ -73,6 +95,8 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
 
     @Override
     public void move(ArmStates state, double timeOutS) {
-
+        targetPos = (int) state.getState();
+        stateArm = state;
+        this.notifyArmStateChange(new ArmEventObject(this, stateArm));
     }
 }

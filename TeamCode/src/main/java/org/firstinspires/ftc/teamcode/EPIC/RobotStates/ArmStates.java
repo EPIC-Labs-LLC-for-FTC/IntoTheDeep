@@ -6,9 +6,7 @@ public enum ArmStates {
     //LOWERED(190),
     LOWERED(1030),
     INITIALIZED(0.0),
-    SAMPLELOW(800),
     NEUTRAL(600); //check the value
-
 
     private double stateNum;
 

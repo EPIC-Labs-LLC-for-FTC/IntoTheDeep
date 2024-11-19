@@ -8,20 +8,31 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ISliderListener;
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.SliderEventObject;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
     public PIDController sliderController;
 
     private final double reset = 0;
+    private int sliderPos;
+    private int targetPos;
 
     private DcMotorEx slideMotorR;
     private DcMotorEx slideMotorL;
     public SliderStates stateSlider;
 
+    private List<ISliderListener> listeners;
+
     public Slider_PIDF(HardwareMap hardwareMap) {
         slideMotorR = hardwareMap.get(DcMotorEx.class, "SMR");
         slideMotorL = hardwareMap.get(DcMotorEx.class, "SML");
+
+        listeners = new ArrayList<>();
     }
 
     public void initialize(double p, double i, double d) {
@@ -46,6 +57,23 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
         telemetry.update();
     }
 
+    public void addSliderListener(ISliderListener listener) {
+        listeners.add(listener);
+    }
+
+    // Method to remove slider listener
+    public void removeSliderListener(ISliderListener listener) {
+        listeners.remove(listener);
+    }
+
+    // Notify all listeners of a slider state change
+    private void fireSliderEvent(SliderStates newState) {
+        SliderEventObject seo = new SliderEventObject(this, newState);
+        for (ISliderListener listener : listeners) {
+            listener.onSliderMove(seo);
+        }
+    }
+
     @Override
     public void runPIDF(double p, double i, double d, double f, int target) {
         sliderController.setPID(p, i, d);
@@ -64,6 +92,8 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
 
     @Override
     public void slide(SliderStates state, double timeOutS) {
-
+        targetPos = (int) state.getStateHeight();
+        stateSlider = state;
+        this.fireSliderEvent(stateSlider);
     }
 }

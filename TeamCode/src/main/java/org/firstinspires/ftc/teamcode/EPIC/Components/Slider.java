@@ -84,7 +84,7 @@ public class Slider extends AComponents implements ISlider {
 
     @Override
     public void slide(SliderStates state, double timeOutS) {
-        int targetPos = (int) (state.getStateHeight() - stateSlider.getStateHeight());
+        int targetPos = (int) (state.getStateHeight());
 
         if (parent.opModeIsActive()) {
 

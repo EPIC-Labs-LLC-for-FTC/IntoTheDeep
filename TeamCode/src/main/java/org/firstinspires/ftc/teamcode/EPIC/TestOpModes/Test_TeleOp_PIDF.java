@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.EPIC.Components.Slider_PIDF;
 @Config
 @TeleOp(name = "TeleOp_PIDF")
 public class Test_TeleOp_PIDF extends LinearOpMode {
-    public static final double ap = 0.02, ai = 0, ad = 0.001, af = 0.08;
-    public static double sp = 0, si = 0, sd = 0, sf = 0;
+    public final double ap = 0.02, ai = 0, ad = 0.001, af = 0.08;
+    public static double sp = 0.02, si = 0, sd = 0.0018, sf = 0;
     public static int starget;
 
     @Override
@@ -22,7 +22,7 @@ public class Test_TeleOp_PIDF extends LinearOpMode {
         Slider_PIDF slider = new Slider_PIDF(hardwareMap);
         slider.setParent(this);
         slider.setTelemetry(this.telemetry);
-        arm.initialize(ap, ai, ad);
+        arm.initialize();
         slider.initialize(sp, si, sd);
 
         while (opModeInInit()){
