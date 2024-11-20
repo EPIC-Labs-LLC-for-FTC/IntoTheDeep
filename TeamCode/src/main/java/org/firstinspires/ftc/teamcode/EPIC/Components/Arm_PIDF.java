@@ -94,7 +94,7 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     }
 
     @Override
-    public void move(ArmStates state, double timeOutS) {
+    public void move(ArmStates state) {
         targetPos = (int) state.getState();
         stateArm = state;
         this.notifyArmStateChange(new ArmEventObject(this, stateArm));

@@ -33,28 +33,28 @@ public class TeleOp_Blue_NoSleep extends LinearOpMode {
             public void run() {
                 while (opModeIsActive()) {
                     if (gamepad1.dpad_up && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
-                        odyssey.odysseySlider.slide(SliderStates.LOW_HANG_START, 7);
+                        odyssey.odysseySlider.slide(SliderStates.LOW_HANG_START);
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                     } else if (gamepad1.dpad_down && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
-                        odyssey.odysseySlider.slide(SliderStates.LOW_HANG, 7);
+                        odyssey.odysseySlider.slide(SliderStates.LOW_HANG);
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                     } else if (gamepad1.left_bumper && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
-                        odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET, 7);
+                        odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET);
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                     } else if (gamepad1.right_bumper && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
-                        odyssey.odysseySlider.slide(SliderStates.RETRACTED, 7);
+                        odyssey.odysseySlider.slide(SliderStates.RETRACTED);
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
@@ -92,15 +92,11 @@ public class TeleOp_Blue_NoSleep extends LinearOpMode {
             } else if (gamepad2.dpad_down) {
                 odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
                 sleep(100);
-            } else if (gamepad2.dpad_left) {
-                odyssey.odysseyArm.setAdjustments(10);
-            } else if (gamepad2.dpad_right) {
-                odyssey.odysseyArm.setAdjustments(-5);
             } else if (gamepad2.left_bumper) {
-                odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT, 6);
+                odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT);
                 sleep(100);
             } else if (gamepad2.right_bumper) {
-                odyssey.odysseyArm.move(ArmStates.LOWERED, 6);
+                odyssey.odysseyArm.move(ArmStates.LOWERED);
                 sleep(100);
             } else if (gamepad1.a) {
                 odyssey.odysseyWheels.setPower(0.2);

@@ -91,7 +91,7 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
     }
 
     @Override
-    public void slide(SliderStates state, double timeOutS) {
+    public void slide(SliderStates state) {
         targetPos = (int) state.getStateHeight();
         stateSlider = state;
         this.fireSliderEvent(stateSlider);

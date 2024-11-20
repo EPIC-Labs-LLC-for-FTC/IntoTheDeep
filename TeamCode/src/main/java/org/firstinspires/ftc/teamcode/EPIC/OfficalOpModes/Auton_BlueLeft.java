@@ -22,7 +22,7 @@ public class Auton_BlueLeft extends LinearOpMode {
 
         waitForStart();
 
-        odyssey.odysseyArm.move(ArmStates.LOWERED,6);
+        odyssey.odysseyArm.move(ArmStates.LOWERED);
         sleep(2000);
         odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
         sleep(1500);
@@ -34,7 +34,7 @@ public class Auton_BlueLeft extends LinearOpMode {
         sleep(1500);
         odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
         sleep(1500);
-        odyssey.odysseyArm.move(ArmStates.INITIALIZED,6);
+        odyssey.odysseyArm.move(ArmStates.INITIALIZED);
         sleep(500);
 
         while (opModeIsActive()) {
