@@ -12,9 +12,7 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 @TeleOp(name = "Driver Tryout TeleOp")
 public class TeleOp_Tryout extends LinearOpMode {
     public static double ap = 0.02, ai = 0, ad = 0.001, af = 0.08;
-    public static int aTarget;
     public static double sp = 0.02, si = 0, sd = 0.0018, sf = 0;
-    public static int sTarget;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -23,8 +21,8 @@ public class TeleOp_Tryout extends LinearOpMode {
         Thread pidf = new Thread() {
             public void run() {
                 while (opModeIsActive()) {
-                    odyssey.odysseyArm.runPIDF(ap, ai, ad, af, aTarget);
-                    odyssey.odysseySlider.runPIDF(sp, si, sd, sf, sTarget);
+                    odyssey.odysseyArm.runPIDF(ap, ai, ad, af);
+                    odyssey.odysseySlider.runPIDF(sp, si, sd, sf);
                 }
             }
         };

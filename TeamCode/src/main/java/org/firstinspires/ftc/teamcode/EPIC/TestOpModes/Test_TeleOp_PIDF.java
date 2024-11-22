@@ -31,7 +31,8 @@ public class Test_TeleOp_PIDF extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()){
-            slider.runPIDF(sp, si, sd, sf, starget);
+            slider.targetPos = starget;
+            slider.runPIDF(sp, si, sd, sf);
         }
     }
 }

@@ -24,7 +24,7 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     private List<IArmListener> listeners;
 
     private final double ticksPerDegrees = 1425.1/360;
-    private int targetPos;
+    public int targetPos;
 
     public Arm_PIDF(HardwareMap hardwareMap) {
         armMotorR = hardwareMap.get(DcMotorEx.class, "AMR");
@@ -73,11 +73,11 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     }
 
     @Override
-    public void runPIDF(double p, double i, double d, double f, int target) {
+    public void runPIDF(double p, double i, double d, double f) {
         armController.setPID(p, i, d);
         int armPos = armMotorR.getCurrentPosition();
-        double pid = armController.calculate(armPos, target);
-        double ff = Math.cos(Math.toRadians(target / ticksPerDegrees)) * f;
+        double pid = armController.calculate(armPos, targetPos);
+        double ff = Math.cos(Math.toRadians(targetPos / ticksPerDegrees)) * f;
 
         double power = (pid/2) + ff;
 
@@ -85,7 +85,7 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
         armMotorL.setPower(power);
 
         telemetry.addData("ArmPos: ", armPos);
-        telemetry.addData("ArmTargetPos: ", target);
+        telemetry.addData("ArmTargetPos: ", targetPos);
     }
 
     @Override
@@ -95,8 +95,8 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
 
     @Override
     public void move(ArmStates state) {
-        targetPos = (int) state.getState();
-        stateArm = state;
+        this.targetPos = (int) state.getState();
+        this.stateArm = state;
         this.notifyArmStateChange(new ArmEventObject(this, stateArm));
     }
 }

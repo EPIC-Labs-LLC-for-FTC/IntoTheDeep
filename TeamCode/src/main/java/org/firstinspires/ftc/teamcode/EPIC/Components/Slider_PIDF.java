@@ -20,7 +20,7 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
 
     private final double reset = 0;
     private int sliderPos;
-    private int targetPos;
+    public int targetPos;
 
     private DcMotorEx slideMotorR;
     private DcMotorEx slideMotorL;
@@ -75,10 +75,10 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
     }
 
     @Override
-    public void runPIDF(double p, double i, double d, double f, int target) {
+    public void runPIDF(double p, double i, double d, double f) {
         sliderController.setPID(p, i, d);
-        int sliderPos = slideMotorR.getCurrentPosition();
-        double pid = sliderController.calculate(sliderPos, target);
+        sliderPos = slideMotorR.getCurrentPosition();
+        double pid = sliderController.calculate(sliderPos, targetPos);
 
         double power = (pid/2) + f;
 
@@ -86,14 +86,14 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
         slideMotorL.setPower(power);
 
         telemetry.addData("SliderPos: ", sliderPos);
-        telemetry.addData("SliderTargetPos: ", target);
+        telemetry.addData("SliderTargetPos: ", targetPos);
         telemetry.update();
     }
 
     @Override
     public void slide(SliderStates state) {
-        targetPos = (int) state.getStateHeight();
-        stateSlider = state;
+        this.targetPos = (int) state.getStateHeight();
+        this.stateSlider = state;
         this.fireSliderEvent(stateSlider);
     }
 }
