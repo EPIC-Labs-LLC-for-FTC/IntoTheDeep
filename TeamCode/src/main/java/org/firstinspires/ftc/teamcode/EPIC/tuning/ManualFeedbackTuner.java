@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.EPIC.ThreeDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.EPIC.TwoDeadWheelLocalizer;
 
 public final class ManualFeedbackTuner extends LinearOpMode {
-    public static double DISTANCE = 64;
+    public static double DISTANCE = 30;
 
     @Override
     public void runOpMode() throws InterruptedException {

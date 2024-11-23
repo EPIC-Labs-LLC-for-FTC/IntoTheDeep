@@ -81,7 +81,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         double magnitude = Math.sqrt(Math.pow(gamepad1.left_stick_x, 2) + Math.pow(gamepad1.left_stick_y, 2));
         double direction = Math.atan2(gamepad1.left_stick_x, -gamepad1.left_stick_y);
-        boolean precision = gamepad1.right_bumper;
+        boolean precision = gamepad1.left_trigger > 0.1;
 
         //INFO Increasing speed to a maximum of 1
         double fl = magnitude * Math.sin(direction + Math.PI / 4) + rotation;
@@ -94,7 +94,7 @@ public class Adventurer_Teleop extends LinearOpMode {
         if (movement == 0 && strafe == 0)
             ratio = 1;
         else if (precision)
-            ratio = hypot / (Math.max(Math.max(Math.max(Math.abs(fl), Math.abs(bl)), Math.abs(fr)), Math.abs(br))) / 2;
+            ratio = hypot / (Math.max(Math.max(Math.max(Math.abs(fl), Math.abs(bl)), Math.abs(fr)), Math.abs(br))) / 3;
         else
             ratio = hypot / (Math.max(Math.max(Math.max(Math.abs(fl), Math.abs(bl)), Math.abs(fr)), Math.abs(br)));
 
@@ -154,9 +154,9 @@ public class Adventurer_Teleop extends LinearOpMode {
 
     public void slideManual() {
         if (gamepad2.right_trigger > 0.2) {
-            target2 = target2 - 10;
+            target2 = target2 - 15;
         } else if (gamepad2.left_trigger > 0.2) {
-            target2 = target2 + 10;
+            target2 = target2 + 15;
         }
     }
 
@@ -193,7 +193,7 @@ public class Adventurer_Teleop extends LinearOpMode {
             runningActions.add(new ParallelAction(
                     new InstantAction(() -> slideRight.getCurrentPosition()
 
-            )));
+                    )));
         }
     }
 
@@ -259,14 +259,14 @@ public class Adventurer_Teleop extends LinearOpMode {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 controller.setPID(p1, i1, d1);
-                  int armPos = armRight.getCurrentPosition();
-                  double pid1 = controller.calculate(armPos, target1);
-                  double ff1 = Math.cos(Math.toRadians(target1 / tick_in_degrees1)) * f1;
+                int armPos = armRight.getCurrentPosition();
+                double pid1 = controller.calculate(armPos, target1);
+                double ff1 = Math.cos(Math.toRadians(target1 / tick_in_degrees1)) * f1;
 
-                  double power1 = pid1 + ff1;
+                double power1 = pid1 + ff1;
 
-                  armRight.setPower(power1);
-                  armLeft.setPower(power1);
+                armRight.setPower(power1);
+                armLeft.setPower(power1);
 
                 telemetry.addData("Arm Position", armPos);
                 telemetry.addData("Arm Target", target1);
@@ -275,9 +275,9 @@ public class Adventurer_Teleop extends LinearOpMode {
                 //////////////////////////////////////////////////////////////////
 
                 controller2.setPID(p2, d2, i2);
-                 int slidePos = slideRight.getCurrentPosition();
-                 double pid2 = controller2.calculate(slidePos, target2);
-                 double ff2 = Math.cos(Math.toRadians(target2 / tick_in_degrees2)) * f2;
+                int slidePos = slideRight.getCurrentPosition();
+                double pid2 = controller2.calculate(slidePos, target2);
+                double ff2 = Math.cos(Math.toRadians(target2 / tick_in_degrees2)) * f2;
 
                 double power2 = pid2 + ff2;
 
@@ -288,7 +288,7 @@ public class Adventurer_Teleop extends LinearOpMode {
                 telemetry.addData("Slide Target", target2);
                 telemetry.addData("Slide Power", power2);
                 telemetry.update();
- 
+
                 driverControl();
                 armManual();
                 slideManual();
