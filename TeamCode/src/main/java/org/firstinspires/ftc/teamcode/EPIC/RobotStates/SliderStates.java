@@ -5,6 +5,7 @@ public enum                                                                     
     LOW_HANG(1),
     LOW_HANG_START(850),
     RETRACTED(0.0);
+    //Positions need to be redone
 
     private double height;
 

@@ -7,6 +7,7 @@ public enum ArmStates {
     LOWERED(1030),
     INITIALIZED(0.0),
     NEUTRAL(600); //check the value
+    //Positions need to be redone
 
     private double stateNum;
 
