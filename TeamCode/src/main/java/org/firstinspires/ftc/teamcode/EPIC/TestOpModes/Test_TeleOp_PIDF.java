@@ -23,7 +23,7 @@ public class Test_TeleOp_PIDF extends LinearOpMode {
         Slider_PIDF slider = new Slider_PIDF(hardwareMap);
         slider.setParent(this);
         slider.setTelemetry(this.telemetry);
-        arm.initialize();
+        arm.initialize(ap, ai, ad);
         slider.initialize(sp, si, sd);
 
         while (opModeInInit()){
