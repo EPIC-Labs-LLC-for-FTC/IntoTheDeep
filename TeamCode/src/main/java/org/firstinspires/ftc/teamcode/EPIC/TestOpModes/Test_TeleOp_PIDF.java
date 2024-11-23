@@ -10,9 +10,9 @@ import org.firstinspires.ftc.teamcode.EPIC.Components.Slider_PIDF;
 @Config
 @TeleOp(name = "TeleOp_PIDF")
 public class Test_TeleOp_PIDF extends LinearOpMode {
-    public final double ap = 0.02, ai = 0, ad = 0.001, af = 0.08;
+    public final double ap = 0.02, ai = 0, ad = 0.0015, af = 0.08;
     public static int atarget;
-    public static double sp = 0.02, si = 0, sd = 0.0018, sf = 0;
+    public final double sp = 0.02, si = 0, sd = 0.001, sf = 0;
     public static int starget;
 
     @Override
