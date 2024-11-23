@@ -2,13 +2,9 @@ package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
-import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
-import org.firstinspires.ftc.teamcode.EPIC.Components.Arm;
+
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
-import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 
 @Autonomous(name = "Test Auton")
 //@Disabled
