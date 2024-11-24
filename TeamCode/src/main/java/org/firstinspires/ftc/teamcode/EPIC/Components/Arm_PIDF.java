@@ -79,7 +79,7 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
         double pid = armController.calculate(armPos, targetPos);
         double ff = Math.cos(Math.toRadians(targetPos / ticksPerDegrees)) * f;
 
-        double power = (pid/4) + ff;
+        double power = (pid/2) + ff;
 
         armMotorR.setPower(power);
         armMotorL.setPower(power);
