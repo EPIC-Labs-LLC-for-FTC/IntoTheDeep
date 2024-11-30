@@ -303,6 +303,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                     }
                 }
             };
+            tc.start();
         }
     }
 }
