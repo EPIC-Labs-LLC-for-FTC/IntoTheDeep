@@ -288,6 +288,21 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
 
     @Override
     public void specClawMove(SClawEventObject event) {
+        if (parent.opModeIsActive()) {
+            SpecimenClaw.SClawStates newState = event.getNewState();
 
+            Thread tc = new Thread() {
+                public void run() {
+                    switch(newState) {
+                        case OPEN:
+                            break;
+                        case HOLDING_SPECIMEN:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            };
+        }
     }
 }
