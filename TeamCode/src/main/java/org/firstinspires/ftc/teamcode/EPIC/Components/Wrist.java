@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Wrist extends AComponents implements IWrist {
-    private Servo jointR;
-    private Servo jointL;
+    public Servo jointR;
+    public Servo jointL;
     public WristStates stateWrist;
 
     // New list to hold wrist listeners
@@ -27,8 +27,6 @@ public class Wrist extends AComponents implements IWrist {
 
     @Override
     public void initialize() {
-        jointR.setDirection(Servo.Direction.FORWARD);
-        jointL.setDirection(Servo.Direction.REVERSE);
         setPos(WristStates.INITIALIZING);
     }
 
@@ -46,6 +44,11 @@ public class Wrist extends AComponents implements IWrist {
         jointL.setPosition(targetPos);
         this.stateWrist = state;
         this.notifyWristStateChange(new WristEventObject(this, this.stateWrist));
+    }
+
+    public void setPos(double tPos) {
+        jointR.setPosition(tPos);
+        jointL.setPosition(tPos);
     }
 
     @Override
