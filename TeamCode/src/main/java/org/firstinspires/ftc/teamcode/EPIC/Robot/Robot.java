@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Robot implements IColorListener, ITouchListener, IClawListener, IArmListener, IWristListener, ISliderListener, IMecanumListener {
+public class Robot implements IColorListener, ITouchListener, IClawListener, IArmListener, ISClawListener, IWristListener, ISliderListener, IMecanumListener {
 
     public Claw odysseyClaw;
     public Slider_PIDF odysseySlider;
@@ -284,5 +284,10 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
             };
             tc.start();
         }
+    }
+
+    @Override
+    public void specClawMove(SClawEventObject event) {
+
     }
 }
