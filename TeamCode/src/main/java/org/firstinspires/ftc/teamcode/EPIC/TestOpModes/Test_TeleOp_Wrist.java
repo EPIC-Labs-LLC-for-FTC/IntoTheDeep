@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
 
 @TeleOp(name = "Wrist Tester")
-public class Test_OpMode_Wrist extends LinearOpMode {
+public class Test_TeleOp_Wrist extends LinearOpMode {
     public static double targetPosR = 0;
     public static double targetPosL = 0;
 
