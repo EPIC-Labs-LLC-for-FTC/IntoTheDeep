@@ -40,14 +40,14 @@ public class Wrist extends AComponents implements IWrist {
     @Override
     public void setPos(WristStates state) {
         double targetPos = state.getPos();
-        jointR.setPosition(targetPos);
+        jointR.setPosition(1-targetPos);
         jointL.setPosition(targetPos);
         this.stateWrist = state;
         this.notifyWristStateChange(new WristEventObject(this, this.stateWrist));
     }
 
     public void setPos(double tPos) {
-        jointR.setPosition(tPos);
+        jointR.setPosition(1-tPos);
         jointL.setPosition(tPos);
     }
 
