@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.EPIC.RobotStates;
 
 public enum WristStates {
-    PICKING_UP_SAMPLE(0.6),
-    DEPOSITING_SAMPLE(0.325),
-    NEUTRAL(0.1),
+    PICKING_UP_SAMPLE(0.9),
+    DEPOSITING_SAMPLE(0.15),
+    NEUTRAL(0.5),
     INITIALIZING(0.15);
 
     private double pos;
