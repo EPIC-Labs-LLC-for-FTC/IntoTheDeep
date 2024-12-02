@@ -22,12 +22,15 @@ public class Wrist extends AComponents implements IWrist {
     public Wrist(HardwareMap hardwareMap) {
         jointR = hardwareMap.get(Servo.class, "JR");
         jointL = hardwareMap.get(Servo.class, "JL");
+        jointL.setDirection(Servo.Direction.REVERSE);
         listeners = new ArrayList<>();
     }
 
     @Override
     public void initialize() {
         setPos(WristStates.INITIALIZING);
+
+        setPos(0);
     }
 
     // New method to notify listeners of wrist state changes
@@ -40,14 +43,14 @@ public class Wrist extends AComponents implements IWrist {
     @Override
     public void setPos(WristStates state) {
         double targetPos = state.getPos();
-        jointR.setPosition(targetPos);
+        jointR.setPosition(1-targetPos);
         jointL.setPosition(targetPos);
         this.stateWrist = state;
         this.notifyWristStateChange(new WristEventObject(this, this.stateWrist));
     }
 
     public void setPos(double tPos) {
-        jointR.setPosition(tPos);
+        jointR.setPosition(1-tPos);
         jointL.setPosition(tPos);
     }
 
