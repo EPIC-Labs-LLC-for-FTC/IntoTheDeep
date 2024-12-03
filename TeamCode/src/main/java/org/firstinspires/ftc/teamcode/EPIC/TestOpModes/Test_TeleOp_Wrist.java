@@ -11,15 +11,6 @@ public class Test_TeleOp_Wrist extends LinearOpMode {
     public static double targetPosR = 0;
     public static double targetPosL = 0;
 
-//    Thread wristing = new Thread() {
-//        public void run() {
-//            while (opModeIsActive()) {
-//
-//            }
-//        }
-//    };
-
-
     @Override
     public void runOpMode() throws InterruptedException {
         Wrist wrist = new Wrist(hardwareMap);
@@ -28,9 +19,6 @@ public class Test_TeleOp_Wrist extends LinearOpMode {
         wrist.initialize();
 
         waitForStart();
-
-
-        //wristing.start();
 
         while (opModeIsActive()) {
             if (gamepad1.a) {
