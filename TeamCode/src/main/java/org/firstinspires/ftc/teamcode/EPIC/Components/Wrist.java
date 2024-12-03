@@ -22,7 +22,7 @@ public class Wrist extends AComponents implements IWrist {
     public Wrist(HardwareMap hardwareMap) {
         jointR = hardwareMap.get(Servo.class, "JR");
         jointL = hardwareMap.get(Servo.class, "JL");
-        jointL.setDirection(Servo.Direction.REVERSE);
+        jointR.setDirection(Servo.Direction.REVERSE);
         listeners = new ArrayList<>();
     }
 
@@ -31,6 +31,7 @@ public class Wrist extends AComponents implements IWrist {
         setPos(WristStates.INITIALIZING);
 
         setPos(0);
+        parent.sleep(1000);
     }
 
     // New method to notify listeners of wrist state changes
