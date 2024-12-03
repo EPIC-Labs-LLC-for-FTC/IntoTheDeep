@@ -23,6 +23,7 @@ public class Wrist extends AComponents implements IWrist {
         jointR = hardwareMap.get(Servo.class, "JR");
         jointL = hardwareMap.get(Servo.class, "JL");
         jointR.setDirection(Servo.Direction.REVERSE);
+        //jointL.setDirection(Servo.Direction.REVERSE);
         listeners = new ArrayList<>();
     }
 
@@ -44,8 +45,7 @@ public class Wrist extends AComponents implements IWrist {
     @Override
     public void setPos(WristStates state) {
         double targetPos = state.getPos();
-        jointR.setPosition(1-targetPos);
-        jointL.setPosition(targetPos);
+        setPos(targetPos);
         this.stateWrist = state;
         this.notifyWristStateChange(new WristEventObject(this, this.stateWrist));
     }
@@ -53,6 +53,9 @@ public class Wrist extends AComponents implements IWrist {
     public void setPos(double tPos) {
         jointR.setPosition(1-tPos);
         jointL.setPosition(tPos);
+
+//        jointR.setPosition(tPos);
+//        jointL.setPosition(1-tPos);
     }
 
     @Override
