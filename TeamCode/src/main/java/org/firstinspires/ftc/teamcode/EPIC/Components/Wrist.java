@@ -22,7 +22,7 @@ public class Wrist extends AComponents implements IWrist {
     public Wrist(HardwareMap hardwareMap) {
         jointR = hardwareMap.get(Servo.class, "JR");
         jointL = hardwareMap.get(Servo.class, "JL");
-        jointR.setDirection(Servo.Direction.REVERSE);
+        //jointR.setDirection(Servo.Direction.REVERSE);
         //jointL.setDirection(Servo.Direction.REVERSE);
         listeners = new ArrayList<>();
     }

@@ -70,8 +70,12 @@ public class SpecimenClaw extends AComponents implements IClaw{
 
     public void move(SClawStates state) {
         stateClaw = state;
-        leftSpecFinger.setPosition(stateClaw.getState());
-        rightSpecFinger.setPosition(stateClaw.getState());
+        move(stateClaw.getState());
         fireSClawEvent(stateClaw);
+    }
+
+    public void move (double pos) {
+        leftSpecFinger.setPosition(pos);
+        rightSpecFinger.setPosition(pos);
     }
 }
