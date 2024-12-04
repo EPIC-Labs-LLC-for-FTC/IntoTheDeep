@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.EPIC.Components.SpecimenClaw;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
@@ -11,12 +12,13 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 
 @TeleOp(name = "Driver Tryout TeleOp")
 public class TeleOp_Tryout extends LinearOpMode {
-    public static double ap = 0.02, ai = 0, ad = 0.001, af = 0.08;
-    public static double sp = 0.02, si = 0, sd = 0.0018, sf = 0;
+    public static double ap = 0.02, ai = 0, ad = 0.0015, af = 0.08;
+    public static double sp = 0.02, si = 0, sd = 0.001, sf = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
         Robot odyssey = new Robot(this, "Red");
+        odyssey.initialize();
 
         Thread pidf = new Thread() {
             public void run() {
@@ -73,9 +75,19 @@ public class TeleOp_Tryout extends LinearOpMode {
                     } else if ((gamepad1.left_bumper || gamepad1.right_bumper || gamepad1.dpad_down || gamepad1.dpad_up) && (odyssey.odysseyArm.stateArm == ArmStates.DEPOSITING)) {
                         telemetry.addData("Slider Thread", "Arm is in the way! Please move it!");
                     } else if (gamepad1.a) {
-                        odyssey.odysseyWheels.setPower(0.2);
+                        odyssey.odysseySClaw.move(SpecimenClaw.SClawStates.OPEN);
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else if (gamepad1.b) {
-                        odyssey.odysseyWheels.setPower(0.6);
+                        odyssey.odysseySClaw.move(SpecimenClaw.SClawStates.HOLDING_SPECIMEN);
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else if (gamepad1.x) {
                         odyssey.odysseyWheels.setPower(1);
                     }
@@ -111,8 +123,10 @@ public class TeleOp_Tryout extends LinearOpMode {
                 sleep(50);
             } else if (gamepad2.left_bumper) {
                 odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT);
+                sleep(50);
             } else if (gamepad2.right_bumper) {
                 odyssey.odysseyArm.move(ArmStates.LOWERED);
+                sleep(50);
             }
 
             telemetry.update();

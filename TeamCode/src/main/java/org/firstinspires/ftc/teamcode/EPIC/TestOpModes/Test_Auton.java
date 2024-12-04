@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 
+@Config
 @Autonomous(name = "Test Auton")
 //@Disabled
 public class Test_Auton extends LinearOpMode {
@@ -18,54 +20,5 @@ public class Test_Auton extends LinearOpMode {
         sleep(1000);
 
         waitForStart();
-        sleep(100);
-
-        //forward
-        distance = 51;
-        //mecanum.encoderDrive(0.8,distance,distance,distance,distance,2);
-        //strafe left
-//        distance = 12.2;
-//        mecanum.encoderDrive(0.8,-distance,distance,distance,-distance,2);
-//        distance = 2.5;
-//        mecanum.encoderDrive(0.8,-distance,-distance,-distance,-distance,1);
-//
-//        sleep(700);
-//        //strafe right
-//        distance = 13.25;
-//        mecanum.encoderDrive(0.8,distance,-distance,-distance,distance,2);
-//        //turn left
-//        distance = 21.4;
-//        mecanum.encoderDrive(0.8,-distance,-distance,distance,distance,2);
-//        //strafe right
-//        distance = 2;
-//        mecanum.encoderDrive(0.8,distance,-distance,-distance,distance,1);
-//
-//        //backward
-//        distance = 16;
-//        mecanum.encoderDrive(0.8,-distance,-distance,-distance,-distance,2);
-//
-//        sleep(200);
-//        //forward
-//        distance = 17.5;
-//        mecanum.encoderDrive(0.8,distance,distance,distance,distance,2);
-//        //strafe right
-//        distance = 14.5;
-//        mecanum.encoderDrive(0.8,distance,-distance,-distance,distance,2);
-//        //turn left
-//        distance = 1.25;
-//        mecanum.encoderDrive(0.8,-distance,-distance,-distance,-distance,1);
-//        sleep(1000);
-//        //strafe left
-//        distance = 13.5;
-//        mecanum.encoderDrive(0.8,-distance,distance,distance,-distance,2);
-
-
-
-
-
-
-
-
-
     }
 }

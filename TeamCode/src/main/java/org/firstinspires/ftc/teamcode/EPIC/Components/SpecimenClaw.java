@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -16,7 +18,7 @@ public class SpecimenClaw extends AComponents implements IClaw{
     private List<ISClawListener> listeners;
 
     public enum SClawStates {
-        OPEN(1.0),
+        OPEN(0.25),
         HOLDING_SPECIMEN(0);
 
         private double state;
@@ -59,8 +61,8 @@ public class SpecimenClaw extends AComponents implements IClaw{
 
     @Override
     public void initialize() {
-        leftSpecFinger.setPosition(0);
-        rightSpecFinger.setPosition(0);
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        move(SClawStates.OPEN);
     }
 
     @Override
@@ -76,6 +78,6 @@ public class SpecimenClaw extends AComponents implements IClaw{
 
     public void move (double pos) {
         leftSpecFinger.setPosition(pos);
-        rightSpecFinger.setPosition(pos);
+        rightSpecFinger.setPosition(0.25-pos);
     }
 }

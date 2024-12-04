@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.EPIC.RobotStates;
 
 public enum ArmStates {
-    READY_TO_DEPOSIT(150),
+    READY_TO_DEPOSIT(300),
     DEPOSITING(20),
     //LOWERED(190),
     LOWERED(500),

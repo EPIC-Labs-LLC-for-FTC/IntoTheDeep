@@ -1,14 +1,18 @@
 package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.EPIC.Components.SpecimenClaw;
 
+@Config
 @TeleOp(name = "SClaw_Tester")
 public class Test_TeleOp_SClaw extends LinearOpMode {
-    public double rPos = 0;
-    public double lPos = 0;
+    public static double rPos = 0;
+    public static double lPos = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         SpecimenClaw sClaw = new SpecimenClaw(hardwareMap);

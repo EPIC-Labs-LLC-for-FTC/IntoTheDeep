@@ -30,9 +30,6 @@ public class Wrist extends AComponents implements IWrist {
     @Override
     public void initialize() {
         setPos(WristStates.INITIALIZING);
-
-        setPos(0);
-        parent.sleep(1000);
     }
 
     // New method to notify listeners of wrist state changes
