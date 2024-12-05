@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -95,5 +99,19 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
         this.targetPos = (int) state.getStateHeight();
         this.stateSlider = state;
         this.fireSliderEvent(stateSlider);
+    }
+
+    public Action slide(SliderStates state, boolean isAction) {
+        Slider_PIDF slide = this;
+        Action action = new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                slide.targetPos = (int) state.getStateHeight();
+                slide.stateSlider = state;
+                slide.fireSliderEvent(stateSlider);
+                return false;
+            }
+        };
+        return action;
     }
 }

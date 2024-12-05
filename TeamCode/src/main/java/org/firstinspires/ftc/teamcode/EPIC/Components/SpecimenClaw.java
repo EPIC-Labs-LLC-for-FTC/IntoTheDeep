@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -74,6 +78,21 @@ public class SpecimenClaw extends AComponents implements IClaw{
         stateClaw = state;
         move(stateClaw.getState());
         fireSClawEvent(stateClaw);
+    }
+
+    public Action move(SClawStates state,boolean IsAction) {
+        SpecimenClaw claw = this;
+        Action action = new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+                stateClaw = state;
+                claw.move(stateClaw.getState());
+                claw.fireSClawEvent(stateClaw);
+                return false;
+            }
+        };
+        return action;
     }
 
     public void move (double pos) {
