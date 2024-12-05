@@ -90,6 +90,20 @@ public class TeleOp_Tryout extends LinearOpMode {
                         }
                     } else if (gamepad1.x) {
                         odyssey.odysseyWheels.setPower(1);
+                    } else if (gamepad1.dpad_right) {
+                        odyssey.odysseySlider.targetPos += 150;
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad1.dpad_left) {
+                        odyssey.odysseySlider.targetPos -= 150;
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
             }
