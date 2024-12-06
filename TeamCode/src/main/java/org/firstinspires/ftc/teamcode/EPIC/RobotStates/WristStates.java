@@ -4,7 +4,8 @@ public enum WristStates {
     PICKING_UP_SAMPLE(1),
     DEPOSITING_SAMPLE(0),
     NEUTRAL(0.5),
-    INITIALIZING(1);
+    INITIALIZING(1),
+    DEPOSITING_SPECIMEN(0); //find this value
 
     private double pos;
 
