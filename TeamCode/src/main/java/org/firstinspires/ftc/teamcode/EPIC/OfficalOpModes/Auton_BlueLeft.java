@@ -44,6 +44,8 @@ public class Auton_BlueLeft extends LinearOpMode {
         sleep(1000);
         odyssey.odysseyClaw.move(ClawStates.OPEN);
         sleep(500);
+        odyssey.odysseyArm.move(ArmStates.INITIALIZED);
+        sleep(1000);
         distance = -12;
         odyssey.odysseyWheels.encoderDrive(0.6,distance,distance,distance,distance,6);
         sleep(1000);
