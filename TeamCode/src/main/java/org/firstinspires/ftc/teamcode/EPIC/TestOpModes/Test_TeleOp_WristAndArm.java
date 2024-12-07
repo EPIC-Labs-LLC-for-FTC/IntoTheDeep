@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 
+@Disabled
 @TeleOp
 @Config
 public class Test_TeleOp_WristAndArm extends LinearOpMode {
@@ -46,9 +48,9 @@ public class Test_TeleOp_WristAndArm extends LinearOpMode {
             } else if (gamepad1.right_bumper) {
                 arm.move(ArmStates.READY_TO_DEPOSIT);
             } else if (gamepad1.dpad_up) {
-                arm.move(ArmStates.DEPOSITING_SPECIMEN);
+                //arm.move(ArmStates.DEPOSITING_SPECIMEN);
             } else if (gamepad1.b) {
-                wrist.setPos(WristStates.DEPOSITING_SPECIMEN);
+                //wrist.setPos(WristStates.DEPOSITING_SPECIMEN);
             }
         }
     }

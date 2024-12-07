@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Slider_PIDF;
 import org.firstinspires.ftc.teamcode.EPIC.Components.SpecimenClaw;
 
+@Disabled
 @Config
 @TeleOp(name = "TeleOp_PIDF")
 public class Test_TeleOp_PIDF extends LinearOpMode {

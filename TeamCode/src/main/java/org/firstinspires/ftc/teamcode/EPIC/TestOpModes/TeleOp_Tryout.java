@@ -74,20 +74,6 @@ public class TeleOp_Tryout extends LinearOpMode {
                         }
                     } else if ((gamepad1.left_bumper || gamepad1.right_bumper || gamepad1.dpad_down || gamepad1.dpad_up) && (odyssey.odysseyArm.stateArm == ArmStates.DEPOSITING)) {
                         telemetry.addData("Slider Thread", "Arm is in the way! Please move it!");
-                    } else if (gamepad1.a) {
-                        //           odyssey.odysseySClaw.move(SpecimenClaw.SClawStates.OPEN);
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    } else if (gamepad1.b) {
-                        //         odyssey.odysseySClaw.move(SpecimenClaw.SClawStates.HOLDING_SPECIMEN);
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
                     } else if (gamepad1.x) {
                         odyssey.odysseyWheels.setPower(1);
                     } else if (gamepad1.dpad_right) {
@@ -138,9 +124,6 @@ public class TeleOp_Tryout extends LinearOpMode {
             } else if (gamepad2.left_bumper) {
                 odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT);
                 sleep(50);
-            } else if (gamepad2.b) {
-                odyssey.odysseyClaw.move(0.1);
-                //sleep(50);
             } else if (gamepad2.right_bumper) {
                 odyssey.odysseyArm.move(ArmStates.LOWERED);
                 sleep(50);

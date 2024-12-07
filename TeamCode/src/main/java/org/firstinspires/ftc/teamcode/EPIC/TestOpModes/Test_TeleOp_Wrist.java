@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Wrist;
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
 
+@Disabled
 @TeleOp(name = "Wrist_Tester")
 public class Test_TeleOp_Wrist extends LinearOpMode {
 

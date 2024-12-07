@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.EPIC.OfficalOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 
+@Disabled
 @TeleOp(name = "TeleOp_Blue_NoSleep")
 public class TeleOp_Blue_NoSleep extends LinearOpMode {
     @Override

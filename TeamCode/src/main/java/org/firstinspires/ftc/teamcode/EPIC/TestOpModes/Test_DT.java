@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.EPIC.Motion.Mecanum_Wheels;
 
+@Disabled
 @TeleOp(name = "Test_DT")
 public class Test_DT extends LinearOpMode {
     @Override
