@@ -22,20 +22,33 @@ public class Auton_BlueLeft extends LinearOpMode {
 
         waitForStart();
 
+//        odyssey.odysseyArm.move(ArmStates.LOWERED);
+//        sleep(2000);
+//        odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+//        sleep(1500);
+//        odyssey.odysseyClaw.move(ClawStates.OPEN);
+//        sleep(1500);
+//        odyssey.odysseyWrist.setPos(WristStates.INITIALIZING);
+//        sleep(1500);
+//        odyssey.odysseyClaw.move(ClawStates.OPEN);
+//        sleep(1500);
+//        odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
+//        sleep(1500);
+//        odyssey.odysseyArm.move(ArmStates.INITIALIZED);
+//        sleep(500);
+
+        double distance = 24;
+        odyssey.odysseyWheels.encoderDrive(0.6,distance,distance,distance,distance,6);
+        sleep(1000);
         odyssey.odysseyArm.move(ArmStates.LOWERED);
-        sleep(2000);
-        odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
-        sleep(1500);
+        sleep(1000);
         odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(1500);
-        odyssey.odysseyWrist.setPos(WristStates.INITIALIZING);
-        sleep(1500);
-        odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(1500);
-        odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
-        sleep(1500);
-        odyssey.odysseyArm.move(ArmStates.INITIALIZED);
         sleep(500);
+        distance = -12;
+        odyssey.odysseyWheels.encoderDrive(0.6,distance,distance,distance,distance,6);
+        sleep(1000);
+        distance = 24;
+        odyssey.odysseyWheels.strafeRight(0.6,distance,6);
 
         while (opModeIsActive()) {
 
