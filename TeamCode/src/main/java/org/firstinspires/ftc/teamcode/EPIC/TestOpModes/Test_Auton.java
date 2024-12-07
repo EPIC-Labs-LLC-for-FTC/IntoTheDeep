@@ -52,19 +52,20 @@ public class Test_Auton extends LinearOpMode {
         TrajectoryActionBuilder tb2 = drive.actionBuilder(initialPose)
                 .lineToY(-16.49)
                 .waitSeconds(1);
+
+        Action tac1 = tb.build();
+        Action tac2 = tb2.build();
         waitForStart();
         pidf.start();
        //odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH);
         sleep(2000);
-        Action tac1 = tb.build();
-        Action tac2 = tb2.build();
         Actions.runBlocking(
                 new SequentialAction(
                         tac1,
                         odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH,true),
                         tac2,
                         odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH,true),
-                        odyssey.odysseySClaw.move(SpecimenClaw.SClawStates.OPEN, true),
+                   //     odyssey.odysseySClaw.move(SpecimenClaw.SClawStates.OPEN, true),
                         tac1
                 )
         );

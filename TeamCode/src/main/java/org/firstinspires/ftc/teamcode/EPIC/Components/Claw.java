@@ -64,6 +64,13 @@ public class Claw extends AComponents implements IClaw{
         this.stateClaw = state;
         fireClaw(new ClawEventObject(this, this.stateClaw));
     }
+    public void move(double pos) {
+        double targetPos = this.stateClaw.getClawPos()-pos;
+        leftFinger.setPosition(targetPos);
+        rightFinger.setPosition(1-targetPos);
+        //this.stateClaw = state;
+        fireClaw(new ClawEventObject(this, this.stateClaw));
+    }
 
     public void addClawListener(IClawListener listener) {
         listeners.add(listener);

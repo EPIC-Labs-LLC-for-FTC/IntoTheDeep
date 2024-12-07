@@ -6,7 +6,8 @@ public enum ArmStates {
     //LOWERED(190),
     LOWERED(500),
     INITIALIZED(0.0),
-    NEUTRAL(250); //check the value
+    NEUTRAL(250),
+    SPECIMEN_PICK(400), SPECIMEN_DROP(200); //check the value
 
 
     private double stateNum;
