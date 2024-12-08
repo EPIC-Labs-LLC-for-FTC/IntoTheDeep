@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.IMU_Auto;
+package org.firstinspires.ftc.teamcode.Encoder_Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -7,9 +7,8 @@ import org.firstinspires.ftc.teamcode.components.Arm;
 import org.firstinspires.ftc.teamcode.components.Claw;
 import org.firstinspires.ftc.teamcode.components.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.components.Slides;
-
-@Autonomous(name = "Right_Auto")
-public class Right_Auto extends LinearOpMode {
+@Autonomous(name = "Left_Auto")
+public class Left_Auto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -47,14 +46,37 @@ public class Right_Auto extends LinearOpMode {
             telemetry.update();
 
         }
-
         double ldistance = 0;
-
-        if (opModeIsActive()){
+        if (opModeIsActive()) {
             waitForStart();
 
-            ldistance = -22;
-            wheels.encoderDrive(0.2,ldistance,ldistance,ldistance,ldistance,5);
+            //Score1
+            arm.angle();
+            ldistance = 24;
+            wheels.encoderDrive(1, ldistance, -ldistance, -ldistance, ldistance, 2);
+            ldistance = 8;
+            wheels.encoderDrive(1, -ldistance, -ldistance, ldistance, ldistance, 2);
+            ldistance = 22;
+            wheels.encoderDrive(1, ldistance, ldistance, ldistance, ldistance, 2);
+            sleep(500);
+            slides.lBucket();
+            sleep(2000);
+            claw.open();
+            sleep(1000);
+            ldistance = -11;
+            wheels.encoderDrive(0.2, ldistance, ldistance, ldistance, ldistance, 2);
+            slides.start();
+
+            //Park
+            ldistance = 25;
+            wheels.encoderDrive(0.4, ldistance, ldistance, -ldistance, -ldistance, 2);
+
+            ldistance = 16;
+            wheels.encoderDrive(1, ldistance, ldistance, ldistance, ldistance, 2);
+            arm.start();
+
+            ldistance = 16;
+            wheels.encoderDrive(1, ldistance, ldistance, -ldistance, -ldistance, 2);
 
         }
     }

@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.components.Arm;
 import org.firstinspires.ftc.teamcode.components.Claw;
 import org.firstinspires.ftc.teamcode.components.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.components.Slides;
+import org.firstinspires.ftc.teamcode.components.Wrist;
 
 @TeleOp(name = "Expedition_TeleOp1")
 public class Expedition_TeleOp1 extends LinearOpMode {
@@ -33,6 +34,11 @@ public class Expedition_TeleOp1 extends LinearOpMode {
         arm.setParent(this);
         arm.setTelemetry(this.telemetry);
         arm.initialize();
+
+        Wrist wrist = new Wrist(hardwareMap);
+        wrist.setParent(this);
+        wrist.setTelemetry(this.telemetry);
+        wrist.initialize();
 
         Claw claw = new Claw(hardwareMap);
         claw.setParent(this);
@@ -99,8 +105,12 @@ public class Expedition_TeleOp1 extends LinearOpMode {
 
             //End of added
 
-            if (gamepad1.dpad_up){
-                slides.lBar();
+            if (gamepad2.dpad_right){
+                wrist.plus();
+            }
+
+            if (gamepad2.dpad_left){
+                wrist.minus();
             }
 
             if (gamepad2.right_trigger > 0.4){

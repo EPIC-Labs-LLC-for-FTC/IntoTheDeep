@@ -37,14 +37,14 @@ public class Wrist implements IComponents,IWrist{
     @Override
     public void plus() {
 
-        wrist.setPosition(wrist.getPosition() +0.1);
+        wrist.setPosition(wrist.getPosition() +0.001);
 
     }
 
     @Override
     public void minus() {
 
-        wrist.setPosition(wrist.getPosition() +0.1);
+        wrist.setPosition(wrist.getPosition() +0.001);
 
 
     }
