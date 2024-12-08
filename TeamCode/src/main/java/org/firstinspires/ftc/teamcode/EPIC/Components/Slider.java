@@ -9,27 +9,27 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Arm implements IComponents, IArm{
+public class Slider implements IComponents, ISlider{
 
     public boolean IsAutonomous = false;
     private LinearOpMode parent;
     private Telemetry telemetry;
     private ElapsedTime runtime = new ElapsedTime();
-    //Declare your servos, motors, sensors, other devices here
 
-    public DcMotorEx armLeft = null;
-    public DcMotorEx armRight = null;
-    public Arm(HardwareMap hardwareMap) {
-        //Instantiate your servos, motors, sensors, other devices here
-        armRight = hardwareMap.get(DcMotorEx.class, "armRight");
-        armLeft = hardwareMap.get(DcMotorEx.class, "armLeft");
+
+    public DcMotorEx slideLeft = null;
+    public DcMotorEx slideRight = null;
+    public Slider (HardwareMap hardwareMap){
+
+        slideRight = hardwareMap.get(DcMotorEx.class, "slideRight");
+        slideLeft = hardwareMap.get(DcMotorEx.class, "slideLeft");
     }
     @Override
     public void initialize() {
 
-        armRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        armLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         if(IsAutonomous){
             //override settings for autonomous mode if needed
         }
@@ -57,44 +57,36 @@ public class Arm implements IComponents, IArm{
     }
 
     @Override
-    public void liftUp(int position) {
+    public void up(int position) {
+
 
     }
 
     @Override
-    public void putDown(int position) {
+    public void down(int position) {
 
     }
 
     @Override
     public void move(int position) {
-        armLeft.setTargetPosition(position);
-        armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armRight.setTargetPosition(position);
-        armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armLeft.setPower(0.8);
-        armRight.setPower(0.8);
-//        while (parent.opModeIsActive() &&
-//                ((runtime.seconds() < 3.0) ||
-//                armRight.isBusy() || armLeft.isBusy())) {
-//
-//        }
+        slideLeft.setTargetPosition(position);
+        slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideRight.setTargetPosition(position);
+        slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideLeft.setPower(0.6);
+        slideRight.setPower(0.6);
         parent.sleep(2000);
-        armLeft.setPower(0.2);
-        armRight.setPower(0.2);
+        slideLeft.setPower(0.2);
+        slideRight.setPower(0.2);
+
     }
 
     public int getCurrentPosition() {
-       return armRight.getCurrentPosition();
+        return slideRight.getCurrentPosition();
     }
 
     public void setPower(double power) {
-        armRight.setPower(power);
-        armLeft.setPower(power);
+        slideRight.setPower(power);
+        slideLeft.setPower(power);
     }
-
-    public void resetEncoder() {
-        armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
 }

@@ -24,7 +24,7 @@ public class Mecanum_Wheels {
     public double leftErrorAdjustment = 1.0;
     public double rightErrorAdjustment = 1.0;
 
-    public double mecanumWheelCircumference = 12; //inches
+    public double mecanumWheelCircumference = 12.8; //inches
     public double omniWheelCircumference = 12; //inches
 
 
@@ -38,10 +38,12 @@ public class Mecanum_Wheels {
     public Telemetry telemetry;
 
     public Mecanum_Wheels(HardwareMap hardwareMap) {
-        frontright = hardwareMap.get(DcMotorEx.class,"frontright");
-        frontleft = hardwareMap.get(DcMotorEx.class,"frontleft");
-        backright = hardwareMap.get(DcMotorEx.class,"backright");
-        backleft = hardwareMap.get(DcMotorEx.class,"backleft");
+
+        frontleft = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        frontright = hardwareMap.get(DcMotorEx.class, "frontRight");
+        backleft = hardwareMap.get(DcMotorEx.class, "backLeft");
+        backright = hardwareMap.get(DcMotorEx.class, "backRight");
+
 
         //xRail = hardwareMap.get(DcMotorEx.class, "xRail");
     }
@@ -55,11 +57,8 @@ public class Mecanum_Wheels {
         backleft.setPower(reset);
         backright.setPower(reset);
 
-        backright.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontright.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        backleft.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontright.setDirection(DcMotorSimple.Direction.REVERSE);
+        backright.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -95,7 +94,7 @@ public class Mecanum_Wheels {
         int new_frontRightTarget;
         int new_backLeftTarget;
         int new_backRightTarget;
-        double ticksPerInchMecanum = (537.7 / mecanumWheelCircumference);
+        double ticksPerInchMecanum = (384.5 / mecanumWheelCircumference);
         // Ensure that the opmode is still active
         if (parent.opModeIsActive()) {
 

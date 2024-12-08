@@ -30,13 +30,14 @@ public class Adventurer_Teleop extends LinearOpMode {
     private PIDController controller;
     private PIDController controller2;
 
-    public static double p1 = 0.02, i1 = 0, d1 = 0.00015;
+    public static double p1 = 0.01, i1 = 0, d1 = 0.00075;
     public static double p2 = 0.017, i2 = 0, d2 = 0.0001;
 
     public static double f1 = -0.2;
     public static double f2 = -0.02;
     public static int target1 = 0;
     public static int target2 = 0;
+    public static int maxtarget = -2200;
     private final double tick_in_degrees1 = 2786.2/360;
     private final double tick_in_degrees2 = 537.7/360;
 
@@ -59,6 +60,46 @@ public class Adventurer_Teleop extends LinearOpMode {
         TelemetryPacket packet = new TelemetryPacket();
 
         // updated based on gamepads
+
+        if (gamepad2.x) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(() -> target2 = -10),
+                    new SleepAction(1),
+                    new InstantAction(() -> target1 = -390)
+            ));
+        }
+
+        if (gamepad2.y) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(() -> target1 = -980),
+                    new SleepAction(1),
+                    new InstantAction(() -> target2 = -2950)
+            ));
+        }
+
+        if (gamepad2.a) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(() -> target1 = -240),
+                    new SleepAction(1),
+                    new InstantAction(() -> target2 = -1200)
+            ));
+        }
+
+        if (gamepad2.dpad_down) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(() -> target1 = -780),
+                    new SleepAction(1),
+                    new InstantAction(() -> target2 = -1130)
+            ));
+        }
+
+        if (gamepad2.dpad_up) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(() -> target1 = -970),
+                    new SleepAction(1),
+                    new InstantAction(() -> target2 = -2800)
+            ));
+        }
 
         // update running actions
         List<Action> newActions = new ArrayList<>();
@@ -100,6 +141,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         frontLeft.setPower(ratio * fl);
         backLeft.setPower(ratio * bl);
+
         frontRight.setPower(ratio * fr);
         backRight.setPower(ratio * br);
 
@@ -169,31 +211,47 @@ public class Adventurer_Teleop extends LinearOpMode {
     }
 
     public void claw() {
-        if (gamepad2.a) {
-            clawRight.setPosition(0.5);
-            clawLeft.setPosition(0.5);
-        } else if (gamepad2.b) {
-            clawRight.setPosition(0.8);
-            clawLeft.setPosition(0.8);
+        if (gamepad1.left_bumper) {
+            clawRight.setPosition(0.45);
+            clawLeft.setPosition(0.65);
+        } else if (gamepad1.right_bumper) {
+            clawRight.setPosition(0.73);
+            clawLeft.setPosition(0.9);
         }
     }
 
     public void reset() {
         if (gamepad2.y) {
             armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            armLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            target1 = 0;
+            target2 = 0;
+        }
+    }
+
+    public void specimenPresets() {
+        if (gamepad2.a) {
+            target1 = -370;
+            target2 = -10;
+        } else if (gamepad2.b) {
+            target1 = 0;
+            target2 = 0;
         }
     }
 
     public void slideAction() {
 
         if (gamepad1.a) {
-            runningActions.add(new ParallelAction(
-                    new InstantAction(() -> slideRight.getCurrentPosition()
+            runningActions.add(new SequentialAction(
+                    new InstantAction(() -> target1 = -370),
+                    new InstantAction(() -> target2 = -10)
+            ));
+        }
+    }
 
-                    )));
+    public void slideLimit() {
+        if (target2 > maxtarget) {
+            target2 = target2 - 30;
         }
     }
 
@@ -250,8 +308,8 @@ public class Adventurer_Teleop extends LinearOpMode {
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        target1 = 0;
-        target2 = 0;
+        target1 = -150;
+        target2 = -30;
 
         waitForStart();
         sleep(100);
@@ -276,6 +334,9 @@ public class Adventurer_Teleop extends LinearOpMode {
 
                 controller2.setPID(p2, d2, i2);
                 int slidePos = slideRight.getCurrentPosition();
+                if ((target2 < maxtarget) && (target1 > -400)) {
+                    target2 = maxtarget;
+                }
                 double pid2 = controller2.calculate(slidePos, target2);
                 double ff2 = Math.cos(Math.toRadians(target2 / tick_in_degrees2)) * f2;
 
@@ -293,6 +354,7 @@ public class Adventurer_Teleop extends LinearOpMode {
                 armManual();
                 slideManual();
                 claw();
+                actions();
 
             }
 
