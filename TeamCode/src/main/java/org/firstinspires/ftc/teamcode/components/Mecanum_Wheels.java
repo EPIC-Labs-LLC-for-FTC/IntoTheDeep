@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -40,11 +41,15 @@ public class Mecanum_Wheels {
     double P_TURN_GAIN = 0.1;
     double P_DRIVE_GAIN = 0.1;
 
+    public double mecanumWheelCircumference = 12.9;
+
     public LinearOpMode parent;
 
     public Telemetry telemetry;
 
-    public double mecanumWheelCircumference = 12; //inches
+
+    public double mecanumWheelCircumference = 12.8; //inches
+
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -109,6 +114,62 @@ public class Mecanum_Wheels {
         rightBack.setPower(ratio * rb * rightErrorAdjustment);
     }
 
+    public void encoderDrive(double speed,
+                             double leftFrontInches, double leftRearInches, double rightFrontInches,
+                             double rightRearInches, double timeoutS) {
+        int new_leftFrontTarget;
+        int new_rightFrontTarget;
+        int new_leftRearTarget;
+        int new_rightRearTarget;
+        double ticksPerInchMecanum = (537.7 / mecanumWheelCircumference);
+        // Ensure that the opmode is still active
+        if (parent.opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            new_leftFrontTarget = leftFront.getCurrentPosition() + (int) (leftFrontInches * ticksPerInchMecanum);
+            new_rightFrontTarget = rightFront.getCurrentPosition() + (int) (rightFrontInches * ticksPerInchMecanum);
+
+            new_leftRearTarget = leftBack.getCurrentPosition() + (int) (leftRearInches * ticksPerInchMecanum);
+            new_rightRearTarget = rightBack.getCurrentPosition() + (int) (rightRearInches * ticksPerInchMecanum);
+            leftFront.setTargetPosition(new_leftFrontTarget);
+            rightFront.setTargetPosition(new_rightFrontTarget);
+
+
+            leftBack.setTargetPosition(new_leftRearTarget);
+            rightBack.setTargetPosition(new_rightRearTarget);
+
+            // Turn On RUN_TO_POSITION
+            leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            leftFront.setPower(speed * leftErrorAdjustment);
+            rightFront.setPower(speed * rightErrorAdjustment);
+
+            leftBack.setPower(speed * leftErrorAdjustment);
+            rightBack.setPower(speed * rightErrorAdjustment);
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (parent.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (leftFront.isBusy() || rightFront.isBusy() || leftBack.isBusy() || rightBack.isBusy())) {
+                // Display it for the driver.
+                telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_leftFrontTarget, new_rightFrontTarget, new_leftRearTarget, new_rightRearTarget);
+                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
+                        leftFront.getCurrentPosition(),
+                        rightFront.getCurrentPosition(),
+
+                        leftBack.getCurrentPosition(),
+                        rightBack.getCurrentPosition());
+                telemetry.update();
+            }
+        }
+    }
+
     public void driveStraight(double maxDriveSpeed, double distance, double heading) {
         int moveCounts = (int)(distance * COUNTS_PER_INCH);
         int leftFrontTarget = leftFront.getCurrentPosition() + moveCounts;
@@ -165,7 +226,7 @@ public class Mecanum_Wheels {
 
             turnSpeed = getSteeringCorrection(heading, P_DRIVE_GAIN);
 
-            moveRobot(driveSpeed, turnSpeed);
+            moveRobot(maxStrafeSpeed, turnSpeed);
 
         }
 
@@ -176,6 +237,7 @@ public class Mecanum_Wheels {
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
+
 
 
     public void encoderDrive(double speed,
@@ -281,28 +343,24 @@ public class Mecanum_Wheels {
                 leftFront.setTargetPosition(leftFront.getCurrentPosition());
                 rightBack.setTargetPosition(rightBack.getCurrentPosition());
                 break;
-
         }
+    }
+    public void holdHeading(double maxTurnSpeed, double heading, double holdTime) {
 
-        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        while (parent.opModeIsActive() && (leftFront.isBusy() && rightFront.isBusy() && leftBack.isBusy() && rightBack.isBusy())) {
-            driveSpeed = maxStrafeSpeed;
+        ElapsedTime holdTimer = new ElapsedTime();
+        holdTimer.reset();
 
-            turnSpeed = getSteeringCorrection(heading, P_DRIVE_GAIN);
+        while (parent.opModeIsActive() && (holdTimer.time() < holdTime)) {
+            turnSpeed = getSteeringCorrection(heading, P_TURN_GAIN);
 
-            moveRobot(driveSpeed, turnSpeed);
+            turnSpeed = Range.clip(turnSpeed, -maxTurnSpeed, maxTurnSpeed);
+
+            moveRobot(0, turnSpeed);
+
         }
 
         moveRobot(0, 0);
-
-        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void turnToHeading(double maxTurnSpeed, double heading) {

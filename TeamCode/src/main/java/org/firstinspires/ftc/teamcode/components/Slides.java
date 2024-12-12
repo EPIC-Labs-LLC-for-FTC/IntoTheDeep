@@ -16,10 +16,10 @@ public class Slides implements IComponents, ISlide{
     public DcMotorEx slide1;
     public DcMotorEx slide2;
 
-    public static final double P = 0.5;
-    public static final double I = 0;
-    public static final double D = 0.1;
-    public static final double F = 0.05;
+    public static final double P = 15.0;
+    public static final double I = 0.3;
+    public static final double D = 2.0;
+    public static final double F = 14.0;
 
     public PIDFController slide1PID, slide2PID;
 
@@ -39,8 +39,15 @@ public class Slides implements IComponents, ISlide{
 
         slide2.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        slide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
         slide1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slide2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 
@@ -75,16 +82,16 @@ public class Slides implements IComponents, ISlide{
     public void lBar() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
+        slide1.setTargetPosition(-1000);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide1.setPower(1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
+        slide2.setTargetPosition(-1000);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(1);
 
-//        moveToPosition(0);
+//        moveToPosition(-2000);
 
     }
 
@@ -109,12 +116,12 @@ public class Slides implements IComponents, ISlide{
     public void lBucket() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
+        slide1.setTargetPosition(-2300);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide1.setPower(1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
+        slide2.setTargetPosition(-2300);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(1);
 
@@ -158,6 +165,7 @@ public class Slides implements IComponents, ISlide{
     }
 
     public void slideControl(double joystick) {
+
         double power = -joystick;
 
         if (Math.abs(power) < 0.1) {

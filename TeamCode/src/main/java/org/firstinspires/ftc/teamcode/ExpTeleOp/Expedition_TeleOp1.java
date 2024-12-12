@@ -8,16 +8,21 @@ import org.firstinspires.ftc.teamcode.components.Arm;
 import org.firstinspires.ftc.teamcode.components.Claw;
 import org.firstinspires.ftc.teamcode.components.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.components.Slides;
+import org.firstinspires.ftc.teamcode.components.Wrist;
 
 @TeleOp(name = "Expedition_TeleOp1")
 public class Expedition_TeleOp1 extends LinearOpMode {
 
-    //public ColorSensor colorSensor = null;
+
+//    public ColorSensor colorSensor = null;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //colorSensor = hardwareMap.get(ColorSensor.class,"colorSensor");
+
+//        colorSensor = hardwareMap.get(ColorSensor.class,"colorSensor");
+
 
         Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
         wheels.telemetry = telemetry;
@@ -34,10 +39,18 @@ public class Expedition_TeleOp1 extends LinearOpMode {
         arm.setTelemetry(this.telemetry);
         arm.initialize();
 
+        Wrist wrist = new Wrist(hardwareMap);
+        wrist.setParent(this);
+        wrist.setTelemetry(this.telemetry);
+        wrist.initialize();
+
         Claw claw = new Claw(hardwareMap);
         claw.setParent(this);
         claw.setTelemetry(this.telemetry);
         claw.initialize();
+
+        boolean clawOpen = false;
+        String mode = "red_yellow";
 
         while (opModeInInit()){
 
@@ -60,6 +73,50 @@ public class Expedition_TeleOp1 extends LinearOpMode {
 
             slides.slideControl(-gamepad2.left_stick_y);
 
+            //Added
+
+//            if (gamepad1.a) {
+//                mode = "red_yellow";
+//            } else if (gamepad1.b) {
+//                mode = "blue_yellow";
+//            }
+//
+//            if (gamepad2.right_trigger > 0.4) {
+//                claw.open();
+//                clawOpen = true;
+//            } else if (clawOpen && colorSensor != null) {
+//                int red = colorSensor.red();
+//                int green = colorSensor.green();
+//                int blue = colorSensor.blue();
+//
+//                if (mode.equals("red_yellow")) {
+//                    if (red > green && red > blue || (red > blue && green > blue)) {
+//                        claw.close();
+//                        clawOpen = false;
+//                        arm.angle();
+//                    }
+//                } else if (mode.equals("blue_yellow")) {
+//                    if (blue > red && blue > green || (red > blue && green > red)) {
+//                        claw.close();
+//                        clawOpen = false;
+//                        arm.angle();
+//                    }
+//                }
+//            } else {
+//                claw.close();
+//                clawOpen = false;
+//            }
+
+            //End of added
+
+            if (gamepad2.dpad_right){
+                wrist.plus();
+            }
+
+            if (gamepad2.dpad_left){
+                wrist.minus();
+            }
+
             if (gamepad2.right_trigger > 0.4){
                 claw.open();
             } else {
@@ -80,6 +137,7 @@ public class Expedition_TeleOp1 extends LinearOpMode {
             telemetry.addData("Arm2Position", arm.arm2.getPosition());
             telemetry.addData("Claw1", claw.claw1.getPosition());
             telemetry.addData("Claw2", claw.claw2.getPosition());
+//            telemetry.addData("Color (R, G, B)", "(%d, %d, %d)", colorSensor.red(), colorSensor.green(), colorSensor.blue());
             telemetry.update();
         }
     }
