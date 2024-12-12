@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -98,5 +102,20 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
         targetPos = (int) state.getState();
         stateArm = state;
         this.notifyArmStateChange(new ArmEventObject(this, stateArm));
+    }
+
+    public Action move(ArmStates state,boolean IsAction) {
+        Arm_PIDF armPidf = this;
+        Action action = new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                targetPos = (int) state.getState();
+                armPidf.stateArm = state;
+                //slide.fireSliderEvent(stateSlider);
+                armPidf.notifyArmStateChange(new ArmEventObject(this, stateArm));
+                return false;
+            }
+        };
+        return action;
     }
 }

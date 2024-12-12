@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
@@ -18,7 +20,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.EPIC.Components.SpecimenClaw;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
@@ -32,7 +37,7 @@ public class Test_Auton extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         double distance = 0;
-        Pose2d initialPose = new Pose2d(37.22, 13.55, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d(0, 0, Math.toRadians(0));
         Robot odyssey = new Robot(this, "Red");
         odyssey.initialize();
         //SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, new Pose2d(-29.39, 48.73, 179.85));
@@ -42,19 +47,26 @@ public class Test_Auton extends LinearOpMode {
             public void run() {
                 while (opModeIsActive()) {
                     odyssey.odysseyArm.runPIDF(ap, ai, ad, af);
-                    odyssey.odysseySlider.runPIDF(sp, si, sd, sf);
+                    //odyssey.odysseySlider.runPIDF(sp, si, sd, sf);
                 }
             }
         };
         TrajectoryActionBuilder tb = drive.actionBuilder(initialPose)
-                        .lineToY(-13.49)
+                        .lineToY(28)
                 .waitSeconds(1);
         TrajectoryActionBuilder tb2 = drive.actionBuilder(initialPose)
-                .lineToY(-16.49)
+                .lineToY(0)
                 .waitSeconds(1);
 
         Action tac1 = tb.build();
         Action tac2 = tb2.build();
+        Action sleeper = new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                sleep(500);
+                return false;
+            }
+        };
         waitForStart();
         pidf.start();
        //odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH);
@@ -62,11 +74,16 @@ public class Test_Auton extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         tac1,
-                        odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH,true),
-                        tac2,
-                        odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH,true),
+                        //odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH,true),
+                        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP,true),
+                        odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE,true),
+                        sleeper,
+                        odyssey.odysseyClaw.move(ClawStates.OPEN,true),
+                        sleeper,
+//                        tac2,
+//                        odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH,true),
                    //     odyssey.odysseySClaw.move(SpecimenClaw.SClawStates.OPEN, true),
-                        tac1
+                        tac2
                 )
         );
         while(opModeIsActive()){

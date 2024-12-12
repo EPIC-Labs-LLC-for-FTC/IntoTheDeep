@@ -2,8 +2,12 @@ package org.firstinspires.ftc.teamcode.EPIC.Components;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ArmEventObject;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IWristListener; // Import the new interface
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.WristEventObject; // Import the event object
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
@@ -45,6 +49,23 @@ public class Wrist extends AComponents implements IWrist {
         setPos(targetPos);
         this.stateWrist = state;
         this.notifyWristStateChange(new WristEventObject(this, this.stateWrist));
+    }
+    public Action setPos(WristStates state,boolean IsAction) {
+
+
+        Wrist wrist = this;
+        Action action = new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                double targetPos = (int) state.getPos();
+                wrist.setPos(targetPos);
+                wrist.stateWrist = state;
+                //slide.fireSliderEvent(stateSlider);
+                wrist.notifyWristStateChange(new WristEventObject(wrist, wrist.stateWrist));
+                return false;
+            }
+        };
+        return action;
     }
 
     public void setPos(double tPos) {

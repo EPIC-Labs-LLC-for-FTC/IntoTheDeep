@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode.EPIC.Components;
 
 import static org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates.*;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -10,6 +14,7 @@ import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.ClawEventObject;
 import org.firstinspires.ftc.teamcode.EPIC.EventListeners.IClawListener;
+import org.firstinspires.ftc.teamcode.EPIC.EventListeners.WristEventObject;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 
 import java.util.ArrayList;
@@ -63,6 +68,23 @@ public class Claw extends AComponents implements IClaw{
         rightFinger.setPosition(1-targetPos);
         this.stateClaw = state;
         fireClaw(new ClawEventObject(this, this.stateClaw));
+    }
+
+    public Action move(ClawStates state, boolean IsAction) {
+
+        Claw claw = this;
+        Action action = new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                double targetPos = (int) state.getClawPos();
+                claw.move(targetPos);
+                claw.stateClaw = state;
+                //slide.fireSliderEvent(stateSlider);
+                fireClaw(new ClawEventObject(claw, claw.stateClaw));
+                return false;
+            }
+        };
+        return action;
     }
     public void move(double pos) {
         double targetPos = this.stateClaw.getClawPos()-pos;
