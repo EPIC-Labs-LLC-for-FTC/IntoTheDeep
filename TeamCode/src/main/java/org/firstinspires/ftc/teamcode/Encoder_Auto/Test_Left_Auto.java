@@ -19,10 +19,10 @@ public class Test_Left_Auto extends LinearOpMode {
         Pose2d initialPose = new Pose2d(0, 0, Math.toRadians(0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
-//        Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
-//        wheels.telemetry = telemetry;
-//        wheels.parent = this;
-//        wheels.initialize();
+        Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
+        wheels.telemetry = telemetry;
+        wheels.parent = this;
+        wheels.initialize();
 
         Slides slides = new Slides(hardwareMap);
         slides.setParent(this);
