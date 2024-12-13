@@ -32,7 +32,8 @@ public class MeepMeepTesting {
 //                        //.lineToX(10)
                         .strafeTo(new Vector2d(10,-37.4))
                         //.turn(Math.toRadians(-60))
-                //.splineToConstantHeading(new Vector2d(42,-9),Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(42,-9),Math.toRadians(90))
+
                                 //.splineToSplineHeading(new Pose2d(42,-9,Math.toRadians(90)),Math.toRadians(90))
                 //.splineToSplineHeading(new Pose2d(43,-9,Math.toRadians(60)),Math.toRadians(90))
 //                .strafeTo(new Vector2d(42,-9))
@@ -47,11 +48,11 @@ public class MeepMeepTesting {
 //                .strafeTo(new Vector2d(61,-9))
 //                .turn(Math.toRadians(-2))
 ////
-////                .splineTo(new Vector2d(51,-9),Math.toRadians(-90))
+                .splineTo(new Vector2d(51,-9),Math.toRadians(90))
 ////                        //.strafeTo(new Vector2d(55,-9))
 //////                        .lineToX(55)
 //////                //.splineTo(new Vector2d(55,-9),Math.toRadians(0))
-//                  .lineToY(-52)
+                  .lineToY(-52)
 ////
 ////                .lineToY(-25)
 //                .splineTo(new Vector2d(40,-48),Math.toRadians(-270))
@@ -76,12 +77,12 @@ public class MeepMeepTesting {
 //                .splineTo(new Vector2d(40,-48),Math.toRadians(180))
 //                //action
 //                .splineTo(new Vector2d(8,-37.4),Math.toRadians(180))
-////                .splineTo(new Vector2d(61,-9),Math.toRadians(-90))
+                .splineTo(new Vector2d(61,-9),Math.toRadians(90))
 //////                .lineToY(-9)
 //////                .lineToX(65)
 //////
 ////////                .splineTo(new Vector2d(65,-9),Math.toRadians(0))
-////                .lineToY(-52)
+                .lineToY(-52)
 //////                .lineToX(0)
 //////                .turn(Math.toRadians(90))
 //////                .lineToY(0)
