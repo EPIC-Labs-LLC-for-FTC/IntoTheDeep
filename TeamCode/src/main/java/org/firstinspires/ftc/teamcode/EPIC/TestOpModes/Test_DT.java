@@ -28,6 +28,21 @@ public class Test_DT extends LinearOpMode {
             } else if (gamepad1.y) {
                 mecanum.backleft.setPower(1);
             }
+
+            
+
+            if(gamepad1.dpad_down){
+                mecanum.checkWheelEncoder(mecanum.backleft);
+            }
+            else if(gamepad1.dpad_left){
+                mecanum.checkWheelEncoder(mecanum.frontleft);
+            }
+            else if(gamepad1.dpad_up){
+                mecanum.checkWheelEncoder(mecanum.frontright);
+            }
+            else if(gamepad1.dpad_right){
+                mecanum.checkWheelEncoder(mecanum.backright);
+            }
         }
     }
 }
