@@ -63,6 +63,36 @@ public class Mecanum_Wheels {
 
     }
 
+    public void checkWheelEncoder(DcMotorEx motor) {
+        int new_Target;
+        double ticksPerInchMecanum = (537.7 / mecanumWheelCircumference);
+        // Ensure that the opmode is still active
+        if (parent.opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            new_Target = motor.getCurrentPosition() + (int) (24 * ticksPerInchMecanum);
+            motor.setTargetPosition(new_Target);
+
+            // Turn On RUN_TO_POSITION
+            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            motor.setPower(0.6 * leftErrorAdjustment);
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (parent.opModeIsActive() &&
+                    (runtime.seconds() < 2) &&
+                    (leftFront.isBusy() || rightFront.isBusy() || leftBack.isBusy() || rightBack.isBusy())) {
+                // Display it for the driver.
+                telemetry.addData("Path1", "Running to %7d  ", new_Target);
+                telemetry.addData("Path2", "Running at %7d ",
+                        motor.getCurrentPosition());
+                telemetry.update();
+            }
+        }
+    }
+
     public void initialize() {
 
         double reset = 0;
