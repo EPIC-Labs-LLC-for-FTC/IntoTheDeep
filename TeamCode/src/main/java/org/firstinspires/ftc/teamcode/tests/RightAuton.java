@@ -64,7 +64,7 @@ public class RightAuton extends LinearOpMode {
         //wheels.encoderDrive(0.6,distance,-distance,-distance,distance,6);
 
     telemetry.addData("Robot Heading = %4.0f", wheels.getHeading());
-            Telemetry.update();
+            telemetry.update();
 
 
         //}
