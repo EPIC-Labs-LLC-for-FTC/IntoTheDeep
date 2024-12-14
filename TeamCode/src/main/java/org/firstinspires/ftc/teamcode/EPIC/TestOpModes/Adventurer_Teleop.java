@@ -89,7 +89,7 @@ public class Adventurer_Teleop extends LinearOpMode {
             runningActions.add(new SequentialAction(
                     new InstantAction(() -> target1 = -780),
                     new SleepAction(1),
-                    new InstantAction(() -> target2 = -1130)
+                    new InstantAction(() -> target2 = -1030)
             ));
         }
 
@@ -256,13 +256,13 @@ public class Adventurer_Teleop extends LinearOpMode {
     }
 
     public void singleMotor() {
-        if (gamepad2.a) {
+        if (gamepad1.a) {
             frontLeft.setPower(1);
-        } else if (gamepad2.b) {
+        } else if (gamepad1.b) {
             frontRight.setPower(1);
-        } else if (gamepad2.x) {
+        } else if (gamepad1.x) {
             backLeft.setPower(1);
-        } else if (gamepad2.y) {
+        } else if (gamepad1.y) {
             backRight.setPower(1);
         } else {
             frontLeft.setPower(0);
@@ -355,6 +355,7 @@ public class Adventurer_Teleop extends LinearOpMode {
                 slideManual();
                 claw();
                 actions();
+
 
             }
 
