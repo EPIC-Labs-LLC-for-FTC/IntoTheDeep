@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.components.Mecanum_Wheels;
 
-@Disabled
+//@Disabled
 @TeleOp(name = "Test_DT")
 public class Test_DT extends LinearOpMode {
     @Override
