@@ -38,9 +38,6 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void initialize() {
-        leftFinger.setDirection(Servo.Direction.FORWARD);
-        rightFinger.setDirection(Servo.Direction.FORWARD);
-
         leftFinger.setPosition(0);
         rightFinger.setPosition(0);
 
@@ -60,7 +57,7 @@ public class Claw extends AComponents implements IClaw{
     public void move(ClawStates state) {
         double targetPos = state.getClawPos();
         leftFinger.setPosition(targetPos);
-        rightFinger.setPosition(1-targetPos);
+        rightFinger.setPosition(0.45-targetPos);
         this.stateClaw = state;
         fireClaw(new ClawEventObject(this, this.stateClaw));
     }
@@ -82,9 +79,8 @@ public class Claw extends AComponents implements IClaw{
         return action;
     }
     public void move(double pos) {
-        double targetPos = this.stateClaw.getClawPos()-pos;
-        leftFinger.setPosition(targetPos);
-        rightFinger.setPosition(1-targetPos);
+        leftFinger.setPosition(pos);
+        rightFinger.setPosition(0.45-pos);
         //this.stateClaw = state;
         fireClaw(new ClawEventObject(this, this.stateClaw));
     }

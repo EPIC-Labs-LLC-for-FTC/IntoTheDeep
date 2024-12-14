@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.EPIC.RobotStates;
 
 public enum ClawStates {
-    HOLDING_SAMPLE_PORTRAIT (0.5),
+    HOLDING_SAMPLE_PORTRAIT (0.45),
     HOLDING_SAMPLE_LANDSCAPE(0.62),
-    OPEN(0.85);
+    OPEN(0);
 
     private double clawPos;
 
