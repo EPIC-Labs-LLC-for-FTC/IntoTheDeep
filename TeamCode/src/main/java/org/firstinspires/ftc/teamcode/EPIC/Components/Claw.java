@@ -22,13 +22,8 @@ import java.util.List;
 
 public class Claw extends AComponents implements IClaw{
 
-    private Servo leftFinger;
-    private Servo rightFinger;
-    public double reset = 0;
-    public double leftMaxPos = 1;
-    public double leftMinPos = 0;
-    public double rightMaxPos = 1;
-    public double rightMinPos = 0;
+    public Servo leftFinger;
+    public Servo rightFinger;
     private List<IClawListener> listeners;
     public ClawStates stateClaw;
 
@@ -46,8 +41,8 @@ public class Claw extends AComponents implements IClaw{
         leftFinger.setDirection(Servo.Direction.FORWARD);
         rightFinger.setDirection(Servo.Direction.FORWARD);
 
-        leftFinger.setPosition(0.5);
-        rightFinger.setPosition(0.5);
+        leftFinger.setPosition(0);
+        rightFinger.setPosition(0);
 
         if(IsAutonomous){
             //override settings for autonomous mode if needed

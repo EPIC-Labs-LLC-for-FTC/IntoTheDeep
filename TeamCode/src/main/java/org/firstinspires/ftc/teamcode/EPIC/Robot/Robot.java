@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-public class Robot implements IColorListener, ITouchListener, IClawListener, IArmListener, ISClawListener, IWristListener, ISliderListener, IMecanumListener {
+public class Robot implements IColorListener, ITouchListener, IClawListener, IArmListener, IWristListener, ISliderListener, IMecanumListener {
 
     public Claw odysseyClaw;
     public Slider_PIDF odysseySlider;
@@ -22,7 +22,6 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
     public Wrist odysseyWrist;
     public Mecanum_Wheels odysseyWheels;
     public MyTouchSensor touchSensor;
-   // public SpecimenClaw odysseySClaw;
 
     public boolean isAutonomous = false;
     private LinearOpMode parent;
@@ -36,7 +35,6 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         odysseyArm = new Arm_PIDF(parent.hardwareMap);
         odysseyWrist = new Wrist(parent.hardwareMap);
         odysseyWheels = new Mecanum_Wheels(parent.hardwareMap);
-      //  odysseySClaw = new SpecimenClaw(parent.hardwareMap);
         this.parent = parent;
         this.telemetry = parent.telemetry;
         this.alliance = alliance;
@@ -49,7 +47,6 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         odysseyArm.setIsAutonomous(isAutonomous);
         odysseyWrist.setIsAutonomous(isAutonomous);
         odysseyWheels.setIsAutonomous(isAutonomous);
-       // odysseySClaw.setIsAutonomous(isAutonomous);
     }
 
     public void initialize() {
@@ -58,25 +55,21 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         odysseyArm.setParent(this.parent);
         odysseyWrist.setParent(this.parent);
         odysseyWheels.setParent(this.parent);
-      //  odysseySClaw.setParent(this.parent);
         odysseyClaw.setTelemetry(this.telemetry);
         odysseySlider.setTelemetry(this.telemetry);
         odysseyArm.setTelemetry(this.telemetry);
         odysseyWrist.setTelemetry(this.telemetry);
         odysseyWheels.setTelemetry(this.telemetry);
-      //  odysseySClaw.setTelemetry(this.telemetry);
         odysseyArm.addArmListener(this);
         odysseyWrist.addWristListener(this);
         odysseySlider.addSliderListener(this);
         odysseyWheels.addMecanumListener(this);
         odysseyClaw.addClawListener(this);
-      //  odysseySClaw.addSClawListener(this);
         odysseyClaw.initialize();
         odysseySlider.initialize(0, 0, 0);
         odysseyArm.initialize(0, 0, 0);
         odysseyWrist.initialize();
         odysseyWheels.initialize();
-      //  odysseySClaw.initialize();
     }
 
     @Override
@@ -295,27 +288,6 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                             break;
                         default:
 
-                            break;
-                    }
-                }
-            };
-            tc.start();
-        }
-    }
-
-    @Override
-    public void specClawMove(SClawEventObject event) {
-        if (parent.opModeIsActive()) {
-            SpecimenClaw.SClawStates newState = event.getNewState();
-
-            Thread tc = new Thread() {
-                public void run() {
-                    switch(newState) {
-                        case OPEN:
-                            break;
-                        case HOLDING_SPECIMEN:
-                            break;
-                        default:
                             break;
                     }
                 }
