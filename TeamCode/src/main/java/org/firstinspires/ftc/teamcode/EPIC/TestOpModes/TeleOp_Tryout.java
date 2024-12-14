@@ -91,6 +91,11 @@ public class TeleOp_Tryout extends LinearOpMode {
                             throw new RuntimeException(e);
                         }
                     }
+                    if (gamepad1.left_trigger > 0) {
+                        odyssey.odysseyWheels.setPower(0.4);
+                    } else {
+                        odyssey.odysseyWheels.setPower(1);
+                    }
                 }
             }
         };
