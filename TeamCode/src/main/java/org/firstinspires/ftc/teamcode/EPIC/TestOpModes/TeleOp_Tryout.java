@@ -133,13 +133,8 @@ public class TeleOp_Tryout extends LinearOpMode {
                 odyssey.odysseyArm.move(ArmStates.LOWERED);
                 sleep(50);
             } else if (gamepad2.dpad_left) {
-
                 odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
                 sleep(500);
-                odyssey.odysseyWrist.setPos(WristStates.SPECIMEN_PICK);
-
-                sleep(500);
-
             } else if (gamepad2.dpad_right) {
                 odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
                 sleep(1000);

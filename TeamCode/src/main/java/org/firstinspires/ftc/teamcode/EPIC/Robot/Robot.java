@@ -185,6 +185,17 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                         case NEUTRAL:
                             telemetry.addData("Arm Thread", "Arm is neutral");
                             break;
+                        case SPECIMEN_DROP:
+                            telemetry.addData("Arm Thread", "Arm has dropped specimen");
+                            break;
+                        case SPECIMEN_PICK:
+                            try {
+                                Thread.sleep(250);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            odysseyWrist.setPos(WristStates.SPECIMEN_PICK);
+                            break;
                         default:
                             System.out.println("Arm moved to an unknown state.");
                             break;
@@ -210,6 +221,8 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                         case PICKING_UP_SAMPLE:
                             telemetry.addData("Wrist Thread", "Ready to pickup sample");
                         case INITIALIZING:
+                            break;
+                        case SPECIMEN_PICK:
                             break;
                         default:
 
