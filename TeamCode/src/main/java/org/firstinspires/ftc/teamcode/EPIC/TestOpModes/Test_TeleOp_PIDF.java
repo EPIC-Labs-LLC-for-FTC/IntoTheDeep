@@ -5,11 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Arm_PIDF;
-import org.firstinspires.ftc.teamcode.EPIC.Components.Claw;
 import org.firstinspires.ftc.teamcode.EPIC.Components.Slider_PIDF;
-import org.firstinspires.ftc.teamcode.EPIC.Components.SpecimenClaw;
 
 @Disabled
 @Config

@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.EPIC.Components.SpecimenClaw;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
@@ -91,6 +90,11 @@ public class TeleOp_Tryout extends LinearOpMode {
                             throw new RuntimeException(e);
                         }
                     }
+                    if (gamepad1.left_trigger > 0) {
+                        odyssey.odysseyWheels.setPower(0.4);
+                    } else {
+                        odyssey.odysseyWheels.setPower(1);
+                    }
                 }
             }
         };
@@ -128,13 +132,8 @@ public class TeleOp_Tryout extends LinearOpMode {
                 odyssey.odysseyArm.move(ArmStates.LOWERED);
                 sleep(50);
             } else if (gamepad2.dpad_left) {
-
                 odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
                 sleep(500);
-                odyssey.odysseyWrist.setPos(WristStates.SPECIMEN_PICK);
-
-                sleep(500);
-
             } else if (gamepad2.dpad_right) {
                 odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
                 sleep(1000);

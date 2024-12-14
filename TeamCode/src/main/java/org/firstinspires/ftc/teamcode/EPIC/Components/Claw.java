@@ -22,13 +22,8 @@ import java.util.List;
 
 public class Claw extends AComponents implements IClaw{
 
-    private Servo leftFinger;
-    private Servo rightFinger;
-    public double reset = 0;
-    public double leftMaxPos = 1;
-    public double leftMinPos = 0;
-    public double rightMaxPos = 1;
-    public double rightMinPos = 0;
+    public Servo leftFinger;
+    public Servo rightFinger;
     private List<IClawListener> listeners;
     public ClawStates stateClaw;
 
@@ -43,11 +38,8 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void initialize() {
-        leftFinger.setDirection(Servo.Direction.FORWARD);
-        rightFinger.setDirection(Servo.Direction.FORWARD);
-
-        leftFinger.setPosition(0.5);
-        rightFinger.setPosition(0.5);
+        leftFinger.setPosition(0);
+        rightFinger.setPosition(0);
 
         if(IsAutonomous){
             //override settings for autonomous mode if needed
@@ -65,7 +57,7 @@ public class Claw extends AComponents implements IClaw{
     public void move(ClawStates state) {
         double targetPos = state.getClawPos();
         leftFinger.setPosition(targetPos);
-        rightFinger.setPosition(1-targetPos);
+        rightFinger.setPosition(0.45-targetPos);
         this.stateClaw = state;
         fireClaw(new ClawEventObject(this, this.stateClaw));
     }
@@ -87,9 +79,8 @@ public class Claw extends AComponents implements IClaw{
         return action;
     }
     public void move(double pos) {
-        double targetPos = this.stateClaw.getClawPos()-pos;
-        leftFinger.setPosition(targetPos);
-        rightFinger.setPosition(1-targetPos);
+        leftFinger.setPosition(pos);
+        rightFinger.setPosition(0.45-pos);
         //this.stateClaw = state;
         fireClaw(new ClawEventObject(this, this.stateClaw));
     }
