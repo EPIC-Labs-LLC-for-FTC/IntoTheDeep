@@ -65,16 +65,25 @@ public class Slides implements IComponents, ISlide{
     public void start() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
+        slide1.setTargetPosition(60000);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide1.setPower(1);
+        slide1.setPower(-1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
+        slide2.setTargetPosition(60000);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setPower(1);
+        slide2.setPower(-1);
+
 
 //        moveToPosition(0);
+
+    }
+
+    @Override
+    public void resetslides() {
+
+        slide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     }
 
@@ -99,16 +108,46 @@ public class Slides implements IComponents, ISlide{
     public void hBar() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
+        slide1.setTargetPosition(-1770);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide1.setPower(1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
+        slide2.setTargetPosition(-1770);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(1);
 
 //        moveToPosition(0);
+
+    }
+
+    @Override
+    public void hbucket2() {
+
+        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide1.setTargetPosition(-500);
+        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide1.setPower(1);
+
+        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide2.setTargetPosition(-500);
+        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide2.setPower(1);
+
+    }
+
+    @Override
+    public void RESEThBar() {
+
+        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide1.setTargetPosition(-900);
+        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide1.setPower(1);
+
+        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide2.setTargetPosition(-900);
+        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide2.setPower(1);
 
     }
 
@@ -133,12 +172,12 @@ public class Slides implements IComponents, ISlide{
     public void hBucket() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
+        slide1.setTargetPosition(-3300);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide1.setPower(1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
+        slide2.setTargetPosition(-3300);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(1);
 
