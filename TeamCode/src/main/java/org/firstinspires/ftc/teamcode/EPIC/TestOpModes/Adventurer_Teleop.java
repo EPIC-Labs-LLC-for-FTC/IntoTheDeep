@@ -95,7 +95,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         if (gamepad2.dpad_up) {
             runningActions.add(new SequentialAction(
-                    new InstantAction(() -> target1 = -970),
+                    new InstantAction(() -> target1 = -800),
                     new SleepAction(1),
                     new InstantAction(() -> target2 = -2800)
             ));

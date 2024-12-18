@@ -18,13 +18,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import org.firstinspires.ftc.teamcode.EPIC.MecanumDrive;
+
 import org.firstinspires.ftc.teamcode.EPIC.SparkFunOTOSDrive;
 import com.arcrobotics.ftclib.controller.PIDController;
 
 @Config
-@Autonomous(name = "RR_Test", group = "Autonomous")
-public class FirstRRAuton extends LinearOpMode {
+@Autonomous(name = "RR_Sample_Auto", group = "Autonomous")
+public class RR_Sample_Auto extends LinearOpMode {
 
     // lift class
     public class Arm {
@@ -62,7 +62,7 @@ public class FirstRRAuton extends LinearOpMode {
         public Action armPID() {
             return new Arm.ArmPID();
         }
-//////////////////////////////////////
+        //////////////////////////////////////
         public class ArmSpecimenForward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -74,11 +74,11 @@ public class FirstRRAuton extends LinearOpMode {
         public Action armSpecimenForward() {
             return new Arm.ArmSpecimenForward();
         }
-//////////////////////////////////////
+        //////////////////////////////////////
         public class ArmSpecimenBackward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -1275;
+                target1 = -690;
                 return false;
             }
 
@@ -91,7 +91,7 @@ public class FirstRRAuton extends LinearOpMode {
         public class ArmResetForward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -370;
+                target1 = -1120;
                 return false;
             }
 
@@ -170,6 +170,16 @@ public class FirstRRAuton extends LinearOpMode {
         public Action slideSpecimen() {
             return new Slides.SlideSpecimen();
         }
+
+        public class SlideSpecimen2 implements Action {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                target2 = -580;
+                return false;
+            }
+        }
+        public Action slideSpecimen2() {
+            return new Slides.SlideSpecimen2();
+        }
         public class SlideReset implements Action {
             public boolean run(@NonNull TelemetryPacket packet) {
                 target2 = -30;
@@ -232,30 +242,11 @@ public class FirstRRAuton extends LinearOpMode {
 
         // actionBuilder builds from the drive steps passed to it
         TrajectoryActionBuilder specimen1 = drive.actionBuilder(initialPose)
-                .waitSeconds(1)
-                .lineToY(-42.5);
+                // Specimen 1
+                .waitSeconds(1);
 
-        TrajectoryActionBuilder back1 = drive.actionBuilder(initialPose)
-                .lineToY(-57);
 
-        TrajectoryActionBuilder observation1 = drive.actionBuilder(initialPose)
-                .waitSeconds(1)
-                .setTangent(Math.toRadians(0))
-                .splineToLinearHeading(new Pose2d(47, -70.5, Math.toRadians(90)), Math.toRadians(270));
-
-        TrajectoryActionBuilder wait = drive.actionBuilder(initialPose)
-                .waitSeconds(2);
-
-        TrajectoryActionBuilder specimen2 = drive.actionBuilder(initialPose)
-                .waitSeconds(1)
-                .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(-10, -50, Math.toRadians(270)), Math.toRadians(180));
-
-        TrajectoryActionBuilder forward = drive.actionBuilder(initialPose)
-                .waitSeconds(1)
-                .lineToY(-41.5);
-
-        Action trajectoryActionCloseOut = forward.endTrajectory().fresh()
+        Action trajectoryActionCloseOut = specimen1.endTrajectory().fresh()
                 .build();
 
 
@@ -270,28 +261,13 @@ public class FirstRRAuton extends LinearOpMode {
                 new ParallelAction(
                         arm.armPID(),
                         slide.slidePID(),
-                    new SequentialAction(
-                            arm.armSpecimenForward(),
-                            slide.slideSpecimen(),
-                            specimen1.build(),
-                            claw.openClaw(),
-                            back1.build(),
-                            slide.slideReset(),
-                            arm.armResetBackward(),
-                            observation1.build(),
-                            claw.openClaw(),
-                            claw.closeClaw(),
-                            wait.build(),
-                            arm.armSpecimenBackward(),
-                            specimen2.build(),
-                            slide.slideSpecimen(),
-
-                            trajectoryActionCloseOut
+                        new SequentialAction(
+                                specimen1.build(),
+                                trajectoryActionCloseOut
+                        )
                 )
-        )
         );
     }
 
 
 }
-
