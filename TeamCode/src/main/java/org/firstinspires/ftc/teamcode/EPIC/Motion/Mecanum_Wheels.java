@@ -73,7 +73,7 @@ public class Mecanum_Wheels extends AComponents {
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (parent.opModeIsActive() &&
                     (runtime.seconds() < 2) &&
-                    (leftFront.isBusy() || rightFront.isBusy() || leftBack.isBusy() || rightBack.isBusy())) {
+                    (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d  ", new_Target);
                 telemetry.addData("Path2", "Running at %7d ",

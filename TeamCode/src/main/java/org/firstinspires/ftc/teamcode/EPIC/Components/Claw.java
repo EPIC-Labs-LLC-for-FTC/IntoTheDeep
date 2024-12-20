@@ -38,8 +38,7 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void initialize() {
-        leftFinger.setPosition(0);
-        rightFinger.setPosition(0);
+        move(0.45);
 
         if(IsAutonomous){
             //override settings for autonomous mode if needed
