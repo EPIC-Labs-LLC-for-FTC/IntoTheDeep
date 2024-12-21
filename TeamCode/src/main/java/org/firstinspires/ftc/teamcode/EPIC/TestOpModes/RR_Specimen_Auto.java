@@ -163,7 +163,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
 
         public class SlideSpecimen implements Action {
             public boolean run(@NonNull TelemetryPacket packet) {
-                target2 = -950;
+                target2 = -910;
                 return false;
             }
         }

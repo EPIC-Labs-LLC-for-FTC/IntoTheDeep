@@ -91,7 +91,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class ArmResetForward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -1120;
+                target1 = -375;
                 return false;
             }
 
@@ -125,7 +125,36 @@ public class RR_Sample_Auto extends LinearOpMode {
             return new Arm.ArmZero();
         }
 
+        public class ArmSpecimenSample implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                target1 = -240;
+                return false;
+            }
+
+        }
+        public Action armSampleSpecimen() {
+            return new Arm.ArmSpecimenSample();
+        }
+
+        public class ArmSpecimenDrop implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                target1 = -1000;
+                return false;
+            }
+
+        }
+        public Action armSampleDrop() {
+            return new Arm.ArmSpecimenDrop();
+        }
+
+
+
     }
+    ////////////////////////////////////////////////
+
+
 
     public class Slides {
         private DcMotorEx slideRight;
@@ -163,7 +192,7 @@ public class RR_Sample_Auto extends LinearOpMode {
 
         public class SlideSpecimen implements Action {
             public boolean run(@NonNull TelemetryPacket packet) {
-                target2 = -950;
+                target2 = -910;
                 return false;
             }
         }
@@ -188,6 +217,30 @@ public class RR_Sample_Auto extends LinearOpMode {
         }
         public Action slideReset() {
             return new Slides.SlideReset();
+        }
+
+        public class SlideSamplePick implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                target2 = -1250;
+                return false;
+            }
+
+        }
+        public Action slideSampleSpecimen() {
+            return new Slides.SlideSamplePick();
+        }
+
+        public class SlideSampleDrop implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                target2 = -3000;
+                return false;
+            }
+
+        }
+        public Action slideSampleDrop() {
+            return new Slides.SlideSampleDrop();
         }
 
 
@@ -243,6 +296,97 @@ public class RR_Sample_Auto extends LinearOpMode {
         // actionBuilder builds from the drive steps passed to it
         TrajectoryActionBuilder specimen1 = drive.actionBuilder(initialPose)
                 // Specimen 1
+                .waitSeconds(1)
+                .afterTime(0.1, arm.armSpecimenForward())
+                .stopAndAdd(arm.armSpecimenForward())
+                .afterTime(0.5, slide.slideSpecimen())
+                .stopAndAdd(slide.slideSpecimen())
+                .waitSeconds(1)
+
+                .strafeToLinearHeading(new Vector2d(4.1, -42), Math.toRadians(90))
+
+                .afterTime(0.1, claw.openClaw())
+                .stopAndAdd(claw.openClaw())
+                .waitSeconds(1)
+
+                .strafeToLinearHeading(new Vector2d(4.1, -55.5), Math.toRadians(90))
+
+                .afterTime(0.1, slide.slideReset())
+                .stopAndAdd(slide.slideReset())
+                .afterTime(0.8, arm.armResetForward())
+                .stopAndAdd(arm.armResetForward())
+                .waitSeconds(1)
+
+                .strafeToLinearHeading(new Vector2d(-34.1, -54), Math.toRadians(90))
+
+                .waitSeconds(1)
+                .afterTime(0.1, arm.armSampleSpecimen())
+                .stopAndAdd(arm.armSampleSpecimen())
+                .afterTime(0.8, slide.slideSampleSpecimen())
+                .stopAndAdd(slide.slideSampleSpecimen())
+
+                .waitSeconds(1)
+                .afterTime(0.1, claw.closeClaw())
+                .stopAndAdd(claw.closeClaw())
+                .waitSeconds(1)
+                .afterTime(0.1, slide.slideReset())
+                .stopAndAdd(slide.slideReset())
+                .afterTime(0.9, arm.armResetForward())
+                .stopAndAdd(arm.armResetForward())
+
+                .strafeToLinearHeading(new Vector2d(-38.5, -58.5), Math.toRadians(225))
+
+                .afterTime(0.1, arm.armSampleDrop())
+                .stopAndAdd(arm.armSampleDrop())
+                .afterTime(0.5, slide.slideSampleDrop())
+                .stopAndAdd(slide.slideSampleDrop())
+                .waitSeconds(2)
+                .afterTime(0.5, claw.openClaw())
+                .stopAndAdd(claw.openClaw())
+                .waitSeconds(1)
+
+                .strafeToLinearHeading(new Vector2d(-36, -56), Math.toRadians(225))
+
+                .waitSeconds(1)
+                .afterTime(0.1, slide.slideReset())
+                .stopAndAdd(slide.slideReset())
+                .waitSeconds(1)
+                .afterTime(0.9, arm.armResetForward())
+                .stopAndAdd(arm.armResetForward())
+                .waitSeconds(1)
+
+                /////////////////////////////////////////////
+                .strafeToLinearHeading(new Vector2d(-39.1, -54), Math.toRadians(110))
+
+                .waitSeconds(1)
+                .afterTime(0.1, arm.armSampleSpecimen())
+                .stopAndAdd(arm.armSampleSpecimen())
+                .afterTime(0.8, slide.slideSampleSpecimen())
+                .stopAndAdd(slide.slideSampleSpecimen())
+
+                .waitSeconds(1)
+                .afterTime(0.1, claw.closeClaw())
+                .stopAndAdd(claw.closeClaw())
+                .waitSeconds(1)
+                .afterTime(0.1, slide.slideReset())
+                .stopAndAdd(slide.slideReset())
+                .afterTime(0.9, arm.armResetForward())
+                .stopAndAdd(arm.armResetForward())
+
+                .strafeToLinearHeading(new Vector2d(-42, -55), Math.toRadians(225))
+
+                .afterTime(0.1, arm.armSampleDrop())
+                .stopAndAdd(arm.armSampleDrop())
+                .afterTime(0.5, slide.slideSampleDrop())
+                .stopAndAdd(slide.slideSampleDrop())
+                .waitSeconds(2)
+                .afterTime(0.5, claw.openClaw())
+                .stopAndAdd(claw.openClaw())
+                .waitSeconds(1)
+                .afterTime(0.1, slide.slideReset())
+                .stopAndAdd(slide.slideReset())
+                .afterTime(0.9, arm.armResetForward())
+                .stopAndAdd(arm.armResetForward())
                 .waitSeconds(1);
 
 

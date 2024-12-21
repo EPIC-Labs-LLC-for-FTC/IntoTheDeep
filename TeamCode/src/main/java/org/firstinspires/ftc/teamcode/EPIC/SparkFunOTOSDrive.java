@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.messages.PoseMessage;
  * <p>
  * Released under the BSD 3-Clause Clear License by j5155 from 12087 Capital City Dynamics
  * Portions of this code made and released under the MIT License by SparkFun
- * Unless otherwise noted, comments are from SparkFun
+ * Unless otherwise noted, comments are fr  om SparkFun
  */
 public class SparkFunOTOSDrive extends MecanumDrive {
     public static class Params {
@@ -35,7 +35,7 @@ public class SparkFunOTOSDrive extends MecanumDrive {
         // forward (positive Y) of the center of the robot, and mounted 90 degrees
         // clockwise (negative rotation) from the robot's orientation, the offset
         // would be {-5, 10, -90}. These can be any value, even the angle can be
-        // tweaked slightly to compensate for imperfect mounting (eg. 1.3 degrees).
+        // tweaked slightly to compensate for imperfect mounting (eg. 1.3 degrees).cd           11..llyughh
 
         // RR localizer note: These units are inches and radians.
         public SparkFunOTOS.Pose2D offset = new SparkFunOTOS.Pose2D(0.15, 0, Math.toRadians(-90));

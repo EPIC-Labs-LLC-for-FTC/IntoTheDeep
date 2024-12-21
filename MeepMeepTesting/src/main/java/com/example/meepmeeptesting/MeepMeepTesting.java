@@ -19,11 +19,7 @@ public class MeepMeepTesting {
                 .waitSeconds(1)
                 .strafeToLinearHeading(new Vector2d(4.1, -42.5), Math.toRadians(90))
                 .strafeToLinearHeading(new Vector2d(4.1, -53), Math.toRadians(90))
-                .strafeToLinearHeading(new Vector2d(47, -47), Math.toRadians(270))
-                .waitSeconds(2)
-                .strafeToLinearHeading(new Vector2d(-5, -50), Math.toRadians(270))
-                .waitSeconds(2)
-                .strafeToLinearHeading(new Vector2d(-5, -39), Math.toRadians(270))
+                .strafeToLinearHeading(new Vector2d(47, -47), Math.toRadians(-91))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
