@@ -22,9 +22,9 @@ public class Test_Claw extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            if (gamepad1.square) {
+            if (gamepad1.a) {
                 claw.move(ClawStates.OPEN);
-            } else if (gamepad1.triangle) {
+            } else if (gamepad1.b) {
                 claw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT); 
             }
         }

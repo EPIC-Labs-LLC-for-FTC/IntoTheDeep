@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.EPIC.RobotStates;
 
 public enum ArmStates {
-    READY_TO_DEPOSIT(300),
+    READY_TO_DEPOSIT(300),   //change
     DEPOSITING(20),
     //LOWERED(190),
     LOWERED(525),
     INITIALIZED(0.0),
     NEUTRAL(250),
-    SPECIMEN_PICK(400), SPECIMEN_DROP(200); //check the value
+    SPECIMEN_PICK(400), //change
+    SPECIMEN_DROP(200);
 
 
     private double stateNum;
