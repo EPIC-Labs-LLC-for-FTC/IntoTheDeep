@@ -65,12 +65,12 @@ public class Slides implements IComponents, ISlide{
     public void start() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(60000);
+        slide1.setTargetPosition(10000);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide1.setPower(-1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(60000);
+        slide2.setTargetPosition(10000);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(-1);
 
@@ -183,6 +183,21 @@ public class Slides implements IComponents, ISlide{
 
 
 //        moveToPosition(0);
+
+    }
+
+    @Override
+    public void custom(int distance) {
+
+        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide1.setTargetPosition(distance);
+        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide1.setPower(1);
+
+        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide2.setTargetPosition(distance);
+        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slide2.setPower(1);
 
     }
 

@@ -9,5 +9,6 @@ public interface ISlide {
     void RESEThBar();
     void lBucket();
     void hBucket();
+    void custom(int distance);
     void hang();
 }

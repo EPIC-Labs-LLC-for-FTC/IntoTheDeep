@@ -66,6 +66,17 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
         slides.start();
     }
 
+    public void armstart(){
+        Arm arm = new Arm(hardwareMap);
+        arm.start();
+    }
+
+
+    public void customSlides(){
+        Slides slides = new Slides(hardwareMap);
+        slides.custom(500);
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -110,7 +121,7 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
                         .stopAndAdd(this::anglearm)
 
                         .setTangent(90)
-                        .splineToConstantHeading(new Vector2d(-9,-38), Math.PI/2)
+                        .splineToConstantHeading(new Vector2d(-9,-37), Math.PI/2)
 
                         .afterTime(0.1,this::barhReset)
                         .stopAndAdd(this::barhReset)
@@ -121,11 +132,13 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
                         .stopAndAdd(this::open)
 
                         .strafeToConstantHeading(new Vector2d(-28,-53))
-                        .strafeToLinearHeading(new Vector2d(-28,-33),Math.PI)
+
+                        //PART 1.5
+
+                        .strafeToLinearHeading(new Vector2d(-28.5,-29),Math.PI)
 
                         .afterTime(0.1,this::armdown)
                         .stopAndAdd(this::armdown)
-
 
                         .afterTime(0.1,this::slide0)
                         .stopAndAdd(this::slide0)
@@ -138,7 +151,7 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
                         .afterTime(0.1,this::close)
                         .stopAndAdd(this::close)
 
-                        .strafeToLinearHeading(new Vector2d(-41,-47),Math.PI*1.25)
+                        .strafeToLinearHeading(new Vector2d(-36,-42.5),Math.PI*1.25)
 
                         .afterTime(0.1,this::anglearm)
                         .stopAndAdd(this::anglearm)
@@ -151,7 +164,7 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
                         .afterTime(0.1,this::open)
                         .stopAndAdd(this::open)
 
-                        .strafeToConstantHeading(new Vector2d(-39,-45))
+                        .strafeToConstantHeading(new Vector2d(-30,-40))
 
                         .waitSeconds(0.5)
 
@@ -163,7 +176,7 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
 
                         //PART2
 
-                        .strafeToLinearHeading(new Vector2d(-33,-28.5),Math.PI)
+                        .strafeToLinearHeading(new Vector2d(-35,-30.5),Math.PI)
 
                         .afterTime(0.1,this::armdown)
                         .stopAndAdd(this::armdown)
@@ -173,7 +186,7 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
                         .afterTime(0.1,this::close)
                         .stopAndAdd(this::close)
 
-                        .strafeToLinearHeading(new Vector2d(-40,-45),Math.PI*1.15)
+                        .strafeToLinearHeading(new Vector2d(-33,-44),Math.PI*1.25)
 
                         .afterTime(0.1,this::anglearm)
                         .stopAndAdd(this::anglearm)
@@ -186,15 +199,20 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
                         .afterTime(0.1,this::open)
                         .stopAndAdd(this::open)
 
+                        .strafeToConstantHeading(new Vector2d(-34,-40))
+
+                        .waitSeconds(0.5)
+
                         .afterTime(0.1,this::slide0)
                         .stopAndAdd(this::slide0)
 
                         .afterTime(0.1,this::resetslides)
                         .stopAndAdd(this::resetslides)
 
-                        .strafeToConstantHeading(new Vector2d(-39,-45))
-
-                        .waitSeconds(0.5)
+//                        .waitSeconds(2)
+//
+//                        .afterTime(0.1,this::customSlides)
+//                        .stopAndAdd(this::customSlides)
 
                         //PART3
 
@@ -204,7 +222,7 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
 //                        .afterTime(0.1,this::armdown)
 //                        .stopAndAdd(this::armdown)
 //
-//                        .strafeToLinearHeading(new Vector2d(-36,-34),Math.PI)
+//                        .strafeToLinearHeading(new Vector2d(-36,-28.5),Math.PI)
 //
 //                        .afterTime(0.1,this::slide0)
 //                        .stopAndAdd(this::slide0)
@@ -221,7 +239,7 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
 //                        .afterTime(0.1,this::anglearm)
 //                        .stopAndAdd(this::anglearm)
 //
-//                        .strafeToLinearHeading(new Vector2d(-40,-45),Math.PI*1.25)
+//                        .strafeToLinearHeading(new Vector2d(-40,-45),Math.PI*1.15)
 //
 //                        .afterTime(0.1,this::hbucket)
 //                        .stopAndAdd(this::hbucket)
@@ -231,16 +249,23 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
 //                        .afterTime(0.1,this::open)
 //                        .stopAndAdd(this::open)
 //
+//                        .strafeToConstantHeading(new Vector2d(-34,-41))
+//
+//                        .waitSeconds(0.5)
+//
 //                        .afterTime(0.1,this::slide0)
 //                        .stopAndAdd(this::slide0)
 //
 //                        .afterTime(0.1,this::resetslides)
 //                        .stopAndAdd(this::resetslides)
+//
+//                        .afterTime(0.1,this::armstart)
+//                        .stopAndAdd(this::armstart)
 
                         //PART4
 
                         .strafeToLinearHeading(new Vector2d(-36,-34),Math.PI)
-                        .splineToLinearHeading(new Pose2d(-20,-15,0), Math.PI/2)
+                        .splineToLinearHeading(new Pose2d(-27,-18,0), Math.PI/2)
 
                         .build());
 

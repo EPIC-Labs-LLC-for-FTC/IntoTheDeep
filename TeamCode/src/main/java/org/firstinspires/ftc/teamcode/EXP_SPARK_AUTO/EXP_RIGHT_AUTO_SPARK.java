@@ -102,6 +102,8 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
                         .setTangent(90)
                         .splineToConstantHeading(new Vector2d(9,-38), Math.PI/2)
 
+                        .waitSeconds(1)
+
                         .afterTime(0.1,this::barhReset)
                         .stopAndAdd(this::barhReset)
 
@@ -110,12 +112,171 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
                         .afterTime(0.1,this::open)
                         .stopAndAdd(this::open)
 
+                        .strafeToConstantHeading(new Vector2d(9,-42))
+
                         //PART2
 
-                        .strafeToLinearHeading(new Vector2d(50,-40),-Math.PI/2)
+//                        .strafeToLinearHeading(new Vector2d(35,-45),-Math.PI/4)
+//
+//                        .afterTime(0.1,this::armdown)
+//                        .stopAndAdd(this::armdown)
+//
+//                        .afterTime(0.1,this::slide0)
+//                        .stopAndAdd(this::slide0)
+//
+//                        .afterTime(0.1,this::resetslides)
+//                        .stopAndAdd(this::resetslides)
+//
+//                        .waitSeconds(1)
+//
+//                        .afterTime(0.1,this::close)
+//                        .stopAndAdd(this::close)
+//
+//                        .afterTime(0.1,this::anglearm)
+//                        .stopAndAdd(this::anglearm)
+//
+//                        .afterTime(0.1,this::barh)
+//                        .stopAndAdd(this::barh)
+//
+//                        .strafeToConstantHeading(new Vector2d(9,-42))
+//
+//                        .strafeToLinearHeading(new Vector2d(9,-20),Math.PI/2)
+//
+//                        .afterTime(0.1,this::barhReset)
+//                        .stopAndAdd(this::barhReset)
+//
+//                        .waitSeconds(0.5)
+//
+//                        .afterTime(0.1,this::open)
+//                        .stopAndAdd(this::open)
+//
+//                        .strafeToConstantHeading(new Vector2d(9,-42))
 
-                        .afterTime(0.1,this::armdown)
-                        .stopAndAdd(this::armdown)
+                        //PART3
+//
+//                        .strafeToConstantHeading(new Vector2d(36,-40))
+//                        .strafeToConstantHeading(new Vector2d(36,-10))
+//
+//                        .strafeToConstantHeading(new Vector2d(48,-10))
+//                        .strafeToConstantHeading(new Vector2d(48,-65))
+//
+//                        .strafeToConstantHeading(new Vector2d(48,-10))
+//                        .strafeToConstantHeading(new Vector2d(57,-10))
+//                        .strafeToConstantHeading(new Vector2d(57,-65))
+//
+//                        .strafeToConstantHeading(new Vector2d(57,-10))
+//                        .strafeToConstantHeading(new Vector2d(68,-10))
+//                        .strafeToConstantHeading(new Vector2d(68,-65))
+//
+//                        //PART2
+//
+//                        .afterTime(0.1,this::barhReset)
+//                        .stopAndAdd(this::barhReset)
+//
+//                        .afterTime(0.1,this::armdown)
+//                        .stopAndAdd(this::armdown)
+//
+//                        .strafeToConstantHeading(new Vector2d(60,-42))
+//                        .strafeToLinearHeading(new Vector2d(50,-40),-Math.PI/2)
+//
+//                        .afterTime(0.1,this::slide0)
+//                        .stopAndAdd(this::slide0)
+//
+//                        .afterTime(0.1,this::resetslides)
+//                        .stopAndAdd(this::resetslides)
+//
+//                        .waitSeconds(0.5)
+//
+//                        .afterTime(0.1,this::close)
+//                        .stopAndAdd(this::close)
+//
+//                        .afterTime(0.1,this::anglearm)
+//                        .stopAndAdd(this::anglearm)
+//
+//                        .afterTime(0.1,this::barh)
+//                        .stopAndAdd(this::barh)
+//
+//                        .strafeToLinearHeading(new Vector2d(9,-38),Math.PI/2)
+//
+//                        .afterTime(0.1,this::barhReset)
+//                        .stopAndAdd(this::barhReset)
+//
+//                        .waitSeconds(0.5)
+//
+//                        .afterTime(0.1,this::open)
+//                        .stopAndAdd(this::open)
+//
+//                        //PART3
+//
+//                        .strafeToConstantHeading(new Vector2d(9,-40))
+//                        .strafeToLinearHeading(new Vector2d(50,-40),-Math.PI/2)
+//
+//                        .afterTime(0.1,this::armdown)
+//                        .stopAndAdd(this::armdown)
+//
+//                        .afterTime(0.1,this::slide0)
+//                        .stopAndAdd(this::slide0)
+//
+//                        .afterTime(0.1,this::resetslides)
+//                        .stopAndAdd(this::resetslides)
+//
+//                        .waitSeconds(0.5)
+//
+//                        .afterTime(0.1,this::close)
+//                        .stopAndAdd(this::close)
+//
+//                        .afterTime(0.1,this::anglearm)
+//                        .stopAndAdd(this::anglearm)
+//
+//                        .afterTime(0.1,this::barh)
+//                        .stopAndAdd(this::barh)
+//
+//                        .strafeToLinearHeading(new Vector2d(9,-38),Math.PI/2)
+//
+//                        .afterTime(0.1,this::barhReset)
+//                        .stopAndAdd(this::barhReset)
+//
+//                        .waitSeconds(0.5)
+//
+//                        .afterTime(0.1,this::open)
+//                        .stopAndAdd(this::open)
+//
+//                        //PART4
+//
+//                        .strafeToConstantHeading(new Vector2d(9,-40))
+//                        .strafeToLinearHeading(new Vector2d(50,-40),-Math.PI/2)
+//
+//                        .afterTime(0.1,this::armdown)
+//                        .stopAndAdd(this::armdown)
+//
+//                        .afterTime(0.1,this::slide0)
+//                        .stopAndAdd(this::slide0)
+//
+//                        .afterTime(0.1,this::resetslides)
+//                        .stopAndAdd(this::resetslides)
+//
+//                        .waitSeconds(0.5)
+//
+//                        .afterTime(0.1,this::close)
+//                        .stopAndAdd(this::close)
+//
+//                        .afterTime(0.1,this::anglearm)
+//                        .stopAndAdd(this::anglearm)
+//
+//                        .afterTime(0.1,this::barh)
+//                        .stopAndAdd(this::barh)
+//
+//                        .strafeToLinearHeading(new Vector2d(9,-38),Math.PI/2)
+//
+//                        .afterTime(0.1,this::barhReset)
+//                        .stopAndAdd(this::barhReset)
+//
+//                        .waitSeconds(0.5)
+//
+//                        .afterTime(0.1,this::open)
+//                        .stopAndAdd(this::open)
+
+                        //PART5
 
                         .afterTime(0.1,this::slide0)
                         .stopAndAdd(this::slide0)
@@ -123,34 +284,7 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
                         .afterTime(0.1,this::resetslides)
                         .stopAndAdd(this::resetslides)
 
-                        .waitSeconds(1)
-
-                        .afterTime(0.1,this::close)
-                        .stopAndAdd(this::close)
-
-                        .afterTime(0.1,this::anglearm)
-                        .stopAndAdd(this::anglearm)
-
-                        .afterTime(0.1,this::barh)
-                        .stopAndAdd(this::barh)
-
-                        .strafeToLinearHeading(new Vector2d(9,-38),Math.PI/2)
-
-                        .afterTime(0.1,this::barhReset)
-                        .stopAndAdd(this::barhReset)
-
-                        .waitSeconds(0.5)
-
-                        .afterTime(0.1,this::open)
-                        .stopAndAdd(this::open)
-
-                        //PART3
-
-                        .strafeToConstantHeading(new Vector2d(36,-40))
-                        .strafeToConstantHeading(new Vector2d(36,-10))
-
-
-
+                        .strafeToConstantHeading(new Vector2d(40,-65))
 
                         .build());
 
