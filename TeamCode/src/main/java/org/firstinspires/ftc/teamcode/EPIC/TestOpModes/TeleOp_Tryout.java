@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 
 @TeleOp(name = "Driver TeleOp")
 public class TeleOp_Tryout extends LinearOpMode {
-    public static double ap = 0.02, ai = 0, ad = 0.0015, af = 0.08;
+    public static double ap = 0.03, ai = 0, ad = 0.0015, af = 0.065;
     public static double sp = 0.02, si = 0, sd = 0.001, sf = 0;
 
     @Override
