@@ -8,7 +8,7 @@ public enum ArmStates {
     INITIALIZED(0.0),
     NEUTRAL(250),
     SPECIMEN_PICK(400), //change
-    SPECIMEN_DROP(200);
+    SPECIMEN_DROP(240);
 
 
     private double stateNum;
