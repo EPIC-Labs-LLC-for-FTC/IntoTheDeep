@@ -5,7 +5,8 @@ public enum WristStates {
     DEPOSITING_SAMPLE(0),
     NEUTRAL(0.5),
     INITIALIZING(0.1),
-    SPECIMEN_PICK(0.55);//0.380
+    SPECIMEN_PICK(0.38),
+    SPECIMEN_DROP(0.55);//0.380
 
 
 

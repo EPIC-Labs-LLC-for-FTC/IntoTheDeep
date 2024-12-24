@@ -179,6 +179,12 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                             telemetry.addData("Arm Thread", "Arm is neutral");
                             break;
                         case SPECIMEN_DROP:
+                            try {
+                                Thread.sleep(50);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            odysseyWrist.setPos(WristStates.SPECIMEN_DROP);
                             telemetry.addData("Arm Thread", "Arm has dropped specimen");
                             break;
                         case SPECIMEN_PICK:
