@@ -135,7 +135,8 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
 
                         //PART 1.5
 
-                        .strafeToLinearHeading(new Vector2d(-28.5,-29),Math.PI)
+                        //alignTo
+                        .strafeToLinearHeading(new Vector2d(-27.8,-31),Math.PI)
 
                         .afterTime(0.1,this::armdown)
                         .stopAndAdd(this::armdown)
@@ -151,7 +152,8 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
                         .afterTime(0.1,this::close)
                         .stopAndAdd(this::close)
 
-                        .strafeToLinearHeading(new Vector2d(-36,-42.5),Math.PI*1.25)
+                        //Placement
+                        .strafeToLinearHeading(new Vector2d(-39,-45),Math.PI*1.25)
 
                         .afterTime(0.1,this::anglearm)
                         .stopAndAdd(this::anglearm)
@@ -164,6 +166,7 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
                         .afterTime(0.1,this::open)
                         .stopAndAdd(this::open)
 
+                        //evade
                         .strafeToConstantHeading(new Vector2d(-30,-40))
 
                         .waitSeconds(0.5)
@@ -175,39 +178,39 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
                         .stopAndAdd(this::resetslides)
 
                         //PART2
-
-                        .strafeToLinearHeading(new Vector2d(-35,-30.5),Math.PI)
-
-                        .afterTime(0.1,this::armdown)
-                        .stopAndAdd(this::armdown)
-
-                        .waitSeconds(1)
-
-                        .afterTime(0.1,this::close)
-                        .stopAndAdd(this::close)
-
-                        .strafeToLinearHeading(new Vector2d(-33,-44),Math.PI*1.25)
-
-                        .afterTime(0.1,this::anglearm)
-                        .stopAndAdd(this::anglearm)
-
-                        .afterTime(0.1,this::bucketh2)
-                        .stopAndAdd(this::bucketh2)
-
-                        .waitSeconds(3)
-
-                        .afterTime(0.1,this::open)
-                        .stopAndAdd(this::open)
-
-                        .strafeToConstantHeading(new Vector2d(-34,-40))
-
-                        .waitSeconds(0.5)
-
-                        .afterTime(0.1,this::slide0)
-                        .stopAndAdd(this::slide0)
-
-                        .afterTime(0.1,this::resetslides)
-                        .stopAndAdd(this::resetslides)
+//
+//                        .strafeToLinearHeading(new Vector2d(-35,-31.2),Math.PI)
+//
+//                        .afterTime(0.1,this::armdown)
+//                        .stopAndAdd(this::armdown)
+//
+//                        .waitSeconds(1)
+//
+//                        .afterTime(0.1,this::close)
+//                        .stopAndAdd(this::close)
+//
+//                        .strafeToLinearHeading(new Vector2d(-34,-44.5),Math.PI*1.25)
+//
+//                        .afterTime(0.1,this::anglearm)
+//                        .stopAndAdd(this::anglearm)
+//
+//                        .afterTime(0.1,this::bucketh2)
+//                        .stopAndAdd(this::bucketh2)
+//
+//                        .waitSeconds(3)
+//
+//                        .afterTime(0.1,this::open)
+//                        .stopAndAdd(this::open)
+//
+//                        .strafeToConstantHeading(new Vector2d(-34,-40))
+//
+//                        .waitSeconds(0.5)
+//
+//                        .afterTime(0.1,this::slide0)
+//                        .stopAndAdd(this::slide0)
+//
+//                        .afterTime(0.1,this::resetslides)
+//                        .stopAndAdd(this::resetslides)
 
 //                        .waitSeconds(2)
 //
