@@ -35,10 +35,10 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
-                .lineToY(-32.15)
-                .strafeTo(new Vector2d(15, -32.15))
+                .lineToY(-38.15);
+//                .strafeTo(new Vector2d(15, -38.15));
 
-                .splineToConstantHeading(new Vector2d(42, -9), Math.toRadians(90));
+//                .splineToConstantHeading(new Vector2d(42, -9), Math.toRadians(90));
 
         Action tsc1 = tab.build();
 
@@ -46,8 +46,11 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
 
         waitForStart();
         Actions.runBlocking(tsc1);
-        telemetry.addData("x :",  drive.pose.position.x);
-        telemetry.addData("x :",  drive.pose.position.y);
+        telemetry.addData("x",  drive.pose.position.x);
+        telemetry.addData("y",  drive.pose.position.y);
+        telemetry.addData("Heading (imag)", Math.toDegrees(drive.pose.heading.imag));
+        telemetry.addData("Heading (real)", Math.toDegrees(drive.pose.heading.real));
+        telemetry.update();
         sleep(10000);
 
         // Move forward to position (24, 0, 0)
