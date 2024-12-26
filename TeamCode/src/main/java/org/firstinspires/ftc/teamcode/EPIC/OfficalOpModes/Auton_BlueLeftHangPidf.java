@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
@@ -34,16 +35,20 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
         }
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
-                .lineToY(-32.15)
 
-                .strafeTo(new Vector2d(10, -37.4))
+                .lineToY(-32.15)
+                .strafeTo(new Vector2d(15, -32.15))
 
                 .splineToConstantHeading(new Vector2d(42, -9), Math.toRadians(90));
+
         Action tsc1 = tab.build();
+
 //
 
         waitForStart();
         Actions.runBlocking(tsc1);
+        telemetry.addData("x :",  drive.pose.position.x);
+        telemetry.addData("x :",  drive.pose.position.y);
         sleep(10000);
 
         // Move forward to position (24, 0, 0)
