@@ -24,8 +24,10 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // Initialize the robot and mecanum drive
         Robot odyssey = new Robot(this, "Blue");
-        SparkFunOTOSDrive drive= new SparkFunOTOSDrive(hardwareMap,new Pose2d(8.25, -63.85, Math.toRadians(90)));
+        SparkFunOTOSDrive drive= new SparkFunOTOSDrive(hardwareMap,new Pose2d(8.25, -63.85,
+                Math.toRadians(90)));
         Pose2d initialPos= new Pose2d(8.25, -63.85, Math.toRadians(90));
+        drive.setPoseEstimate(initialPos);
         odyssey.setIsAutonomous(true);
         odyssey.initialize();
 
@@ -33,11 +35,22 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
             idle();
         }
 
+        Thread coord = new Thread() {
+            public void run() {
+                while (opModeIsActive()) {
+                    telemetry.addData("X", drive.pose.position.x);
+                    telemetry.addData("Y", drive.pose.position.y);
+                    telemetry.addData("Heading (Deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+                }
+            }
+        };
+
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
-                .lineToY(-38.15);
-//                .strafeTo(new Vector2d(15, -38.15));
-
+                .lineToY(-32.15);
+//                .lineToX(15)
+//                .strafeTo(new Vector2d(15, -38.15))
+//
 //                .splineToConstantHeading(new Vector2d(42, -9), Math.toRadians(90));
 
         Action tsc1 = tab.build();
@@ -46,11 +59,6 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
 
         waitForStart();
         Actions.runBlocking(tsc1);
-        telemetry.addData("x",  drive.pose.position.x);
-        telemetry.addData("y",  drive.pose.position.y);
-        telemetry.addData("Heading (imag)", Math.toDegrees(drive.pose.heading.imag));
-        telemetry.addData("Heading (real)", Math.toDegrees(drive.pose.heading.real));
-        telemetry.update();
         sleep(10000);
 
         // Move forward to position (24, 0, 0)
