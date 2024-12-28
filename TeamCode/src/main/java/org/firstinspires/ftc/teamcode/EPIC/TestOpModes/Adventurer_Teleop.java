@@ -51,6 +51,7 @@ public class Adventurer_Teleop extends LinearOpMode {
     public DcMotorEx slideRight = null;
     public Servo clawRight = null;
     public Servo clawLeft = null;
+    public Servo wrist = null;
 
     double movement;
     double rotation;
@@ -73,7 +74,7 @@ public class Adventurer_Teleop extends LinearOpMode {
             runningActions.add(new SequentialAction(
                     new InstantAction(() -> target1 = -980),
                     new SleepAction(1),
-                    new InstantAction(() -> target2 = -2950)
+                    new InstantAction(() -> target2 = -3000)
             ));
         }
 
@@ -220,23 +221,14 @@ public class Adventurer_Teleop extends LinearOpMode {
         }
     }
 
-    public void reset() {
-        if (gamepad2.y) {
-            armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            target1 = 0;
-            target2 = 0;
+    public void wrist() {
+        if (gamepad1.left_trigger > 0.1) {
+            wrist.setPosition(wrist.getPosition() + 0.01);
+        } else if (gamepad1.right_trigger > 0.1) {
+            wrist.setPosition(wrist.getPosition() - 0.01);
         }
-    }
 
-    public void specimenPresets() {
-        if (gamepad2.a) {
-            target1 = -370;
-            target2 = -10;
-        } else if (gamepad2.b) {
-            target1 = 0;
-            target2 = 0;
-        }
+        telemetry.addData("Wrist Pos", wrist.getPosition());
     }
 
     public void slideAction() {
@@ -354,6 +346,7 @@ public class Adventurer_Teleop extends LinearOpMode {
                 armManual();
                 slideManual();
                 claw();
+                wrist();
                 actions();
 
 

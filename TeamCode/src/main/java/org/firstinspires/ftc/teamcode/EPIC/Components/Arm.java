@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -17,8 +18,13 @@ public class Arm implements IComponents, IArm{
     private ElapsedTime runtime = new ElapsedTime();
     //Declare your servos, motors, sensors, other devices here
 
-    public DcMotorEx armLeft = null;
-    public DcMotorEx armRight = null;
+    private DcMotorEx armRight;
+    private DcMotorEx armLeft;
+    private PIDController controller;
+    public double p1 = 0.013, i1 = 0, d1 = 0.00075;
+    public double f1 = -0.2;
+    private int target1 = 0;
+    private final double tick_in_degrees1 = 2786.2/360;
     public Arm(HardwareMap hardwareMap) {
         //Instantiate your servos, motors, sensors, other devices here
         armRight = hardwareMap.get(DcMotorEx.class, "armRight");
@@ -28,8 +34,8 @@ public class Arm implements IComponents, IArm{
     public void initialize() {
 
         armRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        armLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        controller = new PIDController(p1, i1, d1);
+
         if(IsAutonomous){
             //override settings for autonomous mode if needed
         }

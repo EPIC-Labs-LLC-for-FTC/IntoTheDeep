@@ -125,7 +125,7 @@ public class RR_Sample_Auto extends LinearOpMode {
             return new Arm.ArmZero();
         }
 
-        public class ArmSpecimenSample implements Action {
+        public class ArmSamplePick implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 target1 = -240;
@@ -133,11 +133,11 @@ public class RR_Sample_Auto extends LinearOpMode {
             }
 
         }
-        public Action armSampleSpecimen() {
-            return new Arm.ArmSpecimenSample();
+        public Action armSamplePick() {
+            return new Arm.ArmSamplePick();
         }
 
-        public class ArmSpecimenDrop implements Action {
+        public class ArmSampleDrop implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 target1 = -1000;
@@ -146,7 +146,7 @@ public class RR_Sample_Auto extends LinearOpMode {
 
         }
         public Action armSampleDrop() {
-            return new Arm.ArmSpecimenDrop();
+            return new Arm.ArmSampleDrop();
         }
 
 
@@ -227,7 +227,7 @@ public class RR_Sample_Auto extends LinearOpMode {
             }
 
         }
-        public Action slideSampleSpecimen() {
+        public Action slideSamplePick() {
             return new Slides.SlideSamplePick();
         }
 
@@ -294,7 +294,7 @@ public class RR_Sample_Auto extends LinearOpMode {
 
 
         // actionBuilder builds from the drive steps passed to it
-        TrajectoryActionBuilder specimen1 = drive.actionBuilder(initialPose)
+        Action specimen1 = drive.actionBuilder(initialPose)
                 // Specimen
                 .afterTime(0.1, arm.armSpecimenForward())
                 .stopAndAdd(arm.armSpecimenForward())
@@ -319,10 +319,10 @@ public class RR_Sample_Auto extends LinearOpMode {
 
                 .strafeToLinearHeading(new Vector2d(-34.1, -54), Math.toRadians(90))
 
-                .afterTime(0.1, arm.armSampleSpecimen())
-                .stopAndAdd(arm.armSampleSpecimen())
-                .afterTime(0.8, slide.slideSampleSpecimen())
-                .stopAndAdd(slide.slideSampleSpecimen())
+                .afterTime(0.1, arm.armSamplePick())
+                .stopAndAdd(arm.armSamplePick())
+                .afterTime(0.8, slide.slideSamplePick())
+                .stopAndAdd(slide.slideSamplePick())
                 .waitSeconds(1)
 
                 .afterTime(0.1, claw.closeClaw())
@@ -357,10 +357,10 @@ public class RR_Sample_Auto extends LinearOpMode {
 
                 .strafeToLinearHeading(new Vector2d(-39.1, -55), Math.toRadians(110))
 
-                .afterTime(0.1, arm.armSampleSpecimen())
-                .stopAndAdd(arm.armSampleSpecimen())
-                .afterTime(0.8, slide.slideSampleSpecimen())
-                .stopAndAdd(slide.slideSampleSpecimen())
+                .afterTime(0.1, arm.armSamplePick())
+                .stopAndAdd(arm.armSamplePick())
+                .afterTime(0.8, slide.slideSamplePick())
+                .stopAndAdd(slide.slideSamplePick())
                 .waitSeconds(1)
 
                 .afterTime(0.1, claw.closeClaw())
@@ -390,10 +390,7 @@ public class RR_Sample_Auto extends LinearOpMode {
                 .afterTime(0.9, arm.armResetForward())
                 .stopAndAdd(arm.armResetForward())
 
-                .strafeToLinearHeading(new Vector2d(0, -30), Math.toRadians(0));
-
-
-        Action trajectoryActionCloseOut = specimen1.endTrajectory().fresh()
+                .strafeToLinearHeading(new Vector2d(0, -30), Math.toRadians(180))
                 .build();
 
 
@@ -409,8 +406,7 @@ public class RR_Sample_Auto extends LinearOpMode {
                         arm.armPID(),
                         slide.slidePID(),
                         new SequentialAction(
-                                specimen1.build(),
-                                trajectoryActionCloseOut
+                                specimen1
                         )
                 )
         );

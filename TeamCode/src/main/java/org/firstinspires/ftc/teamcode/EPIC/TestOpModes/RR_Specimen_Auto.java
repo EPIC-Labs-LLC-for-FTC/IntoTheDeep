@@ -31,7 +31,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
         private DcMotorEx armRight;
         private DcMotorEx armLeft;
         private PIDController controller;
-        public double p1 = 0.01, i1 = 0, d1 = 0.00075;
+        public double p1 = 0.013, i1 = 0, d1 = 0.00075;
         public double f1 = -0.2;
         private int target1 = 0;
         private final double tick_in_degrees1 = 2786.2/360;
@@ -62,11 +62,11 @@ public class RR_Specimen_Auto extends LinearOpMode {
         public Action armPID() {
             return new Arm.ArmPID();
         }
-//////////////////////////////////////
+        //////////////////////////////////////
         public class ArmSpecimenForward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -780;
+                target1 = -750;
                 return false;
             }
 
@@ -74,7 +74,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
         public Action armSpecimenForward() {
             return new Arm.ArmSpecimenForward();
         }
-//////////////////////////////////////
+        //////////////////////////////////////
         public class ArmSpecimenBackward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -91,7 +91,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
         public class ArmResetForward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -1120;
+                target1 = -375;
                 return false;
             }
 
@@ -125,7 +125,36 @@ public class RR_Specimen_Auto extends LinearOpMode {
             return new Arm.ArmZero();
         }
 
+        public class ArmSamplePick implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                target1 = -240;
+                return false;
+            }
+
+        }
+        public Action armSamplePick() {
+            return new Arm.ArmSamplePick();
+        }
+
+        public class ArmSampleDrop implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                target1 = -1000;
+                return false;
+            }
+
+        }
+        public Action armSampleDrop() {
+            return new Arm.ArmSampleDrop();
+        }
+
+
+
     }
+    ////////////////////////////////////////////////
+
+
 
     public class Slides {
         private DcMotorEx slideRight;
@@ -163,7 +192,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
 
         public class SlideSpecimen implements Action {
             public boolean run(@NonNull TelemetryPacket packet) {
-                target2 = -910;
+                target2 = -925;
                 return false;
             }
         }
@@ -188,6 +217,30 @@ public class RR_Specimen_Auto extends LinearOpMode {
         }
         public Action slideReset() {
             return new Slides.SlideReset();
+        }
+
+        public class SlideSamplePick implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                target2 = -1250;
+                return false;
+            }
+
+        }
+        public Action slideSamplePick() {
+            return new Slides.SlideSamplePick();
+        }
+
+        public class SlideSampleDrop implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                target2 = -3000;
+                return false;
+            }
+
+        }
+        public Action slideSampleDrop() {
+            return new Slides.SlideSampleDrop();
         }
 
 
@@ -241,7 +294,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
 
 
         // actionBuilder builds from the drive steps passed to it
-        TrajectoryActionBuilder specimen1 = drive.actionBuilder(initialPose)
+        Action specimen1 = drive.actionBuilder(initialPose)
                 // Specimen 1
                 .waitSeconds(1)
                 .afterTime(0.1, arm.armSpecimenForward())
@@ -261,34 +314,40 @@ public class RR_Specimen_Auto extends LinearOpMode {
 
                 .afterTime(0.1, slide.slideReset())
                 .stopAndAdd(slide.slideReset())
-                .afterTime(0.5, arm.armResetBackward())
-                .stopAndAdd(arm.armResetBackward())
+                .afterTime(0.5, arm.armResetForward())
+                .stopAndAdd(arm.armResetForward())
                 .waitSeconds(1)
 
-                .strafeToLinearHeading(new Vector2d(47, -70.5), Math.toRadians(270))
+                .strafeToLinearHeading(new Vector2d(30, -49), Math.toRadians(45))
 
+                .afterTime(0.1, arm.armSamplePick())
+                .stopAndAdd(arm.armSamplePick())
+                .afterTime(0.8, slide.slideSamplePick())
+                .stopAndAdd(slide.slideSamplePick())
+                .afterTime(2.4, claw.closeClaw())
+                .stopAndAdd(claw.closeClaw())
+                .waitSeconds(2.5)
+
+                .strafeToLinearHeading(new Vector2d(30, -50), Math.toRadians(315))
+
+                .afterTime(0.1, claw.openClaw())
+                .stopAndAdd(claw.openClaw())
+                .afterTime(1, slide.slideReset())
+                .stopAndAdd(slide.slideReset())
+                .afterTime(1.5, arm.armResetForward())
+                .stopAndAdd(arm.armResetForward())
                 .waitSeconds(2)
+
+                .strafeToLinearHeading(new Vector2d(47, -65), Math.toRadians(270))
+                .waitSeconds(1)
                 .afterTime(0.1, claw.closeClaw())
                 .stopAndAdd(claw.closeClaw())
-                .afterTime(1, arm.armSpecimenBackward())
-                .stopAndAdd(arm.armSpecimenBackward())
                 .waitSeconds(1)
 
-                .strafeToLinearHeading(new Vector2d(-5, -50), Math.toRadians(270))
-
-                .afterTime(0.1, slide.slideSpecimen2())
-                .stopAndAdd(slide.slideSpecimen2())
-                .waitSeconds(1)
-
-                .strafeToLinearHeading(new Vector2d(-5, -39), Math.toRadians(270))
-
-                .afterTime(1, claw.openClaw())
-                .stopAndAdd(claw.openClaw())
-                .waitSeconds(2);
-
-
-        Action trajectoryActionCloseOut = specimen1.endTrajectory().fresh()
                 .build();
+        
+//        Action trajectoryActionCloseOut = specimen1.endTrajectory().fresh()
+//                .build();
 
 
 
@@ -303,8 +362,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
                         arm.armPID(),
                         slide.slidePID(),
                     new SequentialAction(
-                            specimen1.build(),
-                            trajectoryActionCloseOut
+                            specimen1
                 )
         )
         );

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.EPIC.Components;
 
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -19,6 +20,12 @@ public class Slider implements IComponents, ISlider{
 
     public DcMotorEx slideLeft = null;
     public DcMotorEx slideRight = null;
+    private PIDController controller2;
+    public static double p2 = 0.017, i2 = 0, d2 = 0.0001;
+    public static double f2 = -0.02;
+    public static int target2 = 0;
+    private final double tick_in_degrees2 = 537.7/360;
+
     public Slider (HardwareMap hardwareMap){
 
         slideRight = hardwareMap.get(DcMotorEx.class, "slideRight");
@@ -28,8 +35,8 @@ public class Slider implements IComponents, ISlider{
     public void initialize() {
 
         slideRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        controller2 = new PIDController(p2, i2, d2);
+
         if(IsAutonomous){
             //override settings for autonomous mode if needed
         }
