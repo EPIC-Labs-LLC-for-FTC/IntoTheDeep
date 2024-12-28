@@ -284,6 +284,29 @@ public class RR_Specimen_Auto extends LinearOpMode {
 
     }
 
+    public class Wrist {
+        private Servo wrist;
+
+        public Wrist(HardwareMap hardwareMap) {
+            wrist = hardwareMap.get(Servo.class, "wrist");
+        }
+
+        public class WristReset implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                wrist.setPosition(0.7);
+                return false;
+            }
+
+        }
+
+        public Action wristReset() {
+            return new Wrist.WristReset();
+        }
+    }
+
+
+
     @Override
     public void runOpMode() {
         Pose2d initialPose = new Pose2d(4.1, -69.2, Math.toRadians(90));
@@ -291,6 +314,8 @@ public class RR_Specimen_Auto extends LinearOpMode {
         Claw claw = new Claw(hardwareMap);
         Arm arm = new Arm(hardwareMap);
         Slides slide = new Slides(hardwareMap);
+        Wrist wrist = new Wrist(hardwareMap);
+
 
 
         // actionBuilder builds from the drive steps passed to it

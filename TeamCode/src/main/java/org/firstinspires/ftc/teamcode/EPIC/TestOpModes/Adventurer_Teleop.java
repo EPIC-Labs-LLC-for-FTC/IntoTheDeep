@@ -72,6 +72,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         if (gamepad2.y) {
             runningActions.add(new SequentialAction(
+                    new InstantAction(() -> wrist.setPosition(0.5)),
                     new InstantAction(() -> target1 = -980),
                     new SleepAction(1),
                     new InstantAction(() -> target2 = -3000)
@@ -82,7 +83,8 @@ public class Adventurer_Teleop extends LinearOpMode {
             runningActions.add(new SequentialAction(
                     new InstantAction(() -> target1 = -240),
                     new SleepAction(1),
-                    new InstantAction(() -> target2 = -1200)
+                    new InstantAction(() -> target2 = -1200),
+                    new InstantAction(() -> wrist.setPosition(1))
             ));
         }
 
@@ -213,11 +215,11 @@ public class Adventurer_Teleop extends LinearOpMode {
 
     public void claw() {
         if (gamepad1.left_bumper) {
-            clawRight.setPosition(0.45);
-            clawLeft.setPosition(0.65);
+            clawRight.setPosition(0.55);
+            clawLeft.setPosition(0.55);
         } else if (gamepad1.right_bumper) {
-            clawRight.setPosition(0.73);
-            clawLeft.setPosition(0.9);
+            clawRight.setPosition(0.7);
+            clawLeft.setPosition(0.7);
         }
     }
 
@@ -283,6 +285,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         clawLeft = hardwareMap.get(Servo.class, "clawLeft");
         clawRight = hardwareMap.get(Servo.class, "clawRight");
+        wrist = hardwareMap.get(Servo.class, "wrist");
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

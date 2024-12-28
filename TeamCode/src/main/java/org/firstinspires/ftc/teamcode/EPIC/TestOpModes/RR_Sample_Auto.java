@@ -14,6 +14,7 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -78,7 +79,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class ArmSpecimenBackward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -690;
+                target1 = -670;
                 return false;
             }
 
@@ -128,7 +129,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class ArmSamplePick implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -240;
+                target1 = -220;
                 return false;
             }
 
@@ -260,8 +261,8 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class CloseClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                clawRight.setPosition(0.45);
-                clawLeft.setPosition(0.65);
+                clawRight.setPosition(0.5);
+                clawLeft.setPosition(0.5);
                 return false;
             }
 
@@ -273,8 +274,8 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class OpenClaw implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                clawRight.setPosition(0.73);
-                clawLeft.setPosition(0.9);
+                clawRight.setPosition(0.7);
+                clawLeft.setPosition(0.7);
                 return false;
             }
         }
@@ -284,6 +285,28 @@ public class RR_Sample_Auto extends LinearOpMode {
 
     }
 
+    //Wrist
+    public class Wrist {
+        private Servo wrist;
+
+        public Wrist(HardwareMap hardwareMap) {
+            wrist = hardwareMap.get(Servo.class, "wrist");
+        }
+
+        public class WristReset implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                wrist.setPosition(0.7);
+                return false;
+            }
+
+        }
+
+        public Action wristReset() {
+            return new Wrist.WristReset();
+        }
+    }
+
     @Override
     public void runOpMode() {
         Pose2d initialPose = new Pose2d(4.1, -69.2, Math.toRadians(90));
@@ -291,6 +314,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         Claw claw = new Claw(hardwareMap);
         Arm arm = new Arm(hardwareMap);
         Slides slide = new Slides(hardwareMap);
+        Wrist wrist = new Wrist(hardwareMap);
 
 
         // actionBuilder builds from the drive steps passed to it
@@ -298,6 +322,8 @@ public class RR_Sample_Auto extends LinearOpMode {
                 // Specimen
                 .afterTime(0.1, arm.armSpecimenForward())
                 .stopAndAdd(arm.armSpecimenForward())
+                .afterTime(0.1, wrist.wristReset())
+                .stopAndAdd(wrist.wristReset())
                 .afterTime(0.5, slide.slideSpecimen())
                 .stopAndAdd(slide.slideSpecimen())
                 .waitSeconds(1)
@@ -312,8 +338,6 @@ public class RR_Sample_Auto extends LinearOpMode {
 
                 .afterTime(0.1, slide.slideReset())
                 .stopAndAdd(slide.slideReset())
-                .afterTime(0.8, arm.armResetForward())
-                .stopAndAdd(arm.armResetForward())
 
                 // Sample 1
 
@@ -390,7 +414,7 @@ public class RR_Sample_Auto extends LinearOpMode {
                 .afterTime(0.9, arm.armResetForward())
                 .stopAndAdd(arm.armResetForward())
 
-                .strafeToLinearHeading(new Vector2d(0, -30), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-10, -20), Math.toRadians(90))
                 .build();
 
 
