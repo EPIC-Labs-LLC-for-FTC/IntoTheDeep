@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.EPIC.OfficalOpModes;
 
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
@@ -21,6 +22,8 @@ import com.acmerobotics.roadrunner.Pose2d;
 
 @Autonomous(name = "Auton_BlueLeftHangPidf")
 public class Auton_BlueLeftHangPidf extends LinearOpMode {
+    public static double ap = 0.03, ai = 0, ad = 0.0015, af = 0.065;
+    public static double sp = 0.02, si = 0, sd = 0.001, sf = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -48,6 +51,15 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
             }
         };
 
+        Thread pidf = new Thread() {
+            public void run() {
+                while (opModeIsActive()) {
+                    odyssey.odysseySlider.runPIDF(sp, si, sd, sf);
+                    odyssey.odysseyArm.runPIDF(ap, ai, ad, af);
+                }
+            }
+        };
+
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
                 .lineToY(-40.15)
@@ -62,6 +74,7 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
 
         waitForStart();
         coord.start();
+        pidf.start();
         Actions.runBlocking(tsc1);
         sleep(10000);
 
