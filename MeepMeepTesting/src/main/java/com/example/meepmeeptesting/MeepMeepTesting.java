@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class MeepMeepTesting {
     public static void main(String[] args) {
-        MeepMeep meepMeep = new MeepMeep(800);
+        MeepMeep meepMeep = new MeepMeep(600);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
@@ -21,14 +21,14 @@ public class MeepMeepTesting {
                 .setDriveTrainType(DriveTrainType.MECANUM)
                 .setDimensions(16.5, 16.3)// length
                 .setStartPose(new Pose2d(8.25, -63.85, Math.toRadians(90))) // north facing
-                .build();
+                .build(); 
 
         myBot.runAction(myBot.getDrive().actionBuilder(myBot.getPose())
 
-                .lineToY(-32.15)
-                .strafeTo(new Vector2d(15, -32.15))
+                .lineToY(-40.15)
+                .strafeTo(new Vector2d(18, -40.15))
 
-               .splineToConstantHeading(new Vector2d(42, -9), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(45, -9), Math.toRadians(90))
 //
 //
 //                .lineToY(-52)

@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.EPIC.OfficalOpModes;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
+import com.acmerobotics.roadrunner.TrajectoryBuilder;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -41,23 +43,25 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
                     telemetry.addData("X", drive.pose.position.x);
                     telemetry.addData("Y", drive.pose.position.y);
                     telemetry.addData("Heading (Deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+                    telemetry.update();
                 }
             }
         };
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
-                .lineToY(-32.15);
-//                .lineToX(15)
-//                .strafeTo(new Vector2d(15, -38.15))
-//
-//                .splineToConstantHeading(new Vector2d(42, -9), Math.toRadians(90));
+                .lineToY(-40.15)
+                .strafeTo(new Vector2d(18, -40.15))
+
+                .splineToConstantHeading(new Vector2d(45, -9), Math.toRadians(90));
+                //.turnTo(Math.toRadians(90)) Returns Failed Requirement When Used
 
         Action tsc1 = tab.build();
 
 //
 
         waitForStart();
+        coord.start();
         Actions.runBlocking(tsc1);
         sleep(10000);
 
