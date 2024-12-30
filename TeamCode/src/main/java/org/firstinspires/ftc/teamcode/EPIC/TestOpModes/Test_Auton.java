@@ -67,15 +67,13 @@ public class Test_Auton extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         tac1,
-//                        //odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH,true),
-//                        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP,true),
-//                        odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE,true),
-//                        sleeper,
-//                        odyssey.odysseyClaw.move(ClawStates.OPEN,true),
-//                        sleeper,
-//                        tac2,
-//                        odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH,true),
-                   //     odyssey.odysseySClaw.move(SpecimenClaw.SClawStates.OPEN, true),
+                        //odyssey.odysseySlider.slide(SliderStates.SPECIMEN_HIGH,true),
+                        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP,true),
+                        odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE,true),
+                        sleeper,
+                        odyssey.odysseyClaw.move(ClawStates.OPEN,true),
+                        sleeper,
+                        tac2,
                         tac2
                 )
         );
