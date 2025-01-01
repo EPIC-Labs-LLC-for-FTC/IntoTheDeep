@@ -11,6 +11,7 @@ public enum AutonPose {
     SPECIMEN_HANG_R(new Vector2d(0, -32)),
     SAMPLE_GRAB_L(new Vector2d(-24, 0)),
     SAMPLE_GRAB_R(new Vector2d(24, 0));
+    //Current Positions are placeholders and must be finetuned through LocalizationTest
 
     private Vector2d vector;
 
