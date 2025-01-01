@@ -10,29 +10,13 @@ public enum Quadrants {
 
     public boolean inQuadrant(Vector2d vector, Quadrants quadrant) {
         if (quadrant == QUADRANT_I) {
-            if (vector.x > 0 && vector.y > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return vector.x > 0 && vector.y > 0;
         } else if (quadrant == QUADRANT_II) {
-            if (vector.x < 0 && vector.y > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return vector.x < 0 && vector.y > 0;
         } else if (quadrant == QUADRANT_III) {
-            if (vector.x < 0 && vector.y < 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return vector.x < 0 && vector.y < 0;
         } else if (quadrant == QUADRANT_IV) {
-            if (vector.x > 0 && vector.y < 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return vector.x > 0 && vector.y < 0;
         } else {
             return false;
         }
