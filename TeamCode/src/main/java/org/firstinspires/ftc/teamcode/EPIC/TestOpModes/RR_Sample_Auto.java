@@ -42,6 +42,8 @@ public class RR_Sample_Auto extends LinearOpMode {
             armLeft = hardwareMap.get(DcMotorEx.class, "armLeft");
             armRight.setDirection(DcMotorSimple.Direction.REVERSE);
             controller = new PIDController(p1, i1, d1);
+            armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         public class ArmPID implements Action {
@@ -67,7 +69,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class ArmSpecimenForward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -750;
+                target1 = -730;
                 return false;
             }
 
@@ -129,7 +131,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class ArmSamplePick implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -220;
+                target1 = -215;
                 return false;
             }
 
@@ -171,6 +173,8 @@ public class RR_Sample_Auto extends LinearOpMode {
             slideLeft = hardwareMap.get(DcMotorEx.class, "slideLeft");
             slideRight.setDirection(DcMotorSimple.Direction.REVERSE);
             controller2 = new PIDController(p2, i2, d2);
+            slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slideRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         public class SlidePID implements Action {
@@ -223,7 +227,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class SlideSamplePick implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target2 = -1250;
+                target2 = -1200;
                 return false;
             }
 

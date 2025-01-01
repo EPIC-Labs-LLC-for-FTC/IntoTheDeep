@@ -64,6 +64,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         if (gamepad2.x) {
             runningActions.add(new SequentialAction(
+                    new InstantAction(() -> wrist.setPosition(0.5)),
                     new InstantAction(() -> target2 = -10),
                     new SleepAction(1),
                     new InstantAction(() -> target1 = -390)
@@ -73,7 +74,7 @@ public class Adventurer_Teleop extends LinearOpMode {
         if (gamepad2.y) {
             runningActions.add(new SequentialAction(
                     new InstantAction(() -> wrist.setPosition(0.5)),
-                    new InstantAction(() -> target1 = -980),
+                    new InstantAction(() -> target1 = -1200),
                     new SleepAction(1),
                     new InstantAction(() -> target2 = -3000)
             ));
@@ -81,7 +82,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         if (gamepad2.a) {
             runningActions.add(new SequentialAction(
-                    new InstantAction(() -> target1 = -240),
+                    new InstantAction(() -> target1 = -255),
                     new SleepAction(1),
                     new InstantAction(() -> target2 = -1200),
                     new InstantAction(() -> wrist.setPosition(1))
@@ -243,9 +244,12 @@ public class Adventurer_Teleop extends LinearOpMode {
         }
     }
 
-    public void slideLimit() {
-        if (target2 > maxtarget) {
-            target2 = target2 - 30;
+    public void reset() {
+        if (gamepad2.dpad_right) {
+            slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slideRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
     }
 
@@ -351,7 +355,7 @@ public class Adventurer_Teleop extends LinearOpMode {
                 claw();
                 wrist();
                 actions();
-
+                reset();
 
             }
 
