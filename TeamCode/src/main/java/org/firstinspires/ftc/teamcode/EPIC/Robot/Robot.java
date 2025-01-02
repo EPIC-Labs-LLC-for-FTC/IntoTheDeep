@@ -216,6 +216,10 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                             telemetry.addData("Wrist Thread", "Wrist at rest");
                             break;
                         case DEPOSITING_SAMPLE:
+                            if (odysseyClaw.stateClaw == ClawStates.HOLDING_SAMPLE_PORTRAIT
+                                    && odysseyArm.stateArm == ArmStates.LOWERED) {
+                                odysseyArm.move(ArmStates.HOLDING_SAMPLE);
+                            }
                             break;
                         case PICKING_UP_SAMPLE:
                             telemetry.addData("Wrist Thread", "Ready to pickup sample");
