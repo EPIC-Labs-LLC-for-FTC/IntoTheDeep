@@ -66,7 +66,6 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
                 .strafeTo(new Vector2d(18, -40.15))
 
                 .splineToConstantHeading(new Vector2d(45, -9), Math.toRadians(90));
-                //.turnTo(Math.toRadians(90)) Returns Failed Requirement When Used
 
         Action tsc1 = tab.build();
 

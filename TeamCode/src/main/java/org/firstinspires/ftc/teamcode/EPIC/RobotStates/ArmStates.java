@@ -9,7 +9,7 @@ public enum ArmStates {
     NEUTRAL(250),
     SPECIMEN_PICK(400),
     SPECIMEN_DROP(200),
-    HOLDING_SAMPLE(450);
+    HOLDING_SAMPLE(475);
 
 
     private double stateNum;
