@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.EPIC.Components.AutonStates;
+package org.firstinspires.ftc.teamcode.EPIC.AutonStates.AutonStates;
 
 import com.acmerobotics.roadrunner.Vector2d;
 
