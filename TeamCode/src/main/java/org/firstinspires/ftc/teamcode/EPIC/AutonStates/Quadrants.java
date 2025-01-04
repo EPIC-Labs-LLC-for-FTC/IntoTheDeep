@@ -21,4 +21,18 @@ public enum Quadrants {
             return false;
         }
     }
+
+    public Quadrants checkQuadrant(Vector2d vector) {
+        if (vector.x > 0 && vector.y > 0) {
+            return QUADRANT_I;
+        } else if (vector.x < 0 && vector.y > 0) {
+            return QUADRANT_II;
+        } else if (vector.x < 0 && vector.y < 0) {
+            return QUADRANT_III;
+        } else if (vector.x > 0 && vector.y < 0) {
+            return QUADRANT_IV;
+        } else {
+            return null;
+        }
+    }
 }
