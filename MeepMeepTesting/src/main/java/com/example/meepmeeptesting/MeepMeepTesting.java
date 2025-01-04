@@ -30,7 +30,12 @@ public class MeepMeepTesting {
                 .strafeToSplineHeading(new Vector2d(37, -2), Math.toRadians(270))
                 .strafeTo(new Vector2d(46, -2))
                 .strafeTo(new Vector2d(46, -60))
-                .splineToConstantHeading(new Vector2d(50, -2), Math.toRadians(270))
+                .strafeTo(new Vector2d(46, -20))
+                .splineToConstantHeading(new Vector2d(54, -2), Math.toRadians(90))
+                .strafeTo(new Vector2d(54, -60))
+                .strafeTo(new Vector2d(54, -20))
+                .splineToConstantHeading(new Vector2d(62, -2), Math.toRadians(90))
+                .strafeTo(new Vector2d(62, -60))
 
 
                 //.splineToConstantHeading(new Vector2d(45, -9), Math.toRadians(90))
