@@ -62,10 +62,9 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
-                .strafeTo(new Vector2d(8.25, -40.15))
-                .strafeTo(new Vector2d(18, -40.15))
-
-                .splineToConstantHeading(new Vector2d(45, -9), Math.toRadians(90));
+                .lineToY(-40.15)
+                .strafeToConstantHeading(new Vector2d(27, -40.15))
+                .splineToConstantHeading(new Vector2d(45, -9), 0);
 
         Action tsc1 = tab.build();
 
