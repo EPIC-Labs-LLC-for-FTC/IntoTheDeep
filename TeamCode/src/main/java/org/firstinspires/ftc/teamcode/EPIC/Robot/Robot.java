@@ -37,7 +37,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         if(!isAuton) {
             odysseyWheels = new Mecanum_Wheels(parent.hardwareMap);
         }
-        colorSensor = new MyColorRangeSensor(parent.hardwareMap, alliance);
+        //colorSensor = new MyColorRangeSensor(parent.hardwareMap, alliance);
         this.parent = parent;
         this.telemetry = parent.telemetry;
         this.alliance = alliance;

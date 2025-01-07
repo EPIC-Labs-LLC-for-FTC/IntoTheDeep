@@ -28,18 +28,23 @@ import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 @Autonomous(name = "Test Auton")
 //@Disabled
 public class Test_Auton extends LinearOpMode {
-
-    public static double ap = 0.02, ai = 0, ad = 0.0015, af = 0.08;
+    public static double ap = 0.03, ai = 0, ad = 0.0015, af = 0.065;
     public static double sp = 0.02, si = 0, sd = 0.001, sf = 0;
+
     @Override
     public void runOpMode() throws InterruptedException {
+        // Initialize the robot and mecanum drive
         Robot odyssey = new Robot(this, "Red", true);
-        SparkFunOTOSDrive drive= new SparkFunOTOSDrive(hardwareMap,new Pose2d(8.25, -63.85,
+        SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, new Pose2d(8.25, -63.85,
                 Math.toRadians(90)));
-        Pose2d initialPos= new Pose2d(8.25, -63.85, Math.toRadians(90));
+        Pose2d initialPos = new Pose2d(8.25, -63.85, Math.toRadians(90));
         drive.setPoseEstimate(initialPos);
         odyssey.setIsAutonomous(true);
         odyssey.initialize();
+
+        while (opModeInInit()) {
+            idle();
+        }
 
         Thread coord = new Thread() {
             public void run() {
@@ -62,19 +67,19 @@ public class Test_Auton extends LinearOpMode {
         };
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
-                .lineToY(-40.15)
-                //.strafeTo(new Vector2d(8.25, -40.15))
 
-                .strafeTo(new Vector2d(18, -40.15))
+                .lineToY(-40.15)
+                //.strafeToConstantHeading(new Vector2d(18, -40.15))
 
                 .splineToConstantHeading(new Vector2d(45, -9), Math.toRadians(90));
 
         Action tsc1 = tab.build();
 
+//
+
         waitForStart();
         coord.start();
-        pidf.start();
+        //pidf.start();
         Actions.runBlocking(tsc1);
-        sleep(10000);
     }
 }
