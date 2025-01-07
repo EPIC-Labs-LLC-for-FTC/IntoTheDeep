@@ -28,7 +28,7 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize the robot and mecanum drive
-        Robot odyssey = new Robot(this, "Blue");
+        Robot odyssey = new Robot(this, "Blue", true);
         SparkFunOTOSDrive drive= new SparkFunOTOSDrive(hardwareMap,new Pose2d(8.25, -63.85,
                 Math.toRadians(90)));
         Pose2d initialPos= new Pose2d(8.25, -63.85, Math.toRadians(90));

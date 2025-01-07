@@ -16,7 +16,7 @@ public class TeleOp_Tryout extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot odyssey = new Robot(this, "Red");
+        Robot odyssey = new Robot(this, "Red", false);
         odyssey.initialize();
 
         Thread pidf = new Thread() {
