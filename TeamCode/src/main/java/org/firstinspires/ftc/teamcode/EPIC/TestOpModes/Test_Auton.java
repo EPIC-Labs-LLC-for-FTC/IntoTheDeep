@@ -15,6 +15,8 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.EPIC.AutonActions.FailoverAction;
+import org.firstinspires.ftc.teamcode.EPIC.AutonStates.AutonPose;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
@@ -31,7 +33,7 @@ public class Test_Auton extends LinearOpMode {
     public static double sp = 0.02, si = 0, sd = 0.001, sf = 0;
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot odyssey = new Robot(this, "Blue");
+        Robot odyssey = new Robot(this, "Red");
         SparkFunOTOSDrive drive= new SparkFunOTOSDrive(hardwareMap,new Pose2d(8.25, -63.85,
                 Math.toRadians(90)));
         Pose2d initialPos= new Pose2d(8.25, -63.85, Math.toRadians(90));
@@ -68,6 +70,10 @@ public class Test_Auton extends LinearOpMode {
 
         Action tsc1 = tab.build();
 
+        TrajectoryActionBuilder strafeTAB = drive.actionBuilder(new Pose2d(AutonPose.OBSERVATION_R.getVector(), Math.toRadians(270)))
+                .strafeTo(AutonPose.OBSERVATION_R.getVector().plus(new Vector2d(-8, 0)))
+                .strafeTo(AutonPose.OBSERVATION_R.getVector());
+
         while (opModeInInit()) {
             idle();
         }
@@ -77,5 +83,9 @@ public class Test_Auton extends LinearOpMode {
         pidf.start();
         Actions.runBlocking(tsc1);
         sleep(10000);
+
+        while (opModeIsActive()) {
+
+        }
     }
 }
