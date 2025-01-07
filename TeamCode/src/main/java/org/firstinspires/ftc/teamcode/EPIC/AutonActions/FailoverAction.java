@@ -17,6 +17,7 @@ public class FailoverAction implements Action {
 
     @Override
     public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+        //runs mainAction on loop until failOver is called, then runs the failoverAction
         if (failedOver) {
             return failoverAction.run(telemetryPacket);
         }

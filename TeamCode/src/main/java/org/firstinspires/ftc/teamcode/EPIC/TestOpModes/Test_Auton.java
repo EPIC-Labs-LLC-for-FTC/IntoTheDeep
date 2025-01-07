@@ -62,8 +62,9 @@ public class Test_Auton extends LinearOpMode {
         };
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
+                .lineToY(-40.15)
+                //.strafeTo(new Vector2d(8.25, -40.15))
 
-                .strafeTo(new Vector2d(8.25, -40.15))
                 .strafeTo(new Vector2d(18, -40.15))
 
                 .splineToConstantHeading(new Vector2d(45, -9), Math.toRadians(90));
@@ -75,9 +76,5 @@ public class Test_Auton extends LinearOpMode {
         pidf.start();
         Actions.runBlocking(tsc1);
         sleep(10000);
-
-        while (opModeIsActive()) {
-
-        }
     }
 }
