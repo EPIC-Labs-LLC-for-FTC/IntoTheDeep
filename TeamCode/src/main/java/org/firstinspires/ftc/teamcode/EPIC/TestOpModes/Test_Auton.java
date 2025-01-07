@@ -70,14 +70,6 @@ public class Test_Auton extends LinearOpMode {
 
         Action tsc1 = tab.build();
 
-        TrajectoryActionBuilder strafeTAB = drive.actionBuilder(new Pose2d(AutonPose.OBSERVATION_R.getVector(), Math.toRadians(270)))
-                .strafeTo(AutonPose.OBSERVATION_R.getVector().plus(new Vector2d(-8, 0)))
-                .strafeTo(AutonPose.OBSERVATION_R.getVector());
-
-        while (opModeInInit()) {
-            idle();
-        }
-
         waitForStart();
         coord.start();
         pidf.start();

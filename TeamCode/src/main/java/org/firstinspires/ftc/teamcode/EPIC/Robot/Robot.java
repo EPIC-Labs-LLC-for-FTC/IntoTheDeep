@@ -66,6 +66,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         odysseySlider.addSliderListener(this);
         odysseyWheels.addMecanumListener(this);
         odysseyClaw.addClawListener(this);
+        colorSensor.addColorListener(this);
         odysseyClaw.initialize();
         odysseySlider.initialize(0, 0, 0);
         odysseyArm.initialize(0, 0, 0);
@@ -76,7 +77,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
     @Override
     public void colorPicker(ColorEventObject event) {
         if (this.parent.opModeIsActive()) {
-//            
+//
         }
     }
 
@@ -85,11 +86,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         if (this.parent.opModeIsActive()) {
             Thread tc = new Thread() {
                 public void run() {
-                    if (event.getButtonStatus()) {
-                        // odysseyWheels.move(0.6, 0, 0, 0);
-                    } else {
-                        // odysseyWheels.move(0, 0, 0, 0);
-                    }
+
                 }
             };
             tc.start();
