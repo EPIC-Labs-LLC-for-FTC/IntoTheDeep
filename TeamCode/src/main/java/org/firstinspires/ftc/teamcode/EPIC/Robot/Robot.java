@@ -73,7 +73,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         odysseyWheels.addMecanumListener(this);
         }
         odysseyClaw.addClawListener(this);
-        colorSensor.addColorListener(this);
+        //colorSensor.addColorListener(this);
         odysseyClaw.initialize();
         odysseySlider.initialize(0, 0, 0);
         odysseyArm.initialize(0, 0, 0);
