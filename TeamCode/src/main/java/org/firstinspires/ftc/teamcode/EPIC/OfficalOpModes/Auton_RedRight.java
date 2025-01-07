@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 public class Auton_RedRight extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot odyssey = new Robot(this, "Red");
+        Robot odyssey = new Robot(this, "Red", true);
         odyssey.setIsAutonomous(true);
         odyssey.initialize();
 

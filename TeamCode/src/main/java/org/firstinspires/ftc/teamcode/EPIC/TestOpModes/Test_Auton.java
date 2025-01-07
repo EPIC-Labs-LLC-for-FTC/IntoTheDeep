@@ -31,7 +31,7 @@ public class Test_Auton extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         double distance = 0;
         Pose2d initialPose = new Pose2d(0, 0, Math.toRadians(0));
-        Robot odyssey = new Robot(this, "Red");
+        Robot odyssey = new Robot(this, "Red", true);
         odyssey.initialize();
         //SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, new Pose2d(-29.39, 48.73, 179.85));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);

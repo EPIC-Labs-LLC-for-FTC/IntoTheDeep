@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 public class TeleOp_Blue_NoSleep extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot odyssey = new Robot(this, "Blue");
+        Robot odyssey = new Robot(this, "Blue", false);
         odyssey.initialize();
         sleep(100);
 
