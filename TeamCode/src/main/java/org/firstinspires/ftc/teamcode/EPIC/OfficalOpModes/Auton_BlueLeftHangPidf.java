@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.EPIC.OfficalOpModes;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
@@ -28,11 +31,12 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize the robot and mecanum drive
-        Robot odyssey = new Robot(this, "Blue", true);
         SparkFunOTOSDrive drive= new SparkFunOTOSDrive(hardwareMap,new Pose2d(8.25, -63.85,
                 Math.toRadians(90)));
         Pose2d initialPos= new Pose2d(8.25, -63.85, Math.toRadians(90));
         drive.setPoseEstimate(initialPos);
+
+        Robot odyssey = new Robot(this, "Blue", true);
         odyssey.setIsAutonomous(true);
         odyssey.initialize();
 
@@ -62,9 +66,12 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
-                .lineToY(-40.15)
-                .strafeToConstantHeading(new Vector2d(27, -40.15))
-                .splineToConstantHeading(new Vector2d(45, -9), 0);
+                .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2,true))
+                .lineToY(-36.5)
+                .stopAndAdd(performSpecimenDropoff(odyssey))
+                //.strafeToConstantHeading(new Vector2d(27, -40.15))
+                //.splineToConstantHeading(new Vector2d(45, -9), 0)
+        ;
 
         Action tsc1 = tab.build();
 
@@ -125,23 +132,32 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
     /**
      * Handles the sequence for dropping off a specimen.
      */
-    private void performSpecimenDropoff(Robot odyssey) throws InterruptedException {
-        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
-        sleep(500);
+    private Action performSpecimenDropoff(Robot odyssey) throws InterruptedException {
+        return new Action(){
 
-        odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
-        sleep(500);
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
+                sleep(500);
 
-        odyssey.odysseyWrist.setPos(WristStates.SPECIMEN_PICK);
-        sleep(500);
+                odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+                sleep(500);
 
-        odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(500);
+                odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
+                //odyssey.odysseyWrist.setPos(WristStates.SPECIMEN_PICK);
+                sleep(500);
 
-        odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
-        sleep(500);
+                //odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
+                //sleep(500);
 
-        odyssey.odysseyArm.move(ArmStates.INITIALIZED);
-        sleep(1000);
+                odyssey.odysseyClaw.move(ClawStates.OPEN);
+                sleep(500);
+
+                //odyssey.odysseyArm.move(ArmStates.INITIALIZED);
+                //sleep(1000);
+                return false;
+            }
+        };
+
     }
 }
