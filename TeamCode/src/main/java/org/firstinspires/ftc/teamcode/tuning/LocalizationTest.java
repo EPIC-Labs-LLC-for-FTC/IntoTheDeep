@@ -29,6 +29,11 @@ public class LocalizationTest extends LinearOpMode {
         Robot odyssey = new Robot(this, "Red", true);
         odyssey.setIsAutonomous(true);
         odyssey.initialize();
+        telemetry.addLine("LocalizationTest: Coordination");
+        telemetry.addLine("Start the robot in the RedRight position facing North");
+        telemetry.addLine("Run the Robot as you would in TeleOp to the positions described in the AutonPose enum class");
+        telemetry.addLine("Update the coordinates in AutonPose to the corresponding position acquired via Sparkfun");
+        telemetry.update();
 
         Thread pidf = new Thread() {
             public void run() {
