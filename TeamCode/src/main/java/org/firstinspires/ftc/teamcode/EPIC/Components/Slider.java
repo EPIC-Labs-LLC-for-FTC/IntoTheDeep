@@ -30,6 +30,7 @@ public class Slider implements IComponents, ISlider{
 
         slideRight = hardwareMap.get(DcMotorEx.class, "slideRight");
         slideLeft = hardwareMap.get(DcMotorEx.class, "slideLeft");
+        controller2 = new PIDController(p2, i2, d2);
     }
     @Override
     public void initialize() {
@@ -64,36 +65,29 @@ public class Slider implements IComponents, ISlider{
     }
 
     @Override
-    public void up(int position) {
+    public void slideMove(int target2) {
+        controller2.setPID(p2, d2, i2);
+        int slidePos = slideRight.getCurrentPosition();
+        double pid2 = controller2.calculate(slidePos, target2);
+        double ff2 = Math.cos(Math.toRadians(target2 / tick_in_degrees2)) * f2;
+
+        double power2 = pid2 + ff2;
+
+        slideRight.setPower(power2);
+        slideLeft.setPower(power2);
+
+        telemetry.addData("Slide Position", slidePos);
+        telemetry.addData("Slide Target", target2);
+        telemetry.addData("Slide Power", power2);
 
 
     }
 
-    @Override
-    public void down(int position) {
-
+    public void slideManualUp() {
+        target2 = target2 + 15;
     }
 
-    @Override
-    public void move(int position) {
-        slideLeft.setTargetPosition(position);
-        slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slideRight.setTargetPosition(position);
-        slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slideLeft.setPower(0.6);
-        slideRight.setPower(0.6);
-        parent.sleep(2000);
-        slideLeft.setPower(0.2);
-        slideRight.setPower(0.2);
-
-    }
-
-    public int getCurrentPosition() {
-        return slideRight.getCurrentPosition();
-    }
-
-    public void setPower(double power) {
-        slideRight.setPower(power);
-        slideLeft.setPower(power);
+    public void slideManualDown() {
+        target2 = target2 - 15;
     }
 }

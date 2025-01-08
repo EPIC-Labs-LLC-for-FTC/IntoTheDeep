@@ -30,7 +30,7 @@ public class Adventurer_Teleop extends LinearOpMode {
     private PIDController controller;
     private PIDController controller2;
 
-    public static double p1 = 0.013, i1 = 0, d1 = 0.00075;
+    public static double p1 = 0.023, i1 = 0, d1 = 0.00075;
     public static double p2 = 0.017, i2 = 0, d2 = 0.0001;
 
     public static double f1 = -0.2;
@@ -64,7 +64,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         if (gamepad2.x) {
             runningActions.add(new SequentialAction(
-                    new InstantAction(() -> wrist.setPosition(0.5)),
+                    new InstantAction(() -> wrist.setPosition(0.7)),
                     new InstantAction(() -> target2 = -10),
                     new SleepAction(1),
                     new InstantAction(() -> target1 = -390)
@@ -73,8 +73,8 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         if (gamepad2.y) {
             runningActions.add(new SequentialAction(
-                    new InstantAction(() -> wrist.setPosition(0.5)),
-                    new InstantAction(() -> target1 = -1200),
+                    new InstantAction(() -> wrist.setPosition(0.7)),
+                    new InstantAction(() -> target1 = -1000),
                     new SleepAction(1),
                     new InstantAction(() -> target2 = -3000)
             ));
@@ -82,7 +82,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         if (gamepad2.a) {
             runningActions.add(new SequentialAction(
-                    new InstantAction(() -> target1 = -255),
+                    new InstantAction(() -> target1 = -270),
                     new SleepAction(1),
                     new InstantAction(() -> target2 = -1200),
                     new InstantAction(() -> wrist.setPosition(1))
@@ -126,7 +126,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         double magnitude = Math.sqrt(Math.pow(gamepad1.left_stick_x, 2) + Math.pow(gamepad1.left_stick_y, 2));
         double direction = Math.atan2(gamepad1.left_stick_x, -gamepad1.left_stick_y);
-        boolean precision = gamepad1.left_trigger > 0.1;
+        boolean precision = gamepad1.left_stick_button;
 
         //INFO Increasing speed to a maximum of 1
         double fl = magnitude * Math.sin(direction + Math.PI / 4) + rotation;
@@ -216,8 +216,8 @@ public class Adventurer_Teleop extends LinearOpMode {
 
     public void claw() {
         if (gamepad1.left_bumper) {
-            clawRight.setPosition(0.55);
-            clawLeft.setPosition(0.55);
+            clawRight.setPosition(0.5);
+            clawLeft.setPosition(0.5);
         } else if (gamepad1.right_bumper) {
             clawRight.setPosition(0.7);
             clawLeft.setPosition(0.7);

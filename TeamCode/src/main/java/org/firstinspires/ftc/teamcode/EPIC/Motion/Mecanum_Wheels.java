@@ -11,10 +11,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Mecanum_Wheels {
     //Configuration used: 6wheelConfig
-    public DcMotorEx frontright;
-    public DcMotorEx frontleft;
-    public DcMotorEx backright;
-    public DcMotorEx backleft;
+    public DcMotorEx frontRight;
+    public DcMotorEx frontLeft;
+    public DcMotorEx backRight;
+    public DcMotorEx backLeft;
     double backcorrection = 1.0;
 
     //public DcMotorEx xRail;
@@ -39,10 +39,10 @@ public class Mecanum_Wheels {
 
     public Mecanum_Wheels(HardwareMap hardwareMap) {
 
-        frontleft = hardwareMap.get(DcMotorEx.class, "frontLeft");
-        frontright = hardwareMap.get(DcMotorEx.class, "frontRight");
-        backleft = hardwareMap.get(DcMotorEx.class, "backLeft");
-        backright = hardwareMap.get(DcMotorEx.class, "backRight");
+        frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+        backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
+        backRight = hardwareMap.get(DcMotorEx.class, "backRight");
 
 
         //xRail = hardwareMap.get(DcMotorEx.class, "xRail");
@@ -50,42 +50,47 @@ public class Mecanum_Wheels {
 
     //initialize for TeleOp
     public void initialize() {
-        double reset = 0;
-        frontright.setPower(reset);
-        //frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontleft.setPower(reset);
-        backleft.setPower(reset);
-        backright.setPower(reset);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-        backright.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        frontleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        if(IsAutonomous)
-        {
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
-            frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
-            frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }
     }
 
+
+
+    public void driverControl(boolean precision, double movement, double rotation, double strafe) {
+        double magnitude = Math.sqrt(Math.pow(strafe, 2) + Math.pow(movement, 2));
+        double direction = Math.atan2(strafe, -movement);
+
+        double lf = magnitude * Math.sin(direction + Math.PI / 4) + rotation;
+        double lb = magnitude * Math.cos(direction + Math.PI / 4) + rotation;
+        double rf = magnitude * Math.cos(direction + Math.PI / 4) - rotation;
+        double rb = magnitude * Math.sin(direction + Math.PI / 4) - rotation;
+
+        double hypot = Math.hypot(movement, strafe);
+        double ratio;
+        if (movement == 0 && strafe == 0)
+            ratio = 1;
+        else if (precision)
+            ratio = hypot / (Math.max(Math.max(Math.max(Math.abs(lf), Math.abs(lb)), Math.abs(rb)), Math.abs(rf))) / 2;
+        else
+            ratio = hypot / (Math.max(Math.max(Math.max(Math.abs(lf), Math.abs(lb)), Math.abs(rb)), Math.abs(rf)));
+
+        frontLeft.setPower(ratio * lf * leftErrorAdjustment);
+        backLeft.setPower(ratio * lb * leftErrorAdjustment);
+        frontRight.setPower(ratio * rf * rightErrorAdjustment);
+        backRight.setPower(ratio * rb * rightErrorAdjustment);
+    }
 
     public void encoderDrive(double speed,
                              double frontLeftInches, double backLeftInches, double frontRightInches,
@@ -99,71 +104,71 @@ public class Mecanum_Wheels {
         if (parent.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            new_frontLeftTarget = frontleft.getCurrentPosition() + (int) (frontLeftInches * ticksPerInchMecanum);
-            new_frontRightTarget = frontright.getCurrentPosition() + (int) (frontRightInches * ticksPerInchMecanum);
+            new_frontLeftTarget = frontLeft.getCurrentPosition() + (int) (frontLeftInches * ticksPerInchMecanum);
+            new_frontRightTarget = frontRight.getCurrentPosition() + (int) (frontRightInches * ticksPerInchMecanum);
 
-            new_backLeftTarget = backleft.getCurrentPosition() + (int) (backLeftInches * ticksPerInchMecanum);
-            new_backRightTarget = backright.getCurrentPosition() + (int) (backRightInches * ticksPerInchMecanum);
-            frontleft.setTargetPosition(new_frontLeftTarget);
-            frontright.setTargetPosition(new_frontRightTarget);
+            new_backLeftTarget = backLeft.getCurrentPosition() + (int) (backLeftInches * ticksPerInchMecanum);
+            new_backRightTarget = backRight.getCurrentPosition() + (int) (backRightInches * ticksPerInchMecanum);
+            frontLeft.setTargetPosition(new_frontLeftTarget);
+            frontRight.setTargetPosition(new_frontRightTarget);
 
 
-            backleft.setTargetPosition(new_backLeftTarget);
-            backright.setTargetPosition(new_backRightTarget);
+            backLeft.setTargetPosition(new_backLeftTarget);
+            backRight.setTargetPosition(new_backRightTarget);
 
             // Turn On RUN_TO_POSITION
-            frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            frontleft.setPower(speed*leftErrorAdjustment);
-            frontright.setPower(speed*rightErrorAdjustment);
+            frontLeft.setPower(speed*leftErrorAdjustment);
+            frontRight.setPower(speed*rightErrorAdjustment);
 
-            backleft.setPower(speed*leftErrorAdjustment);
-            backright.setPower(speed*rightErrorAdjustment);
+            backLeft.setPower(speed*leftErrorAdjustment);
+            backRight.setPower(speed*rightErrorAdjustment);
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (parent.opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
+                    (frontLeft.isBusy() || frontRight.isBusy() || backLeft.isBusy() || backRight.isBusy())) {
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
                 telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
-                        frontleft.getCurrentPosition(),
-                        frontright.getCurrentPosition(),
+                        frontLeft.getCurrentPosition(),
+                        frontRight.getCurrentPosition(),
 
-                        backleft.getCurrentPosition(),
-                        backright.getCurrentPosition());
+                        backLeft.getCurrentPosition(),
+                        backRight.getCurrentPosition());
                 telemetry.update();
             }
         }
         // Stop all motion;
-        frontleft.setPower(0);
-        frontright.setPower(0);
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
 
-        backleft.setPower(0);
-        backright.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
 
         // Turn off RUN_TO_POSITION
-        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //  sleep(250);   // optional pause after each move
 
     }
 
     public void move(double lefty, double righty, double leftx, double rightx){
-        frontright.setPower((-lefty  - rightx - leftx)*rightErrorAdjustment); // should work same as above
-        frontleft.setPower((-lefty + rightx + leftx)*leftErrorAdjustment);
-        backright.setPower((-lefty - rightx + leftx)*rightErrorAdjustment);
-        backleft.setPower((-lefty + rightx - leftx)*leftErrorAdjustment);
+        frontRight.setPower((-lefty  - rightx - leftx)*rightErrorAdjustment); // should work same as above
+        frontLeft.setPower((-lefty + rightx + leftx)*leftErrorAdjustment);
+        backRight.setPower((-lefty - rightx + leftx)*rightErrorAdjustment);
+        backLeft.setPower((-lefty + rightx - leftx)*leftErrorAdjustment);
 
     }
 }

@@ -52,23 +52,9 @@ public class Claw implements IComponents,IClaw{
         this.IsAutonomous = isAutonomous;
     }
 
-    @Override
-    public void open(double position) {
-        clawRight.setPosition(position);
-        clawLeft.setPosition(position);
-
-    }
-
     public void open() {
-        clawRight.setPosition(0.8);
-        clawLeft.setPosition(0.75);
-
-    }
-
-    @Override
-    public void close(double position) {
-        clawRight.setPosition(position);
-        clawLeft.setPosition(position);
+        clawRight.setPosition(0.7);
+        clawLeft.setPosition(0.7);
 
     }
 

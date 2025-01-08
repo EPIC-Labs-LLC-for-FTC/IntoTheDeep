@@ -43,64 +43,48 @@ public class Arm implements IComponents, IArm{
 
     @Override
     public void displayComponentValues() {
-        telemetry.addData("Arm","Object Initialized");
-        telemetry.update();
+
     }
 
     @Override
     public void setParent(LinearOpMode parent) {
-        this.parent = parent;
+
     }
 
     @Override
     public void setTelemetry(Telemetry telemetry) {
-        this.telemetry = telemetry;
+
     }
 
     @Override
     public void setIsAutonomous(boolean isAutonomous) {
-        this.IsAutonomous = isAutonomous;
+
     }
+
 
     @Override
-    public void liftUp(int position) {
+    public void armMove(int target1) {
+        controller.setPID(p1, i1, d1);
+        int armPos = armRight.getCurrentPosition();
+        double pid1 = controller.calculate(armPos, target1);
+        double ff1 = Math.cos(Math.toRadians(target1 / tick_in_degrees1)) * f1;
 
+        double power1 = pid1 + ff1;
+
+        armRight.setPower(power1);
+        armLeft.setPower(power1);
+
+        telemetry.addData("Arm Position", armPos);
+        telemetry.addData("Arm Target", target1);
+        telemetry.addData("Arm Power", power1);
     }
 
-    @Override
-    public void putDown(int position) {
-
+    public void armManualUp() {
+        target1 = target1 + 10;
     }
 
-    @Override
-    public void move(int position) {
-        armLeft.setTargetPosition(position);
-        armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armRight.setTargetPosition(position);
-        armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armLeft.setPower(0.8);
-        armRight.setPower(0.8);
-//        while (parent.opModeIsActive() &&
-//                ((runtime.seconds() < 3.0) ||
-//                armRight.isBusy() || armLeft.isBusy())) {
-//
-//        }
-        parent.sleep(2000);
-        armLeft.setPower(0.2);
-        armRight.setPower(0.2);
-    }
-
-    public int getCurrentPosition() {
-       return armRight.getCurrentPosition();
-    }
-
-    public void setPower(double power) {
-        armRight.setPower(power);
-        armLeft.setPower(power);
-    }
-
-    public void resetEncoder() {
-        armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public void armManualDown() {
+        target1 = target1 + 10;
     }
 
 }

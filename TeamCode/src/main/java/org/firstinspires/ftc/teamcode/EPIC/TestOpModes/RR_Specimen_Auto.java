@@ -294,7 +294,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
         public class WristReset implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                wrist.setPosition(0.7);
+                wrist.setPosition(0.66);
                 return false;
             }
 

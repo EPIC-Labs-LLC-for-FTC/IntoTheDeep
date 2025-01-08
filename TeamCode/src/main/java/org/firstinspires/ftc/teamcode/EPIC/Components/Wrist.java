@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.EPIC.Components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -11,11 +12,15 @@ public class Wrist implements IComponents,IWrist{
     private Telemetry telemetry;
     //Declare your servos, motors, sensors, other devices here
 
+    public Servo wrist = null;
+
     public Wrist(HardwareMap hardwareMap) {
         //Instantiate your servos, motors, sensors, other devices here
+        wrist = hardwareMap.get(Servo.class, "wrist");
     }
     @Override
     public void initialize() {
+
         if(IsAutonomous){
             //override settings for autonomous mode if needed
         }
@@ -43,7 +48,12 @@ public class Wrist implements IComponents,IWrist{
     }
 
     @Override
-    public void move(double position) {
-
+    public void moveUp() {
+        wrist.setPosition(wrist.getPosition() + 0.01);
+        telemetry.addData("Wrist Pos", wrist.getPosition());
+    }
+    public void moveDown() {
+        wrist.setPosition(wrist.getPosition() - 0.01);
+        telemetry.addData("Wrist Pos", wrist.getPosition());
     }
 }
