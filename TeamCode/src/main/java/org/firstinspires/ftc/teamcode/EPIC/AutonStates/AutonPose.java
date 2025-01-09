@@ -8,7 +8,7 @@ public enum AutonPose {
     OBSERVATION_B(new Vector2d(-60, 60)),
     OBSERVATION_R(new Vector2d(60, -60)),
     SPECIMEN_HANG_B(new Vector2d(0, 32)),
-    SPECIMEN_HANG_R(new Vector2d(0, -32)),
+    SPECIMEN_HANG_R(new Vector2d(8.3, -41.26)),
     SAMPLE_GRAB_L(new Vector2d(-24, 0)),
     SAMPLE_GRAB_R(new Vector2d(24, 0)),
     START_POS_RR(new Vector2d(8.25, -63.85)), //This is the starting position in LocalizationTest
