@@ -87,9 +87,6 @@ public class Arm_PIDF extends AComponents implements IArm, IPIDF{
 
         armMotorR.setPower(power);
         armMotorL.setPower(power);
-
-        telemetry.addData("ArmPos: ", armPos);
-        telemetry.addData("ArmTargetPos: ", targetPos);
     }
 
     @Override

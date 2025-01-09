@@ -88,10 +88,6 @@ public class Slider_PIDF extends AComponents implements ISlider, IPIDF{
 
         slideMotorR.setPower(power);
         slideMotorL.setPower(power);
-
-        telemetry.addData("SliderPos: ", sliderPos);
-        telemetry.addData("SliderTargetPos: ", targetPos);
-        telemetry.update();
     }
 
     @Override

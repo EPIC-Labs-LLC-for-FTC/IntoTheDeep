@@ -29,6 +29,7 @@ public class LocalizationTest extends LinearOpMode {
         Robot odyssey = new Robot(this, "Red", true);
         odyssey.setIsAutonomous(true);
         odyssey.initialize();
+        sleep(10);
         telemetry.addLine("LocalizationTest: Coordination");
         telemetry.addLine("Start the robot in the RedRight position facing North");
         telemetry.addLine("Run the Robot as you would in TeleOp to the positions described in the AutonPose enum class");
@@ -44,33 +45,83 @@ public class LocalizationTest extends LinearOpMode {
             }
         };
 
-        Thread dt = new Thread() {
+        Thread gamePadTwo = new Thread() {
             public void run() {
                 while (opModeIsActive()) {
-                    drive.setDrivePowers(new PoseVelocity2d(
-                            new Vector2d(
-                                    -gamepad1.left_stick_y,
-                                    -gamepad1.left_stick_x
-                            ),
-                            -gamepad1.right_stick_x
-                    ));
+                    if (gamepad2.x) {
+                        odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad2.y) {
+                        odyssey.odysseyClaw.move(ClawStates.OPEN);
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad2.a) {
+                        odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad2.dpad_up) {
+                        odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad2.dpad_down) {
+                        odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad2.left_bumper) {
+                        odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT);
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad2.right_bumper) {
+                        odyssey.odysseyArm.move(ArmStates.LOWERED);
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad2.dpad_left) {
+                        odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (gamepad2.dpad_right) {
+                        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        //odyssey.odysseyWrist.setPos(WristStates.INITIALIZING);
+                        //sleep(500);
+                        //odyssey.odysseyClaw.move(ClawStates.OPEN);
+                        //sleep(500);
 
-                    drive.updatePoseEstimate();
-
-                    telemetry.addData("x", drive.pose.position.x);
-                    telemetry.addData("y", drive.pose.position.y);
-                    telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
-                    telemetry.update();
-
-                    TelemetryPacket packet = new TelemetryPacket();
-                    packet.fieldOverlay().setStroke("#3F51B5");
-                    Drawing.drawRobot(packet.fieldOverlay(), drive.pose);
-                    FtcDashboard.getInstance().sendTelemetryPacket(packet);
+                    }
                 }
             }
         };
 
-        Thread gamepadOne = new Thread() {
+        Thread gamePadOne = new Thread() {
             public void run() {
                 while (opModeIsActive()) {
                     if (gamepad1.dpad_up && (odyssey.odysseyArm.stateArm != ArmStates.DEPOSITING)) {
@@ -120,54 +171,35 @@ public class LocalizationTest extends LinearOpMode {
                             throw new RuntimeException(e);
                         }
                     }
-                    if (gamepad1.left_trigger > 0) {
-                        odyssey.odysseyWheels.setPower(0.4);
-                    } else {
-                        odyssey.odysseyWheels.setPower(1);
-                    }
                 }
             }
         };
 
         waitForStart();
         pidf.start();
-        dt.start();
-        gamepadOne.start();
+        gamePadTwo.start();
+         gamePadOne.start();
 
         while (opModeIsActive()) {
-            if (gamepad2.x) {
-                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
-                sleep(50);
-            } else if (gamepad2.y) {
-                odyssey.odysseyClaw.move(ClawStates.OPEN);
-                sleep(50);
-            } else if (gamepad2.a) {
-                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
-                sleep(50);
-            } else if (gamepad2.dpad_up) {
-                odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
-                sleep(50);
-            } else if (gamepad2.dpad_down) {
-                odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
-                sleep(50);
-            } else if (gamepad2.left_bumper) {
-                odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT);
-                sleep(50);
-            } else if (gamepad2.right_bumper) {
-                odyssey.odysseyArm.move(ArmStates.LOWERED);
-                sleep(50);
-            } else if (gamepad2.dpad_left) {
-                odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
-                sleep(500);
-            } else if (gamepad2.dpad_right) {
-                odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
-                sleep(1000);
-                //odyssey.odysseyWrist.setPos(WristStates.INITIALIZING);
-                //sleep(500);
-                //odyssey.odysseyClaw.move(ClawStates.OPEN);
-                //sleep(500);
+            drive.setDrivePowers(new PoseVelocity2d(
+                    new Vector2d(
+                            -gamepad1.left_stick_y,
+                            -gamepad1.left_stick_x
+                    ),
+                    -gamepad1.right_stick_x
+            ));
 
-            }
+            drive.updatePoseEstimate();
+
+            telemetry.addData("x", drive.pose.position.x);
+            telemetry.addData("y", drive.pose.position.y);
+            telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+            telemetry.update();
+
+            TelemetryPacket packet = new TelemetryPacket();
+            packet.fieldOverlay().setStroke("#3F51B5");
+            Drawing.drawRobot(packet.fieldOverlay(), drive.pose);
+            FtcDashboard.getInstance().sendTelemetryPacket(packet);
         }
     }
 }
