@@ -14,7 +14,18 @@ public enum AutonPose {
     START_POS_RR(new Vector2d(8.25, -63.85)), //This is the starting position in LocalizationTest
     START_POS_RL(new Vector2d(-8.25, -63.85)),
     START_POS_BR(new Vector2d(-8.25, 63.85)),
-    START_POS_BL(new Vector2d(8.25, 63.85));
+    START_POS_BL(new Vector2d(8.25, 63.85)),
+    SAMPLE_FIRST_PUSH(new Vector2d (-24.37 , 41.8));
+    ////SAMPLE_FIRST_DEPOSIT(new Vector2d (, , )),
+
+
+
+   // SAMPLE_SECOND_PUSH(new Vector2d(,)),
+//    SAMPLE_SECOND_DEPOSIT(new Vector2d(,)),
+//    SAMPLE_THIRD_PUSH(new Vector2d(,)),
+//    SAMPLE_THIRD_DEOPSIT(new Vector2d(,)
+//);
+
     //Current Positions are placeholders and must be fine-tuned through LocalizationTest
 
     private Vector2d vector;

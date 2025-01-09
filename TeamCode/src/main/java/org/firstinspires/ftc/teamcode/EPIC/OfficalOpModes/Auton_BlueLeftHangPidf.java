@@ -67,10 +67,35 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
                 .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2,true))
-                .lineToY(-36.5)
-                .stopAndAdd(performSpecimenDropoff(odyssey))
+                //.lineToY(-36.5)
+                //.waitSeconds(1)
+                //.stopAndAdd(performSpecimenDropoff(odyssey))
                 //.strafeToConstantHeading(new Vector2d(27, -40.15))
                 //.splineToConstantHeading(new Vector2d(45, -9), 0)
+
+                //.lineToY(36.6)
+                .lineToY(-41)
+                .waitSeconds(1)
+                .turn(Math.toRadians(-90))
+                .waitSeconds(1)
+                .lineToX(34).turn(Math.toRadians( 90))
+                .waitSeconds(1)
+                .lineToY(-9)
+                .waitSeconds(1)
+                .strafeToConstantHeading(new Vector2d(41,-9))
+                .waitSeconds(1)
+
+                .lineToY(-52)
+                .waitSeconds(1)
+                .splineToConstantHeading(new Vector2d(53,-9),0)
+                .waitSeconds(1)
+                .lineToY(-52)
+                .waitSeconds(1)
+                .splineToConstantHeading(new Vector2d(63,-9),0)
+                .waitSeconds(1)
+                .lineToY(-52)
+                .waitSeconds(1)
+
         ;
 
         Action tsc1 = tab.build();
@@ -98,6 +123,11 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
     /**
      * Moves the robot to a specific position using the MecanumDrive's trajectory capabilities.
      */
+
+
+
+
+
     private void moveToPosition(MecanumDrive mecanumDrive, Pose2d targetPose) {
      /**   try {
             MecanumDrive.FollowTrajectoryAction trajectoryAction = mecanumDrive.new FollowTrajectoryAction(
