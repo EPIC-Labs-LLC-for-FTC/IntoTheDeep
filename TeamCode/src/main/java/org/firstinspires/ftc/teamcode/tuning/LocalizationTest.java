@@ -178,7 +178,7 @@ public class LocalizationTest extends LinearOpMode {
         waitForStart();
         pidf.start();
         gamePadTwo.start();
-         gamePadOne.start();
+        gamePadOne.start();
 
         while (opModeIsActive()) {
             drive.setDrivePowers(new PoseVelocity2d(
