@@ -31,9 +31,10 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize the robot and mecanum drive
-        SparkFunOTOSDrive drive= new SparkFunOTOSDrive(hardwareMap,new Pose2d(8.25, -63.85,
+
+        SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, new Pose2d(8.25, -63.85,
                 Math.toRadians(90)));
-        Pose2d initialPos= new Pose2d(8.25, -63.85, Math.toRadians(90));
+        Pose2d initialPos = new Pose2d(8.25, -63.85, Math.toRadians(90));
         drive.setPoseEstimate(initialPos);
 
         Robot odyssey = new Robot(this, "Blue", true);
@@ -66,7 +67,7 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
-                .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2,true))
+                .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2, true))
                 //.lineToY(-36.5)
                 //.waitSeconds(1)
                 //.stopAndAdd(performSpecimenDropoff(odyssey))
@@ -75,28 +76,26 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
 
                 //.lineToY(36.6)
                 .lineToY(-41)
-                .waitSeconds(1)
+                .waitSeconds(0.3)
                 .turn(Math.toRadians(-90))
-                .waitSeconds(1)
-                .lineToX(34).turn(Math.toRadians( 90))
-                .waitSeconds(1)
-                .lineToY(-9)
-                .waitSeconds(1)
-                .strafeToConstantHeading(new Vector2d(40,-21))
-                .waitSeconds(1)
-
+                .waitSeconds(0.01)
+                .lineToX(34).turn(Math.toRadians(90))
+                .waitSeconds(0.1)
+                //       .lineToY(-7)
+                //      .waitSeconds(0.3)
+                //    .strafeToConstantHeading(new Vector2d(40,-21))
+                .splineToConstantHeading(new Vector2d(40, -21), 0)
+                .waitSeconds(0.01)
                 .lineToY(-62)
-                .waitSeconds(1)
-                .splineToConstantHeading(new Vector2d(50,-21),0)
-                .waitSeconds(1)
+                .waitSeconds(0.01)
+                .splineToConstantHeading(new Vector2d(49, -21), 0)
+                .waitSeconds(0.01)
                 .lineToY(-60)
-                .waitSeconds(1)
-                .splineToConstantHeading(new Vector2d(58,-21),0)
-                .waitSeconds(1)
+                .waitSeconds(0.01)
+                .splineToConstantHeading(new Vector2d(55.5, -21), 0)
+                .waitSeconds(0.01)
                 .lineToY(-60)
-                .waitSeconds(1)
-
-        ;
+                .waitSeconds(0.01);
 
         Action tsc1 = tab.build();
 
@@ -125,24 +124,21 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
      */
 
 
-
-
-
     private void moveToPosition(MecanumDrive mecanumDrive, Pose2d targetPose) {
-     /**   try {
-            MecanumDrive.FollowTrajectoryAction trajectoryAction = mecanumDrive.new FollowTrajectoryAction(
-                    [FollowTrajectoryAction]mecanumDrive.actionBuilder(mecanumDrive.pose)
-                            .lineToX(20)
-                            .build()
-            );
+        /**   try {
+         MecanumDrive.FollowTrajectoryAction trajectoryAction = mecanumDrive.new FollowTrajectoryAction(
+         [FollowTrajectoryAction]mecanumDrive.actionBuilder(mecanumDrive.pose)
+         .lineToX(20)
+         .build()
+         );
 
-            // Run the trajectory
-            while (opModeIsActive() && trajectoryAction.run()) {
-                // Wait for trajectory to complete
-            }
-        } catch (Exception e) {
-            // Handle trajectory execution errors
-        }*/
+         // Run the trajectory
+         while (opModeIsActive() && trajectoryAction.run()) {
+         // Wait for trajectory to complete
+         }
+         } catch (Exception e) {
+         // Handle trajectory execution errors
+         }*/
     }
 
     /**
@@ -163,7 +159,7 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
      * Handles the sequence for dropping off a specimen.
      */
     private Action performSpecimenDropoff(Robot odyssey) throws InterruptedException {
-        return new Action(){
+        return new Action() {
 
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
