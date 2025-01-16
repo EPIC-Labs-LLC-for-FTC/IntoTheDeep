@@ -47,17 +47,17 @@ public class RightAuton extends LinearOpMode {
         //while (opModeIsActive()){
 
             double distance = 30;
-            arm.angle();
+//            arm.angle();
             //wheels.encoderDrive(0.6,distance,-distance,-distance,distance,6);
             distance = 13;
             //wheels.encoderDrive(0.6,distance,distance,distance,distance,2);
-            slides.moveToPosition(-200);
+//            slides.moveToPosition(-200);
             sleep(2000);
-            slides.moveToPosition(-100);
+//            slides.moveToPosition(-100);
             sleep(1000);
             claw.open();
             sleep(1000);
-            arm.start();
+//            arm.start();
             distance=-13;
         //wheels.encoderDrive(0.6,distance,distance,distance,distance,6);
         distance = 30;

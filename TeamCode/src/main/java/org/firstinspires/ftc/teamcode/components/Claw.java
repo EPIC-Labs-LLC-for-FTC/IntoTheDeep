@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.components;
 
-import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -12,8 +11,8 @@ public class Claw implements IComponents,IClaw{
     private LinearOpMode parent;
     private Telemetry telemetry;
 
-    public Servo claw1 = null;
-    public Servo claw2 = null;
+    public Servo claw1;
+    public Servo claw2;
 
     public Claw(HardwareMap hardwareMap) {
 
@@ -24,7 +23,6 @@ public class Claw implements IComponents,IClaw{
     @Override
     public void initialize() {
 
-        claw2.setDirection(Servo.Direction.REVERSE);
         close();
 
     }
@@ -42,7 +40,7 @@ public class Claw implements IComponents,IClaw{
     @Override
     public void open() {
 
-        claw1.setPosition(0.629);
+        claw1.setPosition(0.143);
         claw2.setPosition(1);
 
     }
@@ -50,8 +48,8 @@ public class Claw implements IComponents,IClaw{
     @Override
     public void close() {
 
-        claw1.setPosition(0.3);
-        claw2.setPosition(0.79);
+        claw1.setPosition(0.535);
+        claw2.setPosition(0.605);
 
     }
 

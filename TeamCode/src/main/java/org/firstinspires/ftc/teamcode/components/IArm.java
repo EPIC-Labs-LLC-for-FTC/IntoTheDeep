@@ -1,9 +1,17 @@
 package org.firstinspires.ftc.teamcode.components;
 
 public interface IArm {
-    void liftUp();
-    void putDown();
-    void Horizontal();
-    void angle();
-    void start();
+    void armStart();
+    void armRest();
+    void armRest2();
+
+    void armPick();
+    void armDrop();
+
+    void specimenPick();
+    void specimenDrop();
+    void specimenAutoDrop();
+
+    void armBaseUp();
+    void armBaseDown();
 }

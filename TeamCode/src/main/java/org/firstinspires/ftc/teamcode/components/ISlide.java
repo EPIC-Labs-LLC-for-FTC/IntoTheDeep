@@ -2,13 +2,14 @@ package org.firstinspires.ftc.teamcode.components;
 
 public interface ISlide {
     void start();
-    void resetslides();
-    void lBar();
-    void hBar();
-    void hbucket2();
-    void RESEThBar();
-    void lBucket();
-    void hBucket();
-    void custom(int distance);
+
+    void lowBar();
+    void HighBar();
+
+    void LowBucket();
+    void HighBucket();
+
+    void moveTo(int target);
+
     void hang();
 }

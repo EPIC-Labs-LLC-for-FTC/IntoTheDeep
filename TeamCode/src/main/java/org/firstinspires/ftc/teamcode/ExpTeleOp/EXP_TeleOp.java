@@ -1,7 +1,5 @@
-package org.firstinspires.ftc.teamcode.tests;
+package org.firstinspires.ftc.teamcode.ExpTeleOp;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -12,27 +10,47 @@ import org.firstinspires.ftc.teamcode.components.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.components.Slides;
 import org.firstinspires.ftc.teamcode.components.Wrist;
 
-@Config
-@TeleOp(name = "Expedition_Test1")
-public class Expedition_Test1 extends LinearOpMode {
-
-    public FtcDashboard dashboard = FtcDashboard.getInstance();
+@TeleOp(name = "EXP_TeleOp")
+public class EXP_TeleOp extends LinearOpMode {
 
     public ColorSensor colorSensor;
+
+    public boolean rightBumperToggle = false;
+    public boolean rightBumperPressed = false;
+
+    public boolean leftBumperToggle = false;
+    public boolean leftBumperPressed = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
+        wheels.telemetry = telemetry;
+        wheels.parent = this;
+
         Slides slides = new Slides(hardwareMap);
+        slides.setParent(this);
+        slides.setTelemetry(this.telemetry);
+
         Arm arm = new Arm(hardwareMap);
+        arm.setParent(this);
+        arm.setTelemetry(this.telemetry);
+
         Wrist wrist = new Wrist(hardwareMap);
+        wrist.setParent(this);
+        wrist.setTelemetry(this.telemetry);
+
         Claw claw = new Claw(hardwareMap);
+        claw.setParent(this);
+        claw.setTelemetry(this.telemetry);
 
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
         while (opModeInInit()){
-            
+
+            arm.armRest();
+            claw.open();
+            wrist.rest();
             wheels.initialize();
             slides.initialize();
 
@@ -50,69 +68,62 @@ public class Expedition_Test1 extends LinearOpMode {
 
             slides.slideControl(gamepad2.left_stick_y);
 
-            if(gamepad2.dpad_up){
+            if (gamepad2.right_bumper && !rightBumperPressed) {
+                rightBumperToggle = !rightBumperToggle;
+                if (rightBumperToggle) {
+                    arm.armRest();
+                    wrist.rest();
+                } else {
+                    arm.armPick();
+                    wrist.wristPick();
+                }
+                rightBumperPressed = true;
+            } else if (!gamepad2.right_bumper) {
+                rightBumperPressed = false;
+            }
 
-                arm.armBaseUp();
-
-            } else if (gamepad2.dpad_down) {
-
-                arm.armBaseDown();
-
-            } else if (gamepad2.y) {
-
-                wrist.plus1();
-
-            } else if (gamepad2.a) {
-
-                wrist.minus1();
-
-            } else if (gamepad2.b) {
-
-                wrist.plus2();
-
-            } else if (gamepad2.x) {
-
-                wrist.minus2();
-
-            } else if (gamepad2.right_bumper) {
-
+            if (gamepad2.right_trigger > 0.2) {
                 claw.open();
-
-            } else if (gamepad2.left_bumper) {
-
+            } else {
                 claw.close();
+            }
 
+            if (gamepad2.left_bumper && !leftBumperPressed) {
+                leftBumperToggle = !leftBumperToggle;
+                if (leftBumperToggle) {
+                    arm.specimenPick();
+                    wrist.specimenPick();
+                } else {
+                    arm.specimenDrop();
+                    if (arm.armBase1.getPosition() == 0.9344 && arm.armBase2.getPosition() == 0.0594) {
+                        wrist.specimenDrop();
+                    }
+                }
+                leftBumperPressed = true;
+            } else if (!gamepad2.left_bumper) {
+                leftBumperPressed = false;
+            }
+
+            if (gamepad2.b) {
+                arm.armDrop();
+                wrist.wristDrop();
             }
 
             if (gamepad1.dpad_up) {
-
-                arm.armBase1.setPosition(0);
-                arm.armBase2.setPosition(1);
-
+                slides.moveTo(+15);
             } else if (gamepad1.dpad_down) {
-
-                arm.armBase1.setPosition(1);
-                arm.armBase2.setPosition(0);
-
-            } else if (gamepad1.dpad_right) {
-
-                wrist.wrist1.setPosition(0.5);
-
-            } else if (gamepad1.dpad_left) {
-
-                wrist.wrist2.setPosition(0.5);
-
+                slides.moveTo(-15);
             }
 
             telemetry.addData("Slide1Position", slides.slide1.getCurrentPosition());
             telemetry.addData("Slide2Position", slides.slide2.getCurrentPosition());
-            
+
             telemetry.addData("ArmBase1Position", arm.armBase1.getPosition());
             telemetry.addData("ArmBase2Position", arm.armBase2.getPosition());
 
             telemetry.addData("Wrist1Position", wrist.wrist1.getPosition());
             telemetry.addData("Wrist2Position", wrist.wrist2.getPosition());
-            
+
             telemetry.addData("Claw1", claw.claw1.getPosition());
             telemetry.addData("Claw2", claw.claw2.getPosition());
 

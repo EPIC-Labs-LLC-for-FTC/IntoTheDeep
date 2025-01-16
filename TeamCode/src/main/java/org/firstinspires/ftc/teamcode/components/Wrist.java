@@ -11,16 +11,20 @@ public class Wrist implements IComponents,IWrist{
     private LinearOpMode parent;
     private Telemetry telemetry;
 
-    public Servo wrist = null;
+    public Servo wrist1;
+    public Servo wrist2;
 
     public Wrist(HardwareMap hardwareMap) {
 
-        wrist = hardwareMap.get(Servo.class,"wrist");
+        wrist1 = hardwareMap.get(Servo.class,"wrist1");
+        wrist2 = hardwareMap.get(Servo.class,"wrist2");
 
     }
 
     @Override
     public void initialize() {
+
+        start();
 
     }
 
@@ -35,38 +39,89 @@ public class Wrist implements IComponents,IWrist{
     }
 
     @Override
-    public void plus() {
+    public void start() {
 
-        wrist.setPosition(wrist.getPosition() +0.001);
-
-    }
-
-    @Override
-    public void minus() {
-
-        wrist.setPosition(wrist.getPosition() +0.001);
-
+        wrist1.setPosition(1);
+        wrist2.setPosition(0);
 
     }
 
     @Override
-    public void vertical1() {
+    public void rest() {
 
-        wrist.setPosition(0);
-
-    }
-
-    @Override
-    public void vertical2() {
-
-        wrist.setPosition(0);
+        wrist1.setPosition(1);
+        wrist2.setPosition(0.4306);
 
     }
 
     @Override
-    public void horizontal() {
+    public void wristPick() {
 
-        wrist.setPosition(0);
+        wrist1.setPosition(0.8239);
+        wrist2.setPosition(0);
+
+    }
+
+    @Override
+    public void wristDrop() {
+
+        wrist1.setPosition(1);
+        wrist2.setPosition(0.4306);
+
+    }
+
+    @Override
+    public void specimenPick() {
+
+        wrist1.setPosition(0);
+        wrist2.setPosition(0.565);
+
+    }
+
+    @Override
+    public void specimenDrop() {
+
+//        wrist1.setPosition(1);
+//        wrist2.setPosition(0.4417);
+
+        wrist1.setPosition(0);
+        wrist2.setPosition(1);
+
+    }
+
+    @Override
+    public void specimenAutoDrop() {
+
+        wrist1.setPosition(0);
+        wrist2.setPosition(1);
+
+    }
+
+    @Override
+    public void plus1() {
+
+        wrist1.setPosition(wrist1.getPosition() +0.001);
+
+    }
+
+    @Override
+    public void minus1() {
+
+        wrist1.setPosition(wrist1.getPosition() -0.001);
+
+    }
+
+    @Override
+    public void plus2() {
+
+        wrist2.setPosition(wrist2.getPosition() +0.001);
+
+    }
+
+    @Override
+    public void minus2() {
+
+        wrist2.setPosition(wrist2.getPosition() -0.001);
 
     }
 }

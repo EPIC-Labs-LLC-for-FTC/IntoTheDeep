@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.components;
 
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -16,22 +17,19 @@ public class Slides implements IComponents, ISlide{
     public DcMotorEx slide1;
     public DcMotorEx slide2;
 
-    public static final double P = 15.0;
-    public static final double I = 0.3;
-    public static final double D = 2.0;
-    public static final double F = 14.0;
+    public PIDController controller;
 
-    public PIDFController slide1PID, slide2PID;
+    public static double p = 0.017, i = 0, d = 0.0001;
+    public static double f = -0.02;
 
-    public double targetPosition = 0;
+    public static int target = 0;
+
+    public final double tick_in_degrees = 537.7/360;
 
     public Slides(HardwareMap hardwareMap) {
 
         slide1 = hardwareMap.get(DcMotorEx.class, "slide1");
         slide2 = hardwareMap.get(DcMotorEx.class, "slide2");
-
-        slide1PID = new PIDFController(P, I, D, F);
-        slide2PID = new PIDFController(P, I, D, F);
 
     }
     @Override
@@ -39,15 +37,10 @@ public class Slides implements IComponents, ISlide{
 
         slide2.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        slide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slide2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
         slide1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slide2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        controller = new PIDController(p,i,d);
 
     }
 
@@ -65,139 +58,95 @@ public class Slides implements IComponents, ISlide{
     public void start() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(10000);
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide1.setPower(-1);
-
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(10000);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setPower(-1);
-
-
-//        moveToPosition(0);
-
-    }
-
-    @Override
-    public void resetslides() {
-
-        slide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slide2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-    }
-
-    @Override
-    public void lBar() {
-
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(-1000);
+        slide1.setTargetPosition(0);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide1.setPower(1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(-1000);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setPower(1);
-
-//        moveToPosition(-2000);
-
-    }
-
-    @Override
-    public void hBar() {
-
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(-1770);
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide1.setPower(1);
-
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(-1770);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setPower(1);
-
-//        moveToPosition(0);
-
-    }
-
-    @Override
-    public void hbucket2() {
-
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(-500);
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide1.setPower(1);
-
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(-500);
+        slide2.setTargetPosition(0);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(1);
 
     }
 
     @Override
-    public void RESEThBar() {
+    public void lowBar() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(-900);
+        slide1.setTargetPosition(0);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide1.setPower(1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(-900);
+        slide2.setTargetPosition(0);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(1);
 
     }
 
     @Override
-    public void lBucket() {
+    public void HighBar() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(-2300);
+        slide1.setTargetPosition(0);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide1.setPower(1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(-2300);
+        slide2.setTargetPosition(0);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(1);
-
-//        moveToPosition(0);
 
     }
 
     @Override
-    public void hBucket() {
+    public void LowBucket() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(-3300);
+        slide1.setTargetPosition(0);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide1.setPower(1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(-3300);
+        slide2.setTargetPosition(0);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(1);
-
-
-//        moveToPosition(0);
 
     }
 
     @Override
-    public void custom(int distance) {
+    public void HighBucket() {
 
         slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(distance);
+        slide1.setTargetPosition(0);
         slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide1.setPower(1);
 
         slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(distance);
+        slide2.setTargetPosition(0);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(1);
+
+    }
+
+    @Override
+    public void moveTo(int target) {
+
+        controller.setPID(p,i,d);
+
+        int slidePosition1 = slide1.getCurrentPosition();
+        int slidePosition2 = slide2.getCurrentPosition();
+
+        double pid1 = controller.calculate(slidePosition1, target);
+        double pid2 = controller.calculate(slidePosition2, target);
+
+        double f1 = Math.cos(Math.toRadians(target / tick_in_degrees)) * f;
+
+        double power1 = pid1 + f1;
+        double power2 = pid2 + f1;
+
+        slide1.setPower(power1);
+        slide2.setPower(power2);
 
     }
 
@@ -213,8 +162,6 @@ public class Slides implements IComponents, ISlide{
         slide2.setTargetPosition(0);
         slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide2.setPower(1);
-
-//        moveToPosition(0);
 
     }
 
@@ -239,40 +186,5 @@ public class Slides implements IComponents, ISlide{
 
     public double clipPower(double power) {
         return Math.max(-1, Math.min(1, power));
-    }
-
-    public void moveToPosition(double position) {
-        targetPosition = position;
-
-        double encoderPositionLeft = slide2.getCurrentPosition();
-        double encoderPositionRight = slide1.getCurrentPosition();
-
-        double leftPower = slide2PID.calculate(targetPosition, encoderPositionLeft);
-        double rightPower = slide1PID.calculate(targetPosition, encoderPositionRight);
-
-        slide2.setPower(leftPower);
-        slide1.setPower(rightPower);
-    }
-
-    public static class PIDFController {
-        private double p, i, d, f;
-        private double integral = 0;
-        private double previousError = 0;
-
-        public PIDFController(double p, double i, double d, double f) {
-            this.p = p;
-            this.i = i;
-            this.d = d;
-            this.f = f;
-        }
-
-        public double calculate(double target, double currentPosition) {
-            double error = target - currentPosition;
-            integral += error;
-            double derivative = error - previousError;
-            previousError = error;
-
-            return (p * error) + (i * integral) + (d * derivative) + (f * target);
-        }
     }
 }

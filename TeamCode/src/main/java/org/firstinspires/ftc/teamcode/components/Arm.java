@@ -11,19 +11,19 @@ public class Arm implements IComponents, IArm{
     private LinearOpMode parent;
     private Telemetry telemetry;
 
-    public Servo arm1 = null;
-    public Servo arm2 = null;
+    public Servo armBase1;
+    public Servo armBase2;
 
     public Arm(HardwareMap hardwareMap) {
 
-        arm1 = hardwareMap.get(Servo.class,"arm1");
-        arm2 = hardwareMap.get(Servo.class,"arm2");
+        armBase1 = hardwareMap.get(Servo.class,"armBase1");
+        armBase2 = hardwareMap.get(Servo.class,"armBase2");
     }
+
     @Override
     public void initialize() {
 
-        arm2.setDirection(Servo.Direction.REVERSE);
-        start();
+        armStart();
 
     }
 
@@ -37,43 +37,85 @@ public class Arm implements IComponents, IArm{
         this.telemetry = telemetry;
     }
 
-    @Override
-    public void liftUp() {
-
-        arm1.setPosition(arm1.getPosition() +0.001);
-        arm2.setPosition(arm2.getPosition() +0.001);
-    }
 
     @Override
-    public void putDown() {
+    public void armStart() {
 
-        arm1.setPosition(arm1.getPosition() -0.001);
-        arm2.setPosition(arm2.getPosition() -0.001);
+        armBase1.setPosition(0);
+        armBase2.setPosition(1);
+
 
     }
 
     @Override
-    public void Horizontal() {
+    public void armRest() {
 
-        arm1.setPosition(0.694);
-        arm2.setPosition(0.694);
-
-    }
-
-    @Override
-    public void angle() {
-
-        arm1.setPosition(0.264);
-        arm2.setPosition(0.264);
+        armBase1.setPosition(0.9017);
+        armBase2.setPosition(0.0883);
 
     }
 
     @Override
-    public void start() {
+    public void armRest2() {
 
-        arm1.setPosition(0);
-        arm2.setPosition(0);
+        armBase1.setPosition(0);
+        armBase2.setPosition(0);
 
     }
 
+    @Override
+    public void armPick() {
+
+        armBase1.setPosition(0.955);
+        armBase2.setPosition(0.0306);
+
+    }
+
+    @Override
+    public void armDrop() {
+
+        armBase1.setPosition(0.1817);
+        armBase2.setPosition(0.8089);
+
+    }
+
+    @Override
+    public void specimenPick() {
+
+        armBase1.setPosition(0);
+        armBase2.setPosition(1);
+
+    }
+
+    @Override
+    public void specimenDrop() {
+
+        armBase1.setPosition(0.9344);
+        armBase2.setPosition(0.0594);
+
+    }
+
+    @Override
+    public void specimenAutoDrop() {
+
+        armBase1.setPosition(0.9344);
+        armBase2.setPosition(0.0594);
+
+    }
+
+    @Override
+    public void armBaseUp() {
+
+        armBase1.setPosition(armBase1.getPosition() + 0.001);
+        armBase2.setPosition(armBase2.getPosition() - 0.001);
+
+    }
+
+    @Override
+    public void armBaseDown() {
+
+        armBase1.setPosition(armBase1.getPosition() - 0.001);
+        armBase2.setPosition(armBase2.getPosition() + 0.001);
+
+    }
 }
