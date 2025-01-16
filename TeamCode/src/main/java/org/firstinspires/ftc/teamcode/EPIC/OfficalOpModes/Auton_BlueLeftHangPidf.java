@@ -77,25 +77,31 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
                 //.lineToY(36.6)
                 .lineToY(-41)
                 .waitSeconds(0.3)
-                .turn(Math.toRadians(-90))
-                .waitSeconds(0.01)
-                .lineToX(34).turn(Math.toRadians(90))
-                .waitSeconds(0.1)
+              //  .turn(Math.toRadians(-90))
+                .strafeToConstantHeading(new Vector2d(28,-41))
+               // .lineToX(34).turn(Math.toRadians(90))
+                .waitSeconds(0.05)
                 //       .lineToY(-7)
                 //      .waitSeconds(0.3)
                 //    .strafeToConstantHeading(new Vector2d(40,-21))
-                .splineToConstantHeading(new Vector2d(40, -21), 0)
-                .waitSeconds(0.01)
+                .splineToConstantHeading(new Vector2d(40, -21), 0).waitSeconds(0.01)
                 .lineToY(-62)
                 .waitSeconds(0.01)
                 .splineToConstantHeading(new Vector2d(49, -21), 0)
                 .waitSeconds(0.01)
                 .lineToY(-60)
                 .waitSeconds(0.01)
-                .splineToConstantHeading(new Vector2d(55.5, -21), 0)
+                //.lineToY(-47)
+               // .turn(Math.toRadians(180))
+               .splineToConstantHeading(new Vector2d(55.5, -21), 0)
                 .waitSeconds(0.01)
                 .lineToY(-60)
-                .waitSeconds(0.01);
+                .waitSeconds(0.01)
+                .splineToConstantHeading(new Vector2d(46, -60 ), 0)
+                .turn(Math.toRadians(180))
+                .waitSeconds(0.01)
+                .stopAndAdd(performSpecimenPickup(odyssey));
+
 
         Action tsc1 = tab.build();
 
@@ -144,15 +150,25 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
     /**
      * Handles the sequence for picking up a specimen.
      */
-    private void performSpecimenPickup(Robot odyssey) throws InterruptedException {
+    private Action performSpecimenPickup(Robot odyssey) throws InterruptedException {
+        return new Action() {
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
         odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
-        sleep(1000);
+        sleep(500);
 
         odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(1000);
+        sleep(500);
 
         odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
-        sleep(1000);
+        sleep(500);
+
+        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
+        sleep(500);
+                return false;
+            }
+        };
     }
 
     /**
