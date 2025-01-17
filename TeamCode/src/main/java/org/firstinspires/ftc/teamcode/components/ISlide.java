@@ -9,7 +9,8 @@ public interface ISlide {
     void LowBucket();
     void HighBucket();
 
-    void moveTo(int target);
+    void moveUp(int target);
+    void moveDown(int target);
 
     void hang();
 }

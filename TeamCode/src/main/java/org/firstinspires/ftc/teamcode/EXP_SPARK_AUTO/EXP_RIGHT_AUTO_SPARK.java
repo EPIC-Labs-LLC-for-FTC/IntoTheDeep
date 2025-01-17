@@ -7,7 +7,7 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.RRsetup.SparkFunOTOSDrive;
+import org.firstinspires.ftc.teamcode.RRsetup.PinpointDrive;
 import org.firstinspires.ftc.teamcode.components.Arm;
 import org.firstinspires.ftc.teamcode.components.Claw;
 import org.firstinspires.ftc.teamcode.components.Slides;
@@ -102,13 +102,13 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
         }
 
         Pose2d startPose = new Pose2d(14.3, -63, Math.toRadians(90));
-        SparkFunOTOSDrive sdrive = new SparkFunOTOSDrive(hardwareMap, startPose);
+        PinpointDrive drive = new PinpointDrive(hardwareMap,startPose);
 
         waitForStart();
 
         Actions.runBlocking(
 
-                sdrive.actionBuilder(startPose)
+                drive.actionBuilder(startPose)
 
                         //Drop pre load (specimen1)
                         .stopAndAdd(this::highBar)

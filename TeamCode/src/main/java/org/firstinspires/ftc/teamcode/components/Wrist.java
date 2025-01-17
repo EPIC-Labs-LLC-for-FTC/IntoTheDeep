@@ -57,7 +57,7 @@ public class Wrist implements IComponents,IWrist{
     @Override
     public void wristPick() {
 
-        wrist1.setPosition(0.8239);
+        wrist1.setPosition(0.5);
         wrist2.setPosition(0);
 
     }
@@ -74,15 +74,12 @@ public class Wrist implements IComponents,IWrist{
     public void specimenPick() {
 
         wrist1.setPosition(0);
-        wrist2.setPosition(0.565);
+        wrist2.setPosition(0.4);
 
     }
 
     @Override
     public void specimenDrop() {
-
-//        wrist1.setPosition(1);
-//        wrist2.setPosition(0.4417);
 
         wrist1.setPosition(0);
         wrist2.setPosition(1);

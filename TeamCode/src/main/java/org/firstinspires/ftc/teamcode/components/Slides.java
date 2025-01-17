@@ -19,8 +19,8 @@ public class Slides implements IComponents, ISlide{
 
     public PIDController controller;
 
-    public static double p = 0.017, i = 0, d = 0.0001;
-    public static double f = -0.02;
+    public static double p = 0.019, i = 0, d = 0.0001;
+    public static double f = 0.1;
 
     public static int target = 0;
 
@@ -130,7 +130,28 @@ public class Slides implements IComponents, ISlide{
     }
 
     @Override
-    public void moveTo(int target) {
+    public void moveUp(int target) {
+
+        controller.setPID(p,i,d);
+
+        int slidePosition1 = slide1.getCurrentPosition();
+        int slidePosition2 = slide2.getCurrentPosition();
+
+        double pid1 = controller.calculate(slidePosition1, target);
+        double pid2 = controller.calculate(slidePosition2, target);
+
+        double f1 = Math.cos(Math.toRadians(target / tick_in_degrees)) * f;
+
+        double power1 = pid1 + f1;
+        double power2 = pid2 + f1;
+
+        slide1.setPower(-power1);
+        slide2.setPower(-power2);
+
+    }
+
+    @Override
+    public void moveDown(int target) {
 
         controller.setPID(p,i,d);
 

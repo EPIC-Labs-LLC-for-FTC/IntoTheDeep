@@ -95,9 +95,6 @@ public class EXP_TeleOp extends LinearOpMode {
                     wrist.specimenPick();
                 } else {
                     arm.specimenDrop();
-                    if (arm.armBase1.getPosition() == 0.9344 && arm.armBase2.getPosition() == 0.0594) {
-                        wrist.specimenDrop();
-                    }
                 }
                 leftBumperPressed = true;
             } else if (!gamepad2.left_bumper) {
@@ -109,10 +106,19 @@ public class EXP_TeleOp extends LinearOpMode {
                 wrist.wristDrop();
             }
 
+            if (gamepad2.a) {
+                arm.armRest2();
+                wrist.rest();
+            }
+
             if (gamepad1.dpad_up) {
-                slides.moveTo(+15);
+                slides.moveUp(-15);
             } else if (gamepad1.dpad_down) {
-                slides.moveTo(-15);
+                slides.moveDown(+15);
+            }
+
+            if (gamepad2.left_trigger > 0.2){
+                wrist.specimenDrop();
             }
 
             telemetry.addData("Slide1Position", slides.slide1.getCurrentPosition());
