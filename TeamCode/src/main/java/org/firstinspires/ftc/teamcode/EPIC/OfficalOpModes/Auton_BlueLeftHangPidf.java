@@ -23,6 +23,8 @@ import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
 import com.acmerobotics.roadrunner.Pose2d;
 
+import java.util.Vector;
+
 @Autonomous(name = "Auton_BlueLeftHangPidf")
 public class Auton_BlueLeftHangPidf extends LinearOpMode {
     public static double ap = 0.03, ai = 0, ad = 0.0015, af = 0.065;
@@ -86,22 +88,25 @@ public class Auton_BlueLeftHangPidf extends LinearOpMode {
                 //    .strafeToConstantHeading(new Vector2d(40,-21))
                 .splineToConstantHeading(new Vector2d(40, -21), 0).waitSeconds(0.01)
                 .lineToY(-62)
-                .waitSeconds(0.01)
+                .waitSeconds(0.0000001)
                 .splineToConstantHeading(new Vector2d(49, -21), 0)
-                .waitSeconds(0.01)
+                .waitSeconds(0.0000001)
                 .lineToY(-60)
-                .waitSeconds(0.01)
+                .waitSeconds(0.0000001)
                 //.lineToY(-47)
                // .turn(Math.toRadians(180))
-               .splineToConstantHeading(new Vector2d(55.5, -21), 0)
-                .waitSeconds(0.01)
-                .lineToY(-60)
-                .waitSeconds(0.01)
-                .splineToConstantHeading(new Vector2d(46, -60 ), 0)
-                .turn(Math.toRadians(180))
-                .waitSeconds(0.01)
-                .stopAndAdd(performSpecimenPickup(odyssey));
-
+               .splineToConstantHeading(new Vector2d(55.8, -21), 0)
+                .waitSeconds(0.0000001)
+                .lineToY(-61.5)
+                .waitSeconds(0.00000001)
+               // .splineToConstantHeading(new Vector2d(44.5, -60 ), 0)
+               // .turn(Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(44.5,-62.5,Math.toRadians(270)),Math.toRadians(90))
+        .waitSeconds(0.0000001 )
+                .stopAndAdd(performSpecimenPickup(odyssey))
+                .waitSeconds(0.0000001)
+           //     .turn(Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(3,-41,Math.toRadians(90)),Math.toRadians(90));
 
         Action tsc1 = tab.build();
 
