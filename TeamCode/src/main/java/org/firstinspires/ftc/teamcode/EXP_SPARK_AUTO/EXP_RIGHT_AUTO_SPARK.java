@@ -29,9 +29,12 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
 
     public void specimenDrop(){
         Arm arm = new Arm(hardwareMap);
-        Wrist wrist = new Wrist(hardwareMap);
         arm.specimenDrop();
-        wrist.specimenDrop();
+    }
+
+    public void specimenWristDrop(){
+        Wrist wrist = new Wrist(hardwareMap);
+        wrist.specimenAutoDrop();
     }
 
     public void pick(){
@@ -57,17 +60,17 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
 
     public void slides0(){
         Slides slides = new Slides(hardwareMap);
-        slides.moveTo(0);
+        slides.moveDown(0);
     }
 
     public void highBar(){
         Slides slides = new Slides(hardwareMap);
-        slides.moveTo(0);
+        slides.moveUp(0);
     }
 
     public void highBucket(){
         Slides slides = new Slides(hardwareMap);
-        slides.moveTo(0);
+        slides.moveUp(0);
     }
 
     @Override
@@ -113,6 +116,7 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
                         //Drop pre load (specimen1)
                         .stopAndAdd(this::highBar)
                         .stopAndAdd(this::specimenDrop)
+                        .stopAndAdd(this::specimenWristDrop)
 
                         .setTangent(90)
                         .strafeToConstantHeading(new Vector2d(0,0))
@@ -122,12 +126,14 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
                         //Pick Specimen 2
                         .strafeToConstantHeading(new Vector2d(0,0))
 
+                        .afterTime(0.5, this::slides0)
                         .afterTime(0.5, this::specimenPick)
                         .stopAndAdd(this::close)
 
                         //Place Specimen 2
                         .stopAndAdd(this::highBar)
                         .stopAndAdd(this::specimenDrop)
+                        .stopAndAdd(this::specimenWristDrop)
 
                         .strafeToConstantHeading(new Vector2d(0,0))
 
@@ -179,6 +185,7 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
 
                         .stopAndAdd(this::highBar)
                         .stopAndAdd(this::specimenDrop)
+                        .stopAndAdd(this::specimenWristDrop)
 
                         .strafeToConstantHeading(new Vector2d(0,0))
                         .stopAndAdd(this::open)
@@ -191,6 +198,7 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
 
                         .stopAndAdd(this::highBar)
                         .stopAndAdd(this::specimenDrop)
+                        .stopAndAdd(this::specimenWristDrop)
 
                         .strafeToConstantHeading(new Vector2d(0,0))
                         .stopAndAdd(this::open)
@@ -203,6 +211,7 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
 
                         .stopAndAdd(this::highBar)
                         .stopAndAdd(this::specimenDrop)
+                        .stopAndAdd(this::specimenWristDrop)
 
                         .strafeToConstantHeading(new Vector2d(0,0))
                         .stopAndAdd(this::open)

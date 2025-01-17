@@ -6,22 +6,16 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.RRsetup.MecanumDrive;
-import org.firstinspires.ftc.teamcode.RRsetup.SparkFunOTOSDrive;
+import org.firstinspires.ftc.teamcode.RRsetup.PinpointDrive;
 import org.firstinspires.ftc.teamcode.components.Arm;
 import org.firstinspires.ftc.teamcode.components.Claw;
-import org.firstinspires.ftc.teamcode.components.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.components.Slides;
 import org.firstinspires.ftc.teamcode.components.Wrist;
 
 @Config
 @Autonomous(name = "EXP_LEFT_AUTO_SPARK")
 public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
-
-    public ColorSensor colorSensor;
 
     public void close(){
         Claw claw = new Claw(hardwareMap);
@@ -33,231 +27,147 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
         claw.open();
     }
 
-    public void grabSample(){
+    public void specimenDrop(){
         Arm arm = new Arm(hardwareMap);
-        Wrist wrist = new Wrist(hardwareMap);
-
+        arm.specimenDrop();
     }
 
-    public void dropSample(){
+    public void specimenWristDrop(){
+        Wrist wrist = new Wrist(hardwareMap);
+        wrist.specimenAutoDrop();
+    }
+
+    public void pick(){
+        Arm arm = new Arm(hardwareMap);
+        Wrist wrist = new Wrist(hardwareMap);
+        arm.armPick();
+        wrist.wristPick();
+    }
+
+    public void deliver(){
         Arm arm = new Arm(hardwareMap);
         Wrist wrist = new Wrist(hardwareMap);
         arm.armDrop();
         wrist.wristDrop();
     }
 
-    public void slidesStart(){
+    public void slides0(){
         Slides slides = new Slides(hardwareMap);
-        slides.start();
+        slides.moveDown(0);
     }
 
     public void highBar(){
         Slides slides = new Slides(hardwareMap);
-        slides.HighBar();
+        slides.moveUp(0);
     }
 
     public void highBucket(){
         Slides slides = new Slides(hardwareMap);
-        slides.HighBucket();
+        slides.moveUp(0);
     }
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
-        wheels.telemetry = telemetry;
-        wheels.parent = this;
-
         Slides slides = new Slides(hardwareMap);
         slides.setParent(this);
         slides.setTelemetry(this.telemetry);
+        slides.initialize();
 
         Arm arm = new Arm(hardwareMap);
         arm.setParent(this);
         arm.setTelemetry(this.telemetry);
+        arm.initialize();
 
         Wrist wrist = new Wrist(hardwareMap);
         wrist.setParent(this);
         wrist.setTelemetry(this.telemetry);
+        wrist.initialize();
 
         Claw claw = new Claw(hardwareMap);
         claw.setParent(this);
         claw.setTelemetry(this.telemetry);
-
-        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+        claw.initialize();
 
         while (opModeInInit()){
 
             arm.initialize();
-            wrist.initialize();
             claw.initialize();
             slides.initialize();
 
         }
 
-        Pose2d startPose = new Pose2d(-14.3, -63, Math.toRadians(90));
-        SparkFunOTOSDrive sdrive = new SparkFunOTOSDrive(hardwareMap, startPose);
+        Pose2d startPose = new Pose2d(0, 0, Math.toRadians(-90));
+        PinpointDrive drive = new PinpointDrive(hardwareMap,startPose);
 
         waitForStart();
-        Actions.runBlocking(
-                sdrive.actionBuilder(startPose)
 
-//                        //PART1
-//
-//                        .setTangent(90)
-//                        .splineToConstantHeading(new Vector2d(-9,-37), Math.PI/2)
-//
-//                        .afterTime(0.1,this::barhReset)
-//                        .stopAndAdd(this::barhReset)
-//
-//                        .waitSeconds(0.5)
-//
-//                        .afterTime(0.1,this::open)
-//                        .stopAndAdd(this::open)
-//
-//                        .strafeToConstantHeading(new Vector2d(-28,-53))
-//
-//                        //PART 1.5
-//
-//                        //alignTo
-//                        .strafeToLinearHeading(new Vector2d(-27.8,-31),Math.PI)
-//
-//                        .afterTime(0.1,this::armdown)
-//                        .stopAndAdd(this::armdown)
-//
-//                        .afterTime(0.1,this::slide0)
-//                        .stopAndAdd(this::slide0)
-//
-//                        .afterTime(0.1,this::resetslides)
-//                        .stopAndAdd(this::resetslides)
-//
-//                        .waitSeconds(1)
-//
-//                        .afterTime(0.1,this::close)
-//                        .stopAndAdd(this::close)
-//
-//                        //Placement
-//                        .strafeToLinearHeading(new Vector2d(-39,-45),Math.PI*1.25)
-//
-//                        .afterTime(0.1,this::anglearm)
-//                        .stopAndAdd(this::anglearm)
-//
-//                        .afterTime(0.1,this::hbucket)
-//                        .stopAndAdd(this::hbucket)
-//
-//                        .waitSeconds(3)
-//
-//                        .afterTime(0.1,this::open)
-//                        .stopAndAdd(this::open)
-//
-//                        //evade
-//                        .strafeToConstantHeading(new Vector2d(-30,-40))
-//
-//                        .waitSeconds(0.5)
-//
-//                        .afterTime(0.1,this::slide0)
-//                        .stopAndAdd(this::slide0)
-//
-//                        .afterTime(0.1,this::resetslides)
-//                        .stopAndAdd(this::resetslides)
-//
-//                        //PART2
-////
-////                        .strafeToLinearHeading(new Vector2d(-35,-31.2),Math.PI)
-////
-////                        .afterTime(0.1,this::armdown)
-////                        .stopAndAdd(this::armdown)
-////
-////                        .waitSeconds(1)
-////
-////                        .afterTime(0.1,this::close)
-////                        .stopAndAdd(this::close)
-////
-////                        .strafeToLinearHeading(new Vector2d(-34,-44.5),Math.PI*1.25)
-////
-////                        .afterTime(0.1,this::anglearm)
-////                        .stopAndAdd(this::anglearm)
-////
-////                        .afterTime(0.1,this::bucketh2)
-////                        .stopAndAdd(this::bucketh2)
-////
-////                        .waitSeconds(3)
-////
-////                        .afterTime(0.1,this::open)
-////                        .stopAndAdd(this::open)
-////
-////                        .strafeToConstantHeading(new Vector2d(-34,-40))
-////
-////                        .waitSeconds(0.5)
-////
-////                        .afterTime(0.1,this::slide0)
-////                        .stopAndAdd(this::slide0)
-////
-////                        .afterTime(0.1,this::resetslides)
-////                        .stopAndAdd(this::resetslides)
-//
-////                        .waitSeconds(2)
-////
-////                        .afterTime(0.1,this::customSlides)
-////                        .stopAndAdd(this::customSlides)
-//
-//                        //PART3
-//
-////                        .afterTime(0.1,this::barhReset)
-////                        .stopAndAdd(this::barhReset)
-////
-////                        .afterTime(0.1,this::armdown)
-////                        .stopAndAdd(this::armdown)
-////
-////                        .strafeToLinearHeading(new Vector2d(-36,-28.5),Math.PI)
-////
-////                        .afterTime(0.1,this::slide0)
-////                        .stopAndAdd(this::slide0)
-////
-////                        .afterTime(0.1,this::resetslides)
-////                        .stopAndAdd(this::resetslides)
-////
-////                        .waitSeconds(1)
-////
-////                        .afterTime(0.1,this::close)
-////                        .stopAndAdd(this::close)
-////
-////
-////                        .afterTime(0.1,this::anglearm)
-////                        .stopAndAdd(this::anglearm)
-////
-////                        .strafeToLinearHeading(new Vector2d(-40,-45),Math.PI*1.15)
-////
-////                        .afterTime(0.1,this::hbucket)
-////                        .stopAndAdd(this::hbucket)
-////
-////                        .waitSeconds(3)
-////
-////                        .afterTime(0.1,this::open)
-////                        .stopAndAdd(this::open)
-////
-////                        .strafeToConstantHeading(new Vector2d(-34,-41))
-////
-////                        .waitSeconds(0.5)
-////
-////                        .afterTime(0.1,this::slide0)
-////                        .stopAndAdd(this::slide0)
-////
-////                        .afterTime(0.1,this::resetslides)
-////                        .stopAndAdd(this::resetslides)
-////
-////                        .afterTime(0.1,this::armstart)
-////                        .stopAndAdd(this::armstart)
-//
-//                        //PART4
-//
-//                        .strafeToLinearHeading(new Vector2d(-36,-34),Math.PI)
-//                        .splineToLinearHeading(new Pose2d(-27,-18,0), Math.PI/2)
+        Actions.runBlocking(
+
+                drive.actionBuilder(startPose)
+
+                        //Drop pre load (specimen1)
+                        .stopAndAdd(this::highBar)
+                        .stopAndAdd(this::specimenDrop)
+                        .stopAndAdd(this::specimenWristDrop)
+
+                        .setTangent(-90)
+                        .strafeToConstantHeading(new Vector2d(0,0))
+
+                        .stopAndAdd(this::open)
+
+                        //Pick Sample 1 and Drop
+                        .strafeToConstantHeading(new Vector2d(0,0))
+                        .strafeToConstantHeading(new Vector2d(0,0))
+
+                        .afterTime(0.5, this::slides0)
+                        .afterTime(0.5, this::pick)
+                        .stopAndAdd(this::close)
+
+                        .strafeToLinearHeading(new Vector2d(0,0), 0)
+
+                        .stopAndAdd(this::deliver)
+                        .stopAndAdd(this::highBucket)
+                        .stopAndAdd(this::open)
+
+                        //Pick Sample 2 and Drop
+                        .afterTime(0.5, this::slides0)
+                        .strafeToLinearHeading(new Vector2d(0,0), 0)
+
+                        .afterTime(0.5, this::pick)
+                        .stopAndAdd(this::close)
+
+                        .strafeToLinearHeading(new Vector2d(0,0), 0)
+
+                        .stopAndAdd(this::deliver)
+                        .stopAndAdd(this::highBucket)
+                        .stopAndAdd(this::open)
+
+                        //Pick Sample 3 and Drop
+                        .afterTime(0.5, this::slides0)
+                        .strafeToLinearHeading(new Vector2d(0,0), 0)
+
+                        .afterTime(0.5, this::pick)
+                        .stopAndAdd(this::close)
+
+                        .strafeToLinearHeading(new Vector2d(0,0), 0)
+
+                        .stopAndAdd(this::deliver)
+                        .stopAndAdd(this::highBucket)
+                        .stopAndAdd(this::open)
+
+                        //Park
+                        .strafeToLinearHeading(new Vector2d(0,0),0)
+                        .afterTime(0.5, this::slides0)
 
                         .build());
 
         telemetry.addData("Slide1Position", slides.slide1.getCurrentPosition());
         telemetry.addData("Slide2Position", slides.slide2.getCurrentPosition());
+        telemetry.addData("ArmBase1Position", arm.armBase1.getPosition());
+        telemetry.addData("ArmBase2Position", arm.armBase2.getPosition());
+        telemetry.addData("Wrist1Position", wrist.wrist1.getPosition());
+        telemetry.addData("Wrist2Position", wrist.wrist2.getPosition());
         telemetry.addData("Claw1", claw.claw1.getPosition());
         telemetry.addData("Claw2", claw.claw2.getPosition());
         telemetry.update();

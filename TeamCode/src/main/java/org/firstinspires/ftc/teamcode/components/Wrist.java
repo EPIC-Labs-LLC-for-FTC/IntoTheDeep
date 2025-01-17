@@ -89,8 +89,8 @@ public class Wrist implements IComponents,IWrist{
     @Override
     public void specimenAutoDrop() {
 
-        wrist1.setPosition(0);
-        wrist2.setPosition(1);
+        wrist1.setPosition(1);
+        wrist2.setPosition(0);
 
     }
 
