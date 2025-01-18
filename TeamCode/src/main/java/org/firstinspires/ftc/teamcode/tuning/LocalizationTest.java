@@ -16,7 +16,7 @@ public class LocalizationTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        PinpointDrive drive = new PinpointDrive(hardwareMap, new Pose2d(0, 0, 0));
+        PinpointDrive drive = new PinpointDrive(hardwareMap, new Pose2d(9.909, 62.638, -90));
 
         waitForStart();
 

@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.components.Wrist;
 @Autonomous(name = "EXP_RIGHT_AUTO_SPARK")
 public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
 
+
     public void close(){
         Claw claw = new Claw(hardwareMap);
         claw.close();
@@ -41,7 +42,7 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
         Arm arm = new Arm(hardwareMap);
         Wrist wrist = new Wrist(hardwareMap);
         arm.armPick();
-        wrist.wristPick();
+        wrist.wristAutoPick();
     }
 
     public void deliver(){
@@ -60,17 +61,20 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
 
     public void slides0(){
         Slides slides = new Slides(hardwareMap);
-        slides.moveDown(0);
+        slides.moveTo();
+        slides.slidesGo(250);
     }
 
     public void highBar(){
         Slides slides = new Slides(hardwareMap);
-        slides.moveUp(0);
+        slides.moveTo();
+        slides.slidesGo(1650);
     }
 
     public void highBucket(){
         Slides slides = new Slides(hardwareMap);
-        slides.moveUp(0);
+        slides.moveTo();
+        slides.slidesGo(2000);
     }
 
     @Override
@@ -98,13 +102,14 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
 
         while (opModeInInit()){
 
-            arm.initialize();
+            arm.armRest2();
+            wrist.wristDrop();
             claw.initialize();
             slides.initialize();
 
         }
 
-        Pose2d startPose = new Pose2d(14.3, -63, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-9.5122, 62.6138, -90);
         PinpointDrive drive = new PinpointDrive(hardwareMap,startPose);
 
         waitForStart();
@@ -118,126 +123,126 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
                         .stopAndAdd(this::specimenDrop)
                         .stopAndAdd(this::specimenWristDrop)
 
-                        .setTangent(90)
-                        .strafeToConstantHeading(new Vector2d(0,0))
+                        .setTangent(-90)
+                        .strafeToConstantHeading(new Vector2d(-21.799,41.1814))
 
                         .stopAndAdd(this::open)
 
                         //Pick Specimen 2
-                        .strafeToConstantHeading(new Vector2d(0,0))
-
-                        .afterTime(0.5, this::slides0)
-                        .afterTime(0.5, this::specimenPick)
-                        .stopAndAdd(this::close)
+//                        .strafeToConstantHeading(new Vector2d(-37.2552,60.6072))
+//
+//                        .afterTime(0.5, this::slides0)
+//                        .afterTime(0.5, this::specimenPick)
+//                        .stopAndAdd(this::close)
 
                         //Place Specimen 2
-                        .stopAndAdd(this::highBar)
-                        .stopAndAdd(this::specimenDrop)
-                        .stopAndAdd(this::specimenWristDrop)
-
-                        .strafeToConstantHeading(new Vector2d(0,0))
-
-                        .stopAndAdd(this::open)
+//                        .stopAndAdd(this::highBar)
+//                        .stopAndAdd(this::specimenDrop)
+//                        .stopAndAdd(this::specimenWristDrop)
+//
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//
+//                        .stopAndAdd(this::open)
 
                         //Pick red1 and drop
-                        .strafeToConstantHeading(new Vector2d(0,0))
-                        .strafeToConstantHeading(new Vector2d(0,0))
-
-                        .stopAndAdd(this::pick)
-                        .stopAndAdd(this::slides0)
-                        .stopAndAdd(this::close)
-
-                        .strafeToConstantHeading(new Vector2d(0,0))
-
-                        .stopAndAdd(this::deliver)
-                        .stopAndAdd(this::open)
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//
+//                        .stopAndAdd(this::pick)
+//                        .stopAndAdd(this::slides0)
+//                        .stopAndAdd(this::close)
+//
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//
+//                        .stopAndAdd(this::deliver)
+//                        .stopAndAdd(this::open)
 
                         //Pick red2 and drop
-                        .strafeToConstantHeading(new Vector2d(0,0))
-                        .strafeToConstantHeading(new Vector2d(0,0))
-
-                        .stopAndAdd(this::pick)
-                        .stopAndAdd(this::close)
-
-                        .strafeToConstantHeading(new Vector2d(0,0))
-
-                        .stopAndAdd(this::deliver)
-                        .stopAndAdd(this::open)
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//
+//                        .stopAndAdd(this::pick)
+//                        .stopAndAdd(this::close)
+//
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//
+//                        .stopAndAdd(this::deliver)
+//                        .stopAndAdd(this::open)
 
                         //Pick red3 and drop
-                        .strafeToConstantHeading(new Vector2d(0,0))
-                        .strafeToConstantHeading(new Vector2d(0,0))
-
-                        .stopAndAdd(this::pick)
-                        .stopAndAdd(this::close)
-
-                        .strafeToConstantHeading(new Vector2d(0,0))
-
-                        .stopAndAdd(this::deliver)
-                        .stopAndAdd(this::open)
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//
+//                        .stopAndAdd(this::pick)
+//                        .stopAndAdd(this::close)
+//
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//
+//                        .stopAndAdd(this::deliver)
+//                        .stopAndAdd(this::open)
 
                         //Pick and drop specimen 3
-                        .strafeToConstantHeading(new Vector2d(0,0))
-                        .stopAndAdd(this::specimenPick)
-
-                        .strafeToConstantHeading(new Vector2d(0,0))
-                        .stopAndAdd(this::close)
-
-                        .stopAndAdd(this::highBar)
-                        .stopAndAdd(this::specimenDrop)
-                        .stopAndAdd(this::specimenWristDrop)
-
-                        .strafeToConstantHeading(new Vector2d(0,0))
-                        .stopAndAdd(this::open)
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//                        .stopAndAdd(this::specimenPick)
+//
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//                        .stopAndAdd(this::close)
+//
+//                        .stopAndAdd(this::highBar)
+//                        .stopAndAdd(this::specimenDrop)
+//                        .stopAndAdd(this::specimenWristDrop)
+//
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//                        .stopAndAdd(this::open)
 
                         //Pick and drop specimen 4
-                        .strafeToConstantHeading(new Vector2d(0,0))
-                        .afterTime(0.5, this::slides0)
-                        .afterTime(0.5, this::specimenPick)
-                        .stopAndAdd(this::close)
-
-                        .stopAndAdd(this::highBar)
-                        .stopAndAdd(this::specimenDrop)
-                        .stopAndAdd(this::specimenWristDrop)
-
-                        .strafeToConstantHeading(new Vector2d(0,0))
-                        .stopAndAdd(this::open)
-
-                        //Pick and drop specimen 5
-                        .strafeToConstantHeading(new Vector2d(0,0))
-                        .afterTime(0.5, this::slides0)
-                        .afterTime(0.5, this::specimenPick)
-                        .stopAndAdd(this::close)
-
-                        .stopAndAdd(this::highBar)
-                        .stopAndAdd(this::specimenDrop)
-                        .stopAndAdd(this::specimenWristDrop)
-
-                        .strafeToConstantHeading(new Vector2d(0,0))
-                        .stopAndAdd(this::open)
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//                        .afterTime(0.5, this::slides0)
+//                        .afterTime(0.5, this::specimenPick)
+//                        .stopAndAdd(this::close)
+//
+//                        .stopAndAdd(this::highBar)
+//                        .stopAndAdd(this::specimenDrop)
+//                        .stopAndAdd(this::specimenWristDrop)
+//
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//                        .stopAndAdd(this::open)
+//
+//                        //Pick and drop specimen 5
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//                        .afterTime(0.5, this::slides0)
+//                        .afterTime(0.5, this::specimenPick)
+//                        .stopAndAdd(this::close)
+//
+//                        .stopAndAdd(this::highBar)
+//                        .stopAndAdd(this::specimenDrop)
+//                        .stopAndAdd(this::specimenWristDrop)
+//
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//                        .stopAndAdd(this::open)
 
                         //Pick and place sample
-                        .strafeToLinearHeading(new Vector2d(0,0), 180)
-
-                        .afterTime(0.5,this::slides0)
-                        .afterTime(0.5,this::pick)
-                        .stopAndAdd(this::close)
-                        .stopAndAdd(this::deliver)
-
-                        .strafeToLinearHeading(new Vector2d(0,0), 110)
-                        .strafeToConstantHeading(new Vector2d(0,0))
-
-                        .stopAndAdd(this::highBucket)
-                        .stopAndAdd(this::open)
-
-                        .stopAndAdd(this::pick)
-                        .stopAndAdd(this::slides0)
+//                        .strafeToLinearHeading(new Vector2d(0,0), 180)
+//
+//                        .afterTime(0.5,this::slides0)
+//                        .afterTime(0.5,this::pick)
+//                        .stopAndAdd(this::close)
+//                        .stopAndAdd(this::deliver)
+//
+//                        .strafeToLinearHeading(new Vector2d(0,0), 110)
+//                        .strafeToConstantHeading(new Vector2d(0,0))
+//
+//                        .stopAndAdd(this::highBucket)
+//                        .stopAndAdd(this::open)
+//
+//                        .stopAndAdd(this::pick)
+//                        .stopAndAdd(this::slides0)
 
                         //Park
-                        .strafeToLinearHeading(new Vector2d(0,0), -180)
-
-                        .afterTime(0.5,this::slides0)
-                        .afterTime(0.5,this::pick)
+//                        .strafeToLinearHeading(new Vector2d(0,0), -180)
+//
+//                        .afterTime(0.5,this::slides0)
+//                        .afterTime(0.5,this::pick)
 
                         .build());
 

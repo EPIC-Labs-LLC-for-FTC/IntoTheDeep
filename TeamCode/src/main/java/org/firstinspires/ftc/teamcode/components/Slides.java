@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.components;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,7 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
+@Config
 public class Slides implements IComponents, ISlide{
 
     private LinearOpMode parent;
@@ -19,8 +22,8 @@ public class Slides implements IComponents, ISlide{
 
     public PIDController controller;
 
-    public static double p = 0.019, i = 0, d = 0.0001;
-    public static double f = 0.1;
+    public static double p = 0.02, i = 0, d = 0.0001;
+    public static double f = 0.3;
 
     public static int target = 0;
 
@@ -31,6 +34,8 @@ public class Slides implements IComponents, ISlide{
         slide1 = hardwareMap.get(DcMotorEx.class, "slide1");
         slide2 = hardwareMap.get(DcMotorEx.class, "slide2");
 
+        controller = new PIDController(p,i,d);
+
     }
     @Override
     public void initialize() {
@@ -40,8 +45,7 @@ public class Slides implements IComponents, ISlide{
         slide1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slide2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        controller = new PIDController(p,i,d);
-
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
     @Override
@@ -130,45 +134,31 @@ public class Slides implements IComponents, ISlide{
     }
 
     @Override
-    public void moveUp(int target) {
-
+    public void moveTo() {
         controller.setPID(p,i,d);
 
         int slidePosition1 = slide1.getCurrentPosition();
-        int slidePosition2 = slide2.getCurrentPosition();
 
         double pid1 = controller.calculate(slidePosition1, target);
-        double pid2 = controller.calculate(slidePosition2, target);
 
         double f1 = Math.cos(Math.toRadians(target / tick_in_degrees)) * f;
 
         double power1 = pid1 + f1;
-        double power2 = pid2 + f1;
-
-        slide1.setPower(-power1);
-        slide2.setPower(-power2);
-
-    }
-
-    @Override
-    public void moveDown(int target) {
-
-        controller.setPID(p,i,d);
-
-        int slidePosition1 = slide1.getCurrentPosition();
-        int slidePosition2 = slide2.getCurrentPosition();
-
-        double pid1 = controller.calculate(slidePosition1, target);
-        double pid2 = controller.calculate(slidePosition2, target);
-
-        double f1 = Math.cos(Math.toRadians(target / tick_in_degrees)) * f;
-
-        double power1 = pid1 + f1;
-        double power2 = pid2 + f1;
 
         slide1.setPower(power1);
-        slide2.setPower(power2);
+        slide2.setPower(power1);
+    }
 
+    public void slidesUp(){
+        target = target + 15;
+    }
+
+    public void slidesDown(){
+        target = target - 15;
+    }
+
+    public void slidesGo(int position){
+        target = position;
     }
 
     @Override

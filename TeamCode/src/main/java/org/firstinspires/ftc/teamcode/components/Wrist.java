@@ -49,15 +49,23 @@ public class Wrist implements IComponents,IWrist{
     @Override
     public void rest() {
 
-        wrist1.setPosition(1);
-        wrist2.setPosition(0.4306);
+        wrist1.setPosition(0.5106);
+        wrist2.setPosition(0.4644);
 
     }
 
     @Override
     public void wristPick() {
 
-        wrist1.setPosition(0.5);
+        wrist1.setPosition(0.5106);
+        wrist2.setPosition(0);
+
+    }
+
+    @Override
+    public void wristAutoPick() {
+
+        wrist1.setPosition(1);
         wrist2.setPosition(0);
 
     }
@@ -66,7 +74,7 @@ public class Wrist implements IComponents,IWrist{
     public void wristDrop() {
 
         wrist1.setPosition(1);
-        wrist2.setPosition(0.4306);
+        wrist2.setPosition(0.5272);
 
     }
 
@@ -74,7 +82,7 @@ public class Wrist implements IComponents,IWrist{
     public void specimenPick() {
 
         wrist1.setPosition(0);
-        wrist2.setPosition(0.4);
+        wrist2.setPosition(0.7139);
 
     }
 
@@ -90,7 +98,7 @@ public class Wrist implements IComponents,IWrist{
     public void specimenAutoDrop() {
 
         wrist1.setPosition(1);
-        wrist2.setPosition(0);
+        wrist2.setPosition(1);
 
     }
 
