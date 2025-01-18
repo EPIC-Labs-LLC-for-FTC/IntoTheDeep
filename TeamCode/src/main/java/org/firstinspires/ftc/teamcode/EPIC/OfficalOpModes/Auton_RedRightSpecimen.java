@@ -4,16 +4,12 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
-import com.acmerobotics.roadrunner.TrajectoryBuilder;
-import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
@@ -23,10 +19,8 @@ import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
 import com.acmerobotics.roadrunner.Pose2d;
 
-import java.util.Vector;
-
-@Autonomous(name = "Auton_BlueLeftHangPidf")
-public class Auton_BlueLeftHangPidf extends LinearOpMode {
+@Autonomous(name = "Auton_RedRightSpec")
+public class Auton_RedRightSpecimen extends LinearOpMode {
     public static double ap = 0.03, ai = 0, ad = 0.0015, af = 0.065;
     public static double sp = 0.02, si = 0, sd = 0.001, sf = 0;
 
