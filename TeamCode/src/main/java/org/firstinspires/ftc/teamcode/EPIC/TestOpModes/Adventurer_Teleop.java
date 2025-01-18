@@ -30,7 +30,7 @@ public class Adventurer_Teleop extends LinearOpMode {
     private PIDController controller;
     private PIDController controller2;
 
-    public static double p1 = 0.023, i1 = 0, d1 = 0.00075;
+    public static double p1 = 0.015, i1 = 0, d1 = 0.00075;
     public static double p2 = 0.017, i2 = 0, d2 = 0.0001;
 
     public static double f1 = -0.2;

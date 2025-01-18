@@ -32,7 +32,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         private DcMotorEx armRight;
         private DcMotorEx armLeft;
         private PIDController controller;
-        public double p1 = 0.023, i1 = 0, d1 = 0.00075;
+        public double p1 = 0.015, i1 = 0, d1 = 0.00075;
         public double f1 = -0.2;
         private int target1 = 0;
         private final double tick_in_degrees1 = 2786.2/360;
@@ -42,6 +42,8 @@ public class RR_Sample_Auto extends LinearOpMode {
             armLeft = hardwareMap.get(DcMotorEx.class, "armLeft");
             armRight.setDirection(DcMotorSimple.Direction.REVERSE);
             controller = new PIDController(p1, i1, d1);
+            armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         public class ArmPID implements Action {
@@ -67,7 +69,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class ArmSpecimenForward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -700;
+                target1 = -710;
                 return false;
             }
 
@@ -129,7 +131,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class ArmSamplePick implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -200;
+                target1 = -220;
                 return false;
             }
 
@@ -141,13 +143,39 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class ArmSampleDrop implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -995;
+                target1 = -990;
                 return false;
             }
 
         }
         public Action armSampleDrop() {
             return new Arm.ArmSampleDrop();
+        }
+
+        public class ArmTelemetryInit implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                telemetry.addData("Arm Pos", armRight.getCurrentPosition());
+                telemetry.addData("Arm Target", target1);
+                return false;
+            }
+
+        }
+        public Action armTelemetryInit() {
+            return new Arm.ArmTelemetryInit();
+        }
+
+        public class ArmTelemetryRunning implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                telemetry.addData("Arm Pos", armRight.getCurrentPosition());
+                telemetry.addData("Arm Target", target1);
+                return true;
+            }
+
+        }
+        public Action armTelemetryRunning() {
+            return new Arm.ArmTelemetryRunning();
         }
 
 
@@ -171,6 +199,8 @@ public class RR_Sample_Auto extends LinearOpMode {
             slideLeft = hardwareMap.get(DcMotorEx.class, "slideLeft");
             slideRight.setDirection(DcMotorSimple.Direction.REVERSE);
             controller2 = new PIDController(p2, i2, d2);
+            slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slideRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         public class SlidePID implements Action {
@@ -193,7 +223,7 @@ public class RR_Sample_Auto extends LinearOpMode {
 
         public class SlideSpecimen implements Action {
             public boolean run(@NonNull TelemetryPacket packet) {
-                target2 = -565;
+                target2 = -575;
                 return false;
             }
         }
@@ -223,7 +253,7 @@ public class RR_Sample_Auto extends LinearOpMode {
         public class SlideSamplePick implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target2 = -1200;
+                target2 = -1220;
                 return false;
             }
 
@@ -242,6 +272,34 @@ public class RR_Sample_Auto extends LinearOpMode {
         }
         public Action slideSampleDrop() {
             return new Slides.SlideSampleDrop();
+        }
+
+        public class SlideTelemetryInit implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                telemetry.addData("Slide Pos", slideRight.getCurrentPosition());
+                telemetry.addData("Slide Target", target2);
+                telemetry.update();
+                return false;
+            }
+
+        }
+        public Action slideTelemetryInit() {
+            return new Slides.SlideTelemetryInit();
+        }
+
+        public class SlideTelemetryRunning implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                telemetry.addData("Arm Pos", slideRight.getCurrentPosition());
+                telemetry.addData("Arm Target", target2);
+                telemetry.update();
+                return true;
+            }
+
+        }
+        public Action slideTelemetryRunning() {
+            return new Slides.SlideTelemetryRunning();
         }
 
 
@@ -354,7 +412,7 @@ public class RR_Sample_Auto extends LinearOpMode {
                 .stopAndAdd(slide.slideSpecimen())
                 .waitSeconds(1)
 
-                .strafeToLinearHeading(new Vector2d(4.1, -39), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(4.1, -37), Math.toRadians(90))
 
                 .afterTime(0.1, slide.slideReset())
                 .stopAndAdd(slide.slideReset())
@@ -370,9 +428,11 @@ public class RR_Sample_Auto extends LinearOpMode {
 
                 // Sample 1
 
-                .strafeToLinearHeading(new Vector2d(-33, -54), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-34, -53), Math.toRadians(90))
 
                 .waitSeconds(0.5)
+                .afterTime(0.01, claw.openClaw())
+                .stopAndAdd(claw.openClaw())
                 .afterTime(0.01, arm.armSamplePick())
                 .stopAndAdd(arm.armSamplePick())
                 .waitSeconds(1)
@@ -390,7 +450,7 @@ public class RR_Sample_Auto extends LinearOpMode {
                 .stopAndAdd(slide.slideSampleDrop())
                 .waitSeconds(1.5)
 
-                .strafeToLinearHeading(new Vector2d(-38, -58.5), Math.toRadians(225))
+                .strafeToLinearHeading(new Vector2d(-39.5, -58.5), Math.toRadians(225))
 
                 .waitSeconds(1)
                 .afterTime(0.5, claw.openClaw())
@@ -413,7 +473,7 @@ public class RR_Sample_Auto extends LinearOpMode {
 
                 // Sample 2
 
-                .strafeToLinearHeading(new Vector2d(-40.1, -55), Math.toRadians(100))
+                .strafeToLinearHeading(new Vector2d(-41.1, -55), Math.toRadians(100))
 
                 .afterTime(0.1, arm.armSamplePick())
                 .stopAndAdd(arm.armSamplePick())
@@ -459,6 +519,8 @@ public class RR_Sample_Auto extends LinearOpMode {
 
 
         Actions.runBlocking(claw.closeClaw());
+        Actions.runBlocking(arm.armTelemetryInit());
+        Actions.runBlocking(slide.slideTelemetryInit());
 
         waitForStart();
         if (isStopRequested()) return;
@@ -467,6 +529,8 @@ public class RR_Sample_Auto extends LinearOpMode {
                 new ParallelAction(
                         arm.armPID(),
                         slide.slidePID(),
+                        slide.slideTelemetryRunning(),
+                        arm.armTelemetryRunning(),
                         new SequentialAction(
                                 specimen1
                         )
