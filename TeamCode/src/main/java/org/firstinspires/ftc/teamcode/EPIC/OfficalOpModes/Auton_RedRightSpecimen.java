@@ -63,44 +63,46 @@ public class Auton_RedRightSpecimen extends LinearOpMode {
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
-                .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2, true))
-                //.lineToY(-36.5)
-                //.waitSeconds(1)
-                //.stopAndAdd(performSpecimenDropoff(odyssey))
+               // .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2, true))
+                .lineToY(-34.7)
+                .waitSeconds(1)
+                .stopAndAdd(performSpecimenDropoff(odyssey))
                 //.strafeToConstantHeading(new Vector2d(27, -40.15))
                 //.splineToConstantHeading(new Vector2d(45, -9), 0)
 
                 //.lineToY(36.6)
-                .lineToY(-41)
+               // .lineToY(-41)
                 .waitSeconds(0.3)
               //  .turn(Math.toRadians(-90))
-                .strafeToConstantHeading(new Vector2d(28,-41))
+                .strafeToConstantHeading(new Vector2d(31,-41))
                // .lineToX(34).turn(Math.toRadians(90))
                 .waitSeconds(0.05)
                 //       .lineToY(-7)
                 //      .waitSeconds(0.3)
                 //    .strafeToConstantHeading(new Vector2d(40,-21))
-                .splineToConstantHeading(new Vector2d(40, -21), 0).waitSeconds(0.01)
-                .lineToY(-62)
+                .splineToConstantHeading(new Vector2d(42, -17), 0).waitSeconds(0.01)
+                .lineToY(-60)
                 .waitSeconds(0.0000001)
-                .splineToConstantHeading(new Vector2d(49, -21), 0)
+                .splineToConstantHeading(new Vector2d(51, -17), 0)
                 .waitSeconds(0.0000001)
                 .lineToY(-60)
                 .waitSeconds(0.0000001)
                 //.lineToY(-47)
                // .turn(Math.toRadians(180))
-               .splineToConstantHeading(new Vector2d(55.8, -21), 0)
+               .splineToConstantHeading(new Vector2d(57, -17), 0)
                 .waitSeconds(0.0000001)
-                .lineToY(-61.5)
+                .lineToY(-60)
                 .waitSeconds(0.00000001)
                // .splineToConstantHeading(new Vector2d(44.5, -60 ), 0)
                // .turn(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(44.5,-62.5,Math.toRadians(270)),Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(44.5,-60,Math.toRadians(270)),Math.toRadians(90))
         .waitSeconds(0.0000001 )
                 .stopAndAdd(performSpecimenPickup(odyssey))
                 .waitSeconds(0.0000001)
            //     .turn(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(3,-41,Math.toRadians(90)),Math.toRadians(90));
+                .splineToLinearHeading(new Pose2d(1.3,-33,Math.toRadians(90)),Math.toRadians(90))
+                .stopAndAdd(performSpecimenDropoff(odyssey));
+
 
         Action tsc1 = tab.build();
 
@@ -192,6 +194,12 @@ public class Auton_RedRightSpecimen extends LinearOpMode {
                 //sleep(500);
 
                 odyssey.odysseyClaw.move(ClawStates.OPEN);
+                sleep(500);
+
+                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
+                sleep(500);
+
+                odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT);
                 sleep(500);
 
                 //odyssey.odysseyArm.move(ArmStates.INITIALIZED);
