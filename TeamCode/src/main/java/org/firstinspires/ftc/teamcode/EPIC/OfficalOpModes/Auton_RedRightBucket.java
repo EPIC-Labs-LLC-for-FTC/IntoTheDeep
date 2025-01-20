@@ -13,20 +13,19 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.EPIC.AutonStates.AutonPose;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
+import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.SparkFunOTOSDrive;
 
 import com.acmerobotics.roadrunner.Pose2d;
 
-import java.util.Arrays;
-import java.util.Vector;
-
-@Autonomous(name = "Auton_RedRightSpec")
-public class Auton_RedRightSpecimen extends LinearOpMode {
+@Autonomous(name = "Auton_RedRightBucket")
+public class Auton_RedRightBucket extends LinearOpMode {
     public static double ap = 0.03, ai = 0, ad = 0.0015, af = 0.065;
     public static double sp = 0.02, si = 0, sd = 0.001, sf = 0;
 
@@ -37,7 +36,7 @@ public class Auton_RedRightSpecimen extends LinearOpMode {
         SparkFunOTOSDrive drive = new SparkFunOTOSDrive(hardwareMap, new Pose2d(8.25, -63.85,
                 Math.toRadians(90)));
 
-        Pose2d initialPos = new Pose2d(8.25, -63.85, Math.toRadians(90));
+        Pose2d initialPos = new Pose2d(-8.25, -63.85, Math.toRadians(90));
         drive.setPoseEstimate(initialPos);
 
         Robot odyssey = new Robot(this, "Blue", true);
@@ -70,51 +69,21 @@ public class Auton_RedRightSpecimen extends LinearOpMode {
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
-               // .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2, true))
-                .lineToY(-34.7)
+                // .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2, true))
+                .splineToConstantHeading(new Vector2d(-28, -44.5), 0, drive.fastVelConstraint, drive.defaultAccelConstraint).waitSeconds(0.01)
                 .waitSeconds(1)
-                .stopAndAdd(performSpecimenDropoff(odyssey))
-                //.strafeToConstantHeading(new Vector2d(27, -40.15))
-                //.splineToConstantHeading(new Vector2d(45, -9), 0)
+                .stopAndAdd(performSpecimenPickupFloor(odyssey))
+                .waitSeconds(1)
+                .splineToLinearHeading(new Pose2d(-30, -44.5, Math.toRadians(55)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .waitSeconds(0.01)
+                .stopAndAdd(performSlideUp(odyssey))
+                .waitSeconds(2.8)
+                .lineToY(-54.4)
+                .splineToLinearHeading(new Pose2d(-32, -44.5, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .stopAndAdd(performSlideDown(odyssey))
+                .waitSeconds(1)
+                .stopAndAdd(performSpecimenPickupFloor(odyssey));
 
-                //.lineToY(36.6)
-               // .lineToY(-41)
-                .waitSeconds(0.3)
-              //  .turn(Math.toRadians(-90))
-                .strafeToConstantHeading(new Vector2d(31,-41), drive.fastVelConstraint, drive.defaultAccelConstraint)
-               // .lineToX(34).turn(Math.toRadians(90))
-                .waitSeconds(0.05)
-                //       .lineToY(-7)
-                //      .waitSeconds(0.3)
-                //    .strafeToConstantHeading(new Vector2d(40,-21))
-                .splineToConstantHeading(new Vector2d(42, -17), 0, drive.fastVelConstraint, drive.defaultAccelConstraint).waitSeconds(0.01)
-                .lineToY(-60, drive.fastVelConstraint, drive.defaultAccelConstraint)
-                .waitSeconds(0.0000001)
-                .splineToConstantHeading(new Vector2d(51, -17), 0, drive.fastVelConstraint, drive.defaultAccelConstraint)
-                .waitSeconds(0.0000001)
-                .lineToY(-60, drive.fastVelConstraint, drive.defaultAccelConstraint)
-                .waitSeconds(0.0000001)
-                //.lineToY(-47)
-               // .turn(Math.toRadians(180))
-               .splineToConstantHeading(new Vector2d(57, -17), 0, drive.fastVelConstraint, drive.defaultAccelConstraint)
-                .waitSeconds(0.0000001)
-                .lineToY(-60, drive.fastVelConstraint, drive.defaultAccelConstraint)
-                .waitSeconds(0.00000001)
-               // .splineToConstantHeading(new Vector2d(44.5, -60 ), 0)
-               // .turn(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(44.5,-60,Math.toRadians(270)),Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
-        .waitSeconds(0.0000001 )
-                .stopAndAdd(performSpecimenPickup(odyssey))
-                .waitSeconds(0.0000001)
-           //     .turn(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(1.3,-33,Math.toRadians(90)),Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
-                .stopAndAdd(performSpecimenDropoff(odyssey))
-                .splineToLinearHeading(new Pose2d(44.5,-58  ,Math.toRadians(270)),Math.toRadians(90),drive.fastVelConstraint,drive.defaultAccelConstraint)
-                .waitSeconds(0.01)
-                .stopAndAdd(performSpecimenPickup(odyssey))
-                .waitSeconds(0.01)
-                .splineToLinearHeading(new Pose2d(1.3,-33,Math.toRadians(90)),Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
-                .stopAndAdd(performSpecimenDropoff(odyssey));
 
 
         Action tsc1 = tab.build();
@@ -169,21 +138,45 @@ public class Auton_RedRightSpecimen extends LinearOpMode {
 
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-        odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
-        sleep(500);
+                odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
+                sleep(500);
 
-        odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(1000);
+                odyssey.odysseyClaw.move(ClawStates.OPEN);
+                sleep(1000);
 
-        odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
-        sleep(500);
+                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
+                sleep(500);
 
-        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
-        sleep(500);
+                odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
+                sleep(500);
                 return false;
             }
         };
     }
+
+
+    private Action performSlideUp(Robot odyssey) throws InterruptedException {
+        return new Action() {
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET);
+
+                return false;
+            }
+        };
+    }
+    private Action performSlideDown(Robot odyssey) throws InterruptedException {
+        return new Action() {
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                odyssey.odysseySlider.slide(SliderStates.RETRACTED);
+                return false;
+            }
+        };
+    }
+
 
     /**
      * Handles the sequence for dropping off a specimen.
@@ -217,6 +210,36 @@ public class Auton_RedRightSpecimen extends LinearOpMode {
 
                 //odyssey.odysseyArm.move(ArmStates.INITIALIZED);
                 //sleep(1000);
+                return false;
+            }
+        };
+
+    }
+
+    private Action performSpecimenPickupFloor(Robot odyssey) throws InterruptedException {
+        return new Action() {
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+                odyssey.odysseyArm.move(ArmStates.LOWERED);
+
+
+                odyssey.odysseyClaw.move(ClawStates.OPEN);
+                sleep(500);
+
+                odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+                sleep(500);
+
+                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
+                sleep(500);
+
+                odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT);
+                sleep(1000);
+
+                odyssey.odysseyClaw.move(ClawStates.OPEN);
+                sleep(500);
+
                 return false;
             }
         };
