@@ -70,6 +70,11 @@ public class Auton_RedRightBucket extends LinearOpMode {
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
                 // .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2, true))
+                .strafeToConstantHeading(new Vector2d(8,-32))
+                .waitSeconds(1)
+                .stopAndAdd(performSpecimenDropoff(odyssey))
+                .waitSeconds(1)
+                .lineToY(-40)
                 .splineToConstantHeading(new Vector2d(-28, -44.5), 0, drive.fastVelConstraint, drive.defaultAccelConstraint).waitSeconds(0.01)
                 .waitSeconds(1)
                 .stopAndAdd(performSpecimenPickupFloor(odyssey))
@@ -79,11 +84,23 @@ public class Auton_RedRightBucket extends LinearOpMode {
                 .stopAndAdd(performSlideUp(odyssey))
                 .waitSeconds(2.8)
                 .lineToY(-54.4)
-                .splineToLinearHeading(new Pose2d(-32, -44.5, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .splineToLinearHeading(new Pose2d(-37, -47.6, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .stopAndAdd(performSlideDown(odyssey))
                 .waitSeconds(1)
-                .stopAndAdd(performSpecimenPickupFloor(odyssey));
-
+                .stopAndAdd(performSpecimenPickupFloor(odyssey))
+                .waitSeconds(1)
+                .splineToLinearHeading(new Pose2d(-30, -44.5, Math.toRadians(55)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .waitSeconds(0.01)
+                .stopAndAdd(performSlideUp(odyssey))
+                .waitSeconds(2.8)
+                .lineToY(-54.4)
+                .waitSeconds(0.1)
+                .lineToY(-46);
+               // .lineToY(-20 )
+               // .splineToLinearHeading(new Pose2d(-45, -47.6, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+               //   .stopAndAdd(performSlideDown(odyssey));
+                //.waitSeconds(1)
+               // .stopAndAdd(performSpecimenPickupFloor(odyssey));
 
 
         Action tsc1 = tab.build();
@@ -155,6 +172,7 @@ public class Auton_RedRightBucket extends LinearOpMode {
     }
 
 
+
     private Action performSlideUp(Robot odyssey) throws InterruptedException {
         return new Action() {
 
@@ -166,6 +184,7 @@ public class Auton_RedRightBucket extends LinearOpMode {
             }
         };
     }
+
     private Action performSlideDown(Robot odyssey) throws InterruptedException {
         return new Action() {
 
