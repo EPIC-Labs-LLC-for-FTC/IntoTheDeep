@@ -70,50 +70,51 @@ public class Auton_RedRightSpecimen extends LinearOpMode {
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
-               // .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2, true))
+                // .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2, true))
                 .lineToY(-34.7)
-                .waitSeconds(1)
+                .waitSeconds(0.5)
                 .stopAndAdd(performSpecimenDropoff(odyssey))
                 //.strafeToConstantHeading(new Vector2d(27, -40.15))
                 //.splineToConstantHeading(new Vector2d(45, -9), 0)
 
                 //.lineToY(36.6)
-               // .lineToY(-41)
-                .waitSeconds(0.3)
-              //  .turn(Math.toRadians(-90))
-                .strafeToConstantHeading(new Vector2d(31,-41), drive.fastVelConstraint, drive.defaultAccelConstraint)
-               // .lineToX(34).turn(Math.toRadians(90))
-                .waitSeconds(0.05)
+                // .lineToY(-41)
+                .waitSeconds(0.2)
+                //  .turn(Math.toRadians(-90))
+                .strafeToConstantHeading(new Vector2d(31, -41), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                // .lineToX(34).turn(Math.toRadians(90))
+                .waitSeconds(0.00001)
                 //       .lineToY(-7)
                 //      .waitSeconds(0.3)
                 //    .strafeToConstantHeading(new Vector2d(40,-21))
                 .splineToConstantHeading(new Vector2d(42, -17), 0, drive.fastVelConstraint, drive.defaultAccelConstraint).waitSeconds(0.01)
-                .lineToY(-60, drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .lineToY(-58.5, drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .waitSeconds(0.0000001)
                 .splineToConstantHeading(new Vector2d(51, -17), 0, drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .waitSeconds(0.0000001)
                 .lineToY(-60, drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .waitSeconds(0.0000001)
                 //.lineToY(-47)
-               // .turn(Math.toRadians(180))
-               .splineToConstantHeading(new Vector2d(57, -17), 0, drive.fastVelConstraint, drive.defaultAccelConstraint)
-                .waitSeconds(0.0000001)
-                .lineToY(-60, drive.fastVelConstraint, drive.defaultAccelConstraint)
-                .waitSeconds(0.00000001)
-               // .splineToConstantHeading(new Vector2d(44.5, -60 ), 0)
-               // .turn(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(44.5,-60,Math.toRadians(270)),Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
-        .waitSeconds(0.0000001 )
+                // .turn(Math.toRadians(180))
+                //      .splineToConstantHeading(new Vector2d(57, -17), 0, drive.fastVelConstraint, drive.defaultAccelConstraint)
+                //      .waitSeconds(0.0000001)
+                //       .lineToY(-60, drive.fastVelConstraint, drive.defaultAccelConstraint)
+                //       .waitSeconds(0.00000001)
+                //       // .splineToConstantHeading(new Vector2d(44.5, -60 ), 0)
+                // .turn(Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(44.5, -60, Math.toRadians(270)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .waitSeconds(0.0000002)
                 .stopAndAdd(performSpecimenPickup(odyssey))
-                .waitSeconds(0.0000001)
-           //     .turn(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(1.3,-33,Math.toRadians(90)),Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .waitSeconds(0.0000002)
+                //     .turn(Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(1.3, -33, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .stopAndAdd(performSpecimenDropoff(odyssey))
-                .splineToLinearHeading(new Pose2d(44.5,-58  ,Math.toRadians(270)),Math.toRadians(90),drive.fastVelConstraint,drive.defaultAccelConstraint)
-                .waitSeconds(0.01)
+                .waitSeconds(0.1)
+                .splineToLinearHeading(new Pose2d(44.5, -58, Math.toRadians(270)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .waitSeconds(0.0000002)
                 .stopAndAdd(performSpecimenPickup(odyssey))
-                .waitSeconds(0.01)
-                .splineToLinearHeading(new Pose2d(1.3,-33,Math.toRadians(90)),Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .waitSeconds(0.000002)
+                .splineToLinearHeading(new Pose2d(1.3, -32, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .stopAndAdd(performSpecimenDropoff(odyssey));
 
 
@@ -169,17 +170,17 @@ public class Auton_RedRightSpecimen extends LinearOpMode {
 
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-        odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
-        sleep(500);
+                odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
+                sleep(500);
 
-        odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(1000);
+                odyssey.odysseyClaw.move(ClawStates.OPEN);
+                sleep(1000);
 
-        odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
-        sleep(500);
+                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
+                sleep(500);
 
-        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
-        sleep(500);
+                odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
+                sleep(500);
                 return false;
             }
         };
