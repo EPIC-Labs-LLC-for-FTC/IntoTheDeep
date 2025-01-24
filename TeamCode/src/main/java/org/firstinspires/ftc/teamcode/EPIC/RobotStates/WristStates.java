@@ -8,6 +8,8 @@ public enum WristStates {
     SPECIMEN_PICK(0.38),
     SPECIMEN_DROP(0.55);//0.380
 
+    //orignal pick is 0.38
+
 
 
     private double pos;

@@ -94,8 +94,10 @@ public class Auton_RedRightBucket extends LinearOpMode {
                 .stopAndAdd(performSlideUp(odyssey))
                 .waitSeconds(2.8)
                 .lineToY(-54.4)
-                .waitSeconds(0.1)
-                .lineToY(-46);
+                .waitSeconds(0.1);
+           //     .lineToY(-46); // this is without park KEEP THIS VALUES
+               // .splineToLinearHeading(new Pose2d(2, -15, Math.toRadians(270)), Math.toRadians(45), drive.fastVelConstraint, drive.defaultAccelConstraint)
+       // .turn(320);
                // .lineToY(-20 )
                // .splineToLinearHeading(new Pose2d(-45, -47.6, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
                //   .stopAndAdd(performSlideDown(odyssey));

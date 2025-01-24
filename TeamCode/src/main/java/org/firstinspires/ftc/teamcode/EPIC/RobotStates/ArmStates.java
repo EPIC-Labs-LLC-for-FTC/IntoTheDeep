@@ -7,7 +7,7 @@ public enum ArmStates {
     LOWERED(525),
     INITIALIZED(0.0),
     NEUTRAL(250),
-    SPECIMEN_PICK(385),
+    SPECIMEN_PICK(413),
     SPECIMEN_DROP(200),
 
     SPECIMEN_DROP2(220),
