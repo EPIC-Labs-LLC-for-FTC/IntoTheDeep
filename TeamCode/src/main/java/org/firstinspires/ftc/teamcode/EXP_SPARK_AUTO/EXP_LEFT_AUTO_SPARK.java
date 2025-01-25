@@ -101,7 +101,7 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
 
         }
 
-        Pose2d startPose = new Pose2d(9.909, 62.638, -90);
+        Pose2d startPose = new Pose2d(9, 62.638, -180);
         PinpointDrive drive = new PinpointDrive(hardwareMap,startPose);
 
         waitForStart();
@@ -111,14 +111,14 @@ public class EXP_LEFT_AUTO_SPARK extends LinearOpMode {
                 drive.actionBuilder(startPose)
 
                         //Drop pre load (specimen1)
-                        .stopAndAdd(this::highBar)
-                        .stopAndAdd(this::specimenDrop)
-                        .stopAndAdd(this::specimenWristDrop)
+//                        .stopAndAdd(this::highBar)
+//                        .stopAndAdd(this::specimenDrop)
+//                        .stopAndAdd(this::specimenWristDrop)
 
                         .setTangent(-90)
                         .strafeToConstantHeading(new Vector2d(9,39.06))
 
-                        .stopAndAdd(this::open)
+//                        .stopAndAdd(this::open)
 
                         //Pick Sample 1 and Drop
 //                        .strafeToConstantHeading(new Vector2d(32.2,48.9))

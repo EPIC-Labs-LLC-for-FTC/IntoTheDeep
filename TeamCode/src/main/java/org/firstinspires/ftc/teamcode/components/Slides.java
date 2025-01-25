@@ -45,6 +45,8 @@ public class Slides implements IComponents, ISlide{
         slide1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slide2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        slide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 

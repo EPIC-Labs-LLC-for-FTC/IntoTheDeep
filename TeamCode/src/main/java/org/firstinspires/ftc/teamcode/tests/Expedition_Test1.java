@@ -34,7 +34,6 @@ public class Expedition_Test1 extends LinearOpMode {
         while (opModeInInit()){
             
             wheels.initialize();
-            slides.initialize();
 
         }
 
@@ -76,11 +75,19 @@ public class Expedition_Test1 extends LinearOpMode {
 
             } else if (gamepad2.right_bumper) {
 
-                claw.open();
+                claw.open1();
 
             } else if (gamepad2.left_bumper) {
 
-                claw.close();
+                claw.close1();
+
+            } else if (gamepad2.right_trigger > 0.2) {
+
+                claw.open2();
+
+            } else if (gamepad2.left_trigger > 0.2) {
+
+                claw.close2();
 
             }
 
@@ -101,6 +108,16 @@ public class Expedition_Test1 extends LinearOpMode {
             } else if (gamepad1.dpad_left) {
 
                 wrist.wrist2.setPosition(0.5);
+
+            } else if (gamepad1.right_bumper) {
+
+                claw.claw1.setPosition(0);
+                claw.claw2.setPosition(1);
+
+            } else if (gamepad1.left_bumper) {
+
+                claw.claw1.setPosition(1);
+                claw.claw2.setPosition(0);
 
             }
 

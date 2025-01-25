@@ -21,6 +21,9 @@ public class EXP_TeleOp extends LinearOpMode {
     public boolean leftBumperToggle = false;
     public boolean leftBumperPressed = false;
 
+    public boolean leftBumperToggle1 = false;
+    public boolean leftBumperPressed1 = false;
+
     public int target =0;
 
     @Override
@@ -54,7 +57,6 @@ public class EXP_TeleOp extends LinearOpMode {
             claw.open();
             wrist.rest();
             wheels.initialize();
-            slides.initialize();
 
         }
 
@@ -96,7 +98,8 @@ public class EXP_TeleOp extends LinearOpMode {
                     arm.specimenPick();
                     wrist.specimenPick();
                 } else {
-                    arm.specimenAutoDrop();
+                    arm.specimenReadyDrop();
+                    wrist.specimenDrop();
                 }
                 leftBumperPressed = true;
             } else if (!gamepad2.left_bumper) {
@@ -108,13 +111,13 @@ public class EXP_TeleOp extends LinearOpMode {
                 wrist.wristDrop();
             }
 
+            if (gamepad2.y) {
+                arm.specimenDrop();
+            }
+
             if (gamepad2.a) {
                 arm.armRest2();
                 wrist.rest();
-            }
-
-            if (gamepad2.left_trigger > 0.2){
-                wrist.specimenAutoDrop();
             }
 
             telemetry.addData("Slide1Position", slides.slide1.getCurrentPosition());

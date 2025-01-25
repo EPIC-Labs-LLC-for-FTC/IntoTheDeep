@@ -9,6 +9,7 @@ public interface IArm {
     void armDrop();
 
     void specimenPick();
+    void specimenReadyDrop();
     void specimenDrop();
     void specimenAutoDrop();
 

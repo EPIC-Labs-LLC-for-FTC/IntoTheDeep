@@ -49,48 +49,49 @@ public class Wrist implements IComponents,IWrist{
     @Override
     public void rest() {
 
-        wrist1.setPosition(0.5106);
-        wrist2.setPosition(0.4644);
+        wrist1.setPosition(0.18);
+        wrist2.setPosition(0.5072);
 
     }
 
     @Override
     public void wristPick() {
 
-        wrist1.setPosition(0.5106);
-        wrist2.setPosition(0);
+        wrist1.setPosition(0.5044);
+        wrist2.setPosition(0.8283);
 
     }
 
     @Override
     public void wristAutoPick() {
 
-        wrist1.setPosition(1);
-        wrist2.setPosition(0);
+        wrist1.setPosition(0.1744);
+        wrist2.setPosition(0.8283);
 
     }
 
     @Override
     public void wristDrop() {
 
-        wrist1.setPosition(1);
-        wrist2.setPosition(0.5272);
+        wrist1.setPosition(0.18);
+        wrist2.setPosition(0.5072);
 
     }
 
     @Override
     public void specimenPick() {
 
-        wrist1.setPosition(0);
-        wrist2.setPosition(0.7139);
+        wrist1.setPosition(0.1539);
+        wrist2.setPosition(0.4811);
 
     }
 
     @Override
     public void specimenDrop() {
 
-        wrist1.setPosition(0);
-        wrist2.setPosition(1);
+//        wrist1.setPosition(0.1706);
+        wrist1.setPosition(0.8644);
+        wrist2.setPosition(0.5189);
 
     }
 
