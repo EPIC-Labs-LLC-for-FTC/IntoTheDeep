@@ -82,8 +82,8 @@ public class Arm implements IComponents, IArm{
     @Override
     public void specimenPick() {
 
-        armBase1.setPosition(0.0722);
-        armBase2.setPosition(0.9139);
+        armBase1.setPosition(0.0561);
+        armBase2.setPosition(0.9411);
 
     }
 

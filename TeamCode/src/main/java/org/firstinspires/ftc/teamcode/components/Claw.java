@@ -48,8 +48,8 @@ public class Claw implements IComponents,IClaw{
     @Override
     public void close() {
 
-        claw1.setPosition(0.9478);
-        claw2.setPosition(0.0422);
+        claw1.setPosition(0.98);
+        claw2.setPosition(0.02);
 
     }
 

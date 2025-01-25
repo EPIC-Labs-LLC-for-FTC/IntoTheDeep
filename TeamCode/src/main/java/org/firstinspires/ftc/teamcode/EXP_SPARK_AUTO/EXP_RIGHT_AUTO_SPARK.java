@@ -28,14 +28,16 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
         claw.open();
     }
 
+    public void specimenReadyDrop(){
+        Arm arm = new Arm(hardwareMap);
+        Wrist wrist = new Wrist(hardwareMap);
+        arm.specimenReadyDrop();
+        wrist.specimenDrop();
+    }
+
     public void specimenDrop(){
         Arm arm = new Arm(hardwareMap);
         arm.specimenDrop();
-    }
-
-    public void specimenWristDrop(){
-        Wrist wrist = new Wrist(hardwareMap);
-        wrist.specimenAutoDrop();
     }
 
     public void pick(){
@@ -65,12 +67,6 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
         slides.slidesGo(250);
     }
 
-    public void highBar(){
-        Slides slides = new Slides(hardwareMap);
-        slides.moveTo();
-        slides.slidesGo(1650);
-    }
-
     public void highBucket(){
         Slides slides = new Slides(hardwareMap);
         slides.moveTo();
@@ -83,33 +79,26 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
         Slides slides = new Slides(hardwareMap);
         slides.setParent(this);
         slides.setTelemetry(this.telemetry);
-        slides.initialize();
 
         Arm arm = new Arm(hardwareMap);
         arm.setParent(this);
         arm.setTelemetry(this.telemetry);
-        arm.initialize();
 
         Wrist wrist = new Wrist(hardwareMap);
         wrist.setParent(this);
         wrist.setTelemetry(this.telemetry);
-        wrist.initialize();
 
         Claw claw = new Claw(hardwareMap);
         claw.setParent(this);
         claw.setTelemetry(this.telemetry);
-        claw.initialize();
 
         while (opModeInInit()){
 
-            arm.armRest2();
-            wrist.wristDrop();
-            claw.initialize();
-            slides.initialize();
+            claw.close();
 
         }
 
-        Pose2d startPose = new Pose2d(-9.5122, 62.6138, -90);
+        Pose2d startPose = new Pose2d(-14.17, 62.55, Math.toRadians(0));
         PinpointDrive drive = new PinpointDrive(hardwareMap,startPose);
 
         waitForStart();
@@ -119,23 +108,46 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
                 drive.actionBuilder(startPose)
 
                         //Drop pre load (specimen1)
-                        .stopAndAdd(this::highBar)
-                        .stopAndAdd(this::specimenDrop)
-                        .stopAndAdd(this::specimenWristDrop)
 
-                        .setTangent(-90)
-                        .strafeToConstantHeading(new Vector2d(-21.799,41.1814))
+                        .setTangent(0)
+
+                        .strafeToLinearHeading(new Vector2d(-18,37),Math.toRadians(-87))
+
+                        .afterTime(0.1,this::specimenReadyDrop)
+
+                        .waitSeconds(2)
+
+                        .stopAndAdd(this::specimenDrop)
+                        .waitSeconds(0.5)
 
                         .stopAndAdd(this::open)
 
                         //Pick Specimen 2
-//                        .strafeToConstantHeading(new Vector2d(-37.2552,60.6072))
-//
-//                        .afterTime(0.5, this::slides0)
-//                        .afterTime(0.5, this::specimenPick)
-//                        .stopAndAdd(this::close)
+
+                        .setTangent(87)
+
+                        .splineToConstantHeading(new Vector2d(-50,15),Math.toRadians(87))
+
+                        .afterTime(0.3, this::specimenPick)
+
+                        .waitSeconds(0.5)
+                        .stopAndAdd(this::close)
+
+                        .waitSeconds(20)
 
                         //Place Specimen 2
+
+                        .strafeToConstantHeading(new Vector2d(-22,37))
+
+                        .afterTime(0.1,this::specimenReadyDrop)
+
+                        .waitSeconds(2)
+
+                        .stopAndAdd(this::specimenDrop)
+                        .waitSeconds(0.5)
+
+                        .stopAndAdd(this::open)
+
 //                        .stopAndAdd(this::highBar)
 //                        .stopAndAdd(this::specimenDrop)
 //                        .stopAndAdd(this::specimenWristDrop)
@@ -239,6 +251,9 @@ public class EXP_RIGHT_AUTO_SPARK extends LinearOpMode {
 //                        .stopAndAdd(this::slides0)
 
                         //Park
+
+                        .strafeToConstantHeading(new Vector2d(-200,45))
+
 //                        .strafeToLinearHeading(new Vector2d(0,0), -180)
 //
 //                        .afterTime(0.5,this::slides0)

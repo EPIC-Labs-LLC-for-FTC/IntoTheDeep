@@ -31,7 +31,6 @@ public class Slides_Test_Pidf extends LinearOpMode {
         while (opModeInInit()){
             
             wheels.initialize();
-            slides.initialize();
             arm.armRest2();
             wrist.rest();
             claw.close();
