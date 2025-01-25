@@ -70,32 +70,36 @@ public class Auton_RedRightBucket extends LinearOpMode {
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
 
                 // .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2, true))
-                .strafeToConstantHeading(new Vector2d(8,-35.5))
+                .strafeToConstantHeading(new Vector2d(8,-34))
                 .waitSeconds(1)
                 .stopAndAdd(performSpecimenDropoff(odyssey))
                 .waitSeconds(1)
                 .lineToY(-40)
-                .splineToConstantHeading(new Vector2d(-28, -41.0), 0, drive.fastVelConstraint, drive.defaultAccelConstraint).waitSeconds(0.01)
+                .splineToConstantHeading(new Vector2d(-28, -39), 0, drive.fastVelConstraint, drive.defaultAccelConstraint).waitSeconds(0.01)
                 .waitSeconds(1)
                 .stopAndAdd(performSpecimenPickupFloor(odyssey))
                 .waitSeconds(1)
                 .splineToLinearHeading(new Pose2d(-30, -44.5, Math.toRadians(55)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .waitSeconds(0.01)
                 .stopAndAdd(performSlideUp(odyssey))
-                .waitSeconds(2.8)
+                .waitSeconds(1.8)
                 .lineToY(-54.4)
-                .splineToLinearHeading(new Pose2d(-37, -44.5, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .splineToLinearHeading(new Pose2d(-37, -40, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .stopAndAdd(performSlideDown(odyssey))
                 .waitSeconds(1)
                 .stopAndAdd(performSpecimenPickupFloor(odyssey))
                 .waitSeconds(1)
                 .splineToLinearHeading(new Pose2d(-30, -44.5, Math.toRadians(55)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
-                .waitSeconds(0.01)
-                .stopAndAdd(performSlideUp(odyssey))
-                .waitSeconds(2.8)
-                .lineToY(-54.4)
-                .waitSeconds(0.1);
-           //     .lineToY(-46); // this is without park KEEP THIS VALUES
+                 .waitSeconds(0.01)
+                 .stopAndAdd(performSlideUp(odyssey))
+                 .waitSeconds(1.5)
+                 .lineToY(-54.4)
+                 .waitSeconds(0.1)
+                 .lineToY(-46)
+                 .waitSeconds(0.1)
+                 .stopAndAdd(performSlideDown(odyssey))
+                 .waitSeconds(1);
+        // this is without park KEEP THIS VALUES
                // .splineToLinearHeading(new Pose2d(2, -15, Math.toRadians(270)), Math.toRadians(45), drive.fastVelConstraint, drive.defaultAccelConstraint)
        // .turn(320);
                // .lineToY(-20 )
@@ -207,6 +211,44 @@ public class Auton_RedRightBucket extends LinearOpMode {
 
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
+                sleep(500);
+
+                odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+                sleep(500);
+
+                odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
+                //odyssey.odysseyWrist.setPos(WristStates.SPECIMEN_PICK);
+                sleep(500);
+
+                //odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
+                //sleep(500);
+
+                odyssey.odysseyClaw.move(ClawStates.OPEN);
+                sleep(500);
+
+                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
+                sleep(500);
+
+                odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT);
+                sleep(500);
+
+                //odyssey.odysseyArm.move(ArmStates.INITIALIZED);
+                //sleep(1000);
+                return false;
+            }
+        };
+
+    }
+
+    private Action performSpecimenDropoff2(Robot odyssey) throws InterruptedException {
+        return new Action() {
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                odyssey.odysseyArm.move(ArmStates.LOWERED);
+                sleep(500);
+
                 odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
                 sleep(500);
 

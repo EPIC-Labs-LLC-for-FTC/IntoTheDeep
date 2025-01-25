@@ -69,9 +69,10 @@ public class Auton_RedRightSpecimen extends LinearOpMode {
         };
 
         TrajectoryActionBuilder tab = drive.actionBuilder(initialPos)
+                //was 34.7
 
                 // .stopAndAdd(odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP2, true))
-                .lineToY(-34.7)
+                .lineToY(-34)
                 .waitSeconds(0.5)
                 .stopAndAdd(performSpecimenDropoff(odyssey))
                 //.strafeToConstantHeading(new Vector2d(27, -40.15))
@@ -110,11 +111,11 @@ public class Auton_RedRightSpecimen extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(1.3, -33, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .stopAndAdd(performSpecimenDropoff(odyssey))
                 .waitSeconds(0.1)
-                .splineToLinearHeading(new Pose2d(44.5, -58, Math.toRadians(270)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .splineToLinearHeading(new Pose2d(44.5, -60, Math.toRadians(270)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .waitSeconds(0.0000002)
                 .stopAndAdd(performSpecimenPickup(odyssey))
                 .waitSeconds(0.000002)
-                .splineToLinearHeading(new Pose2d(1.3, -32, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
+                .splineToLinearHeading(new Pose2d(1.3, -33, Math.toRadians(90)), Math.toRadians(90), drive.fastVelConstraint, drive.defaultAccelConstraint)
                 .stopAndAdd(performSpecimenDropoff(odyssey));
 
 
