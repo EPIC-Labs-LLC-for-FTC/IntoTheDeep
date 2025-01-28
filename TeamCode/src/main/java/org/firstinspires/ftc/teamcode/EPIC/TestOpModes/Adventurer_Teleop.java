@@ -30,7 +30,7 @@ public class Adventurer_Teleop extends LinearOpMode {
     private PIDController controller;
     private PIDController controller2;
 
-    public static double p1 = 0.015, i1 = 0, d1 = 0.00075;
+    public static double p1 = 0.02, i1 = 0, d1 = 0.00075;
     public static double p2 = 0.017, i2 = 0, d2 = 0.0001;
 
     public static double f1 = -0.2;
@@ -64,7 +64,8 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         if (gamepad2.x) {
             runningActions.add(new SequentialAction(
-                    new InstantAction(() -> wrist.setPosition(0.7)),
+                    new InstantAction(() -> wrist.setPosition(0)),
+                    new SleepAction(0.5),
                     new InstantAction(() -> target2 = -10),
                     new SleepAction(1),
                     new InstantAction(() -> target1 = -390)
@@ -76,7 +77,8 @@ public class Adventurer_Teleop extends LinearOpMode {
                     new InstantAction(() -> wrist.setPosition(0.7)),
                     new InstantAction(() -> target1 = -1000),
                     new SleepAction(1),
-                    new InstantAction(() -> target2 = -3000)
+                    new InstantAction(() -> target2 = -3200),
+                    new InstantAction(() -> wrist.setPosition(0.6))
             ));
         }
 
@@ -138,7 +140,7 @@ public class Adventurer_Teleop extends LinearOpMode {
         double ratio;
         if (movement == 0 && strafe == 0)
             ratio = 1;
-        else if (precision)
+        else if (target2 <= -1100)
             ratio = hypot / (Math.max(Math.max(Math.max(Math.abs(fl), Math.abs(bl)), Math.abs(fr)), Math.abs(br))) / 3;
         else
             ratio = hypot / (Math.max(Math.max(Math.max(Math.abs(fl), Math.abs(bl)), Math.abs(fr)), Math.abs(br)));
@@ -216,8 +218,8 @@ public class Adventurer_Teleop extends LinearOpMode {
 
     public void claw() {
         if (gamepad1.left_bumper) {
-            clawRight.setPosition(0.5);
-            clawLeft.setPosition(0.5);
+            clawRight.setPosition(0.54);
+            clawLeft.setPosition(0.54);
         } else if (gamepad1.right_bumper) {
             clawRight.setPosition(0.7);
             clawLeft.setPosition(0.7);
@@ -245,7 +247,7 @@ public class Adventurer_Teleop extends LinearOpMode {
     }
 
     public void reset() {
-        if (gamepad2.dpad_right) {
+        if (gamepad1.dpad_left) {
             slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             slideRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -355,7 +357,6 @@ public class Adventurer_Teleop extends LinearOpMode {
                 claw();
                 wrist();
                 actions();
-                reset();
 
             }
 

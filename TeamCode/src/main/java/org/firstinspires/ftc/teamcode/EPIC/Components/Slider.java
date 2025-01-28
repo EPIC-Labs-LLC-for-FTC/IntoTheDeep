@@ -91,3 +91,4 @@ public class Slider implements IComponents, ISlider{
         target2 = target2 - 15;
     }
 }
+
