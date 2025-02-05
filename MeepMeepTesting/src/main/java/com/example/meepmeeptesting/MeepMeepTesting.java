@@ -15,11 +15,20 @@ public class MeepMeepTesting {
                 .setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 14.058558292784566)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(4.1, -69.2, Math.toRadians(90)))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-8, -69.2, Math.toRadians(90)))
                 .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(4.1, -42.5), Math.toRadians(90))
-                .strafeToLinearHeading(new Vector2d(4.1, -53), Math.toRadians(90))
-                .strafeToLinearHeading(new Vector2d(47, -47), Math.toRadians(-91))
+                .strafeToLinearHeading(new Vector2d(-8, -37), Math.toRadians(90))
+                .waitSeconds(2)
+                .strafeToLinearHeading(new Vector2d(-8, -45), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-47, -45), Math.toRadians(90))
+                .waitSeconds(1)
+                .strafeToLinearHeading(new Vector2d(-53, -50), Math.toRadians(225))
+                .waitSeconds(1)
+                .strafeToLinearHeading(new Vector2d(-58, -45), Math.toRadians(90))
+                .waitSeconds(1)
+                .strafeToLinearHeading(new Vector2d(-53, -50), Math.toRadians(225))
+                .waitSeconds(1)
+                .strafeToLinearHeading(new Vector2d(-30, 0), Math.toRadians(0))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)

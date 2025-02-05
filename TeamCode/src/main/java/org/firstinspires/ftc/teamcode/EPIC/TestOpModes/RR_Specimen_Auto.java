@@ -32,8 +32,8 @@ public class RR_Specimen_Auto extends LinearOpMode {
         private DcMotorEx armRight;
         private DcMotorEx armLeft;
         private PIDController controller;
-        public double p1 = 0.018, i1 = 0, d1 = 0.00075;
-        public double f1 = -0.2;
+        public double p1 = 0.013, i1 = 0, d1 = 0.00075;
+        public double f1 = -0.25;
         private int target1 = 0;
         private final double tick_in_degrees1 = 2786.2/360;
 
@@ -69,7 +69,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
         public class ArmSpecimenForward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -840;
+                target1 = -850;
                 return false;
             }
 
@@ -81,7 +81,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
         public class ArmSpecimenBackward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -680;
+                target1 = -845;
                 return false;
             }
 
@@ -235,7 +235,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
 
         public class SlideSpecimen implements Action {
             public boolean run(@NonNull TelemetryPacket packet) {
-                target2 = -1830;
+                target2 = -1960;
                 return false;
             }
         }
@@ -448,7 +448,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
                 .stopAndAdd(wrist.wristSpecimen())
                 .afterTime(0.5, slide.slideSpecimen())
                 .stopAndAdd(slide.slideSpecimen())
-                .waitSeconds(1)
+                .waitSeconds(6)
 
                 .strafeToLinearHeading(new Vector2d(4.1, -45), Math.toRadians(90))
 
@@ -459,6 +459,7 @@ public class RR_Specimen_Auto extends LinearOpMode {
                 .waitSeconds(1)
 
                 .strafeToLinearHeading(new Vector2d(4.1, -55.5), Math.toRadians(90))
+
                 .afterTime(0.1, claw.closeClaw())
                 .stopAndAdd(claw.closeClaw())
                 .afterTime(0.1, slide.slideReset())

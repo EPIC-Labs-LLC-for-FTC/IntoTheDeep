@@ -31,8 +31,8 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
         private DcMotorEx armRight;
         private DcMotorEx armLeft;
         private PIDController controller;
-        public double p1 = 0.02, i1 = 0, d1 = 0.00075;
-        public double f1 = -0.2;
+        public double p1 = 0.013, i1 = 0, d1 = 0.00075;
+        public double f1 = -0.25;
         private int target1 = 0;
         private final double tick_in_degrees1 = 2786.2/360;
 
@@ -68,7 +68,7 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
         public class ArmSpecimenForward implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target1 = -690;
+                target1 = -845;
                 return false;
             }
 
@@ -234,7 +234,7 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
 
         public class SlideSpecimen implements Action {
             public boolean run(@NonNull TelemetryPacket packet) {
-                target2 = -645;
+                target2 = -1960;
                 return false;
             }
         }
@@ -264,7 +264,7 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
         public class SlideSamplePick implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                target2 = -1240;
+                target2 = -1250;
                 return false;
             }
 
@@ -311,6 +311,16 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
         }
         public Action slideTelemetryRunning() {
             return new Slides.SlideTelemetryRunning();
+        }
+
+        public class SlidePark implements Action {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                target2 = -1550;
+                return false;
+            }
+        }
+        public Action slidePark() {
+            return new Slides.SlidePark();
         }
 
 
@@ -378,7 +388,7 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
         public class WristSpecimen implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                wrist.setPosition(0.2189);
+                wrist.setPosition(1);
                 return false;
             }
 
@@ -400,6 +410,18 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
         public Action wristBucket() {
             return new Wrist.WristBucket();
         }
+
+        public class WristUp implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                wrist.setPosition(0);
+                return false;
+            }
+
+        }
+
+        public Action wristUp() {return new Wrist.WristUp();
+        }
     }
 
     @Override
@@ -419,29 +441,31 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
                 .stopAndAdd(arm.armSpecimenForward())
                 .afterTime(0.1, wrist.wristSpecimen())
                 .stopAndAdd(wrist.wristSpecimen())
-                .afterTime(0.5, slide.slideSpecimen())
+                .afterTime(1, slide.slideSpecimen())
                 .stopAndAdd(slide.slideSpecimen())
-                .waitSeconds(1)
-
-                .strafeToLinearHeading(new Vector2d(4.1, -36), Math.toRadians(90))
-
-                .afterTime(0.1, slide.slideReset())
-                .stopAndAdd(slide.slideReset())
-                .afterTime(0.1, wrist.wristReset())
-                .stopAndAdd(wrist.wristReset())
-                .afterTime(0.7, claw.openClaw())
-                .stopAndAdd(claw.openClaw())
                 .waitSeconds(1.5)
 
+                .strafeToLinearHeading(new Vector2d(4.1, -38), Math.toRadians(90))
+
+                .afterTime(0.5, claw.openClaw())
+                .stopAndAdd(claw.openClaw())
+                .afterTime(1, wrist.wristUp())
+                .stopAndAdd(wrist.wristUp())
+
+                .waitSeconds(1)
                 .strafeToLinearHeading(new Vector2d(4.1, -55.5), Math.toRadians(90))
+
                 .afterTime(0.1, claw.closeClaw())
                 .stopAndAdd(claw.closeClaw())
+                .afterTime(0.1, slide.slideReset())
+                .stopAndAdd(slide.slideReset())
                 .afterTime(1, wrist.wristReset())
                 .stopAndAdd(wrist.wristReset())
+                .waitSeconds(1)
 
                 // Sample 1
 
-                .strafeToLinearHeading(new Vector2d(-34, -51.5), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-34, -50), Math.toRadians(90))
 
                 .waitSeconds(0.5)
                 .afterTime(0.01, claw.openClaw())
@@ -463,7 +487,7 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
                 .stopAndAdd(slide.slideSampleDrop())
                 .waitSeconds(1.5)
 
-                .strafeToLinearHeading(new Vector2d(-39.5, -58.5), Math.toRadians(225))
+                .strafeToLinearHeading(new Vector2d(-39, -56.3), Math.toRadians(225))
 
                 .waitSeconds(1)
                 .afterTime(0.5, claw.openClaw())
@@ -486,7 +510,7 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
 
                 // Sample 2
 
-                .strafeToLinearHeading(new Vector2d(-41.1, -52), Math.toRadians(100))
+                .strafeToLinearHeading(new Vector2d(-40.5, -52.5), Math.toRadians(95))
 
                 .afterTime(0.1, arm.armSamplePick())
                 .stopAndAdd(arm.armSamplePick())
@@ -505,7 +529,7 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
                 .stopAndAdd(slide.slideSampleDrop())
                 .waitSeconds(1.5)
 
-                .strafeToLinearHeading(new Vector2d(-41, -58.5), Math.toRadians(230))
+                .strafeToLinearHeading(new Vector2d(-41, -56.5), Math.toRadians(230))
 
                 .waitSeconds(0.5)
                 .afterTime(0.5, claw.openClaw())
@@ -515,17 +539,17 @@ public class RR_Sample_Auto_RED extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(-41, -54), Math.toRadians(0))
                 .setTangent(Math.toRadians(90))
 
-                .afterTime(0.1, slide.slideReset())
-                .stopAndAdd(slide.slideReset())
+                .afterTime(0.1, slide.slidePark())
+                .stopAndAdd(slide.slidePark())
                 .waitSeconds(1)
                 .afterTime(1.5, arm.armPark())
                 .stopAndAdd(arm.armPark())
                 .afterTime(1.5, wrist.wristReset())
                 .stopAndAdd(wrist.wristReset())
-                .afterTime(1.5, slide.slideSpecimen())
-                .stopAndAdd(slide.slideSpecimen())
+                .afterTime(1.5, slide.slidePark())
+                .stopAndAdd(slide.slidePark())
 
-                .splineToConstantHeading(new Vector2d(-6.5, -15), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(-5.5, -25), Math.toRadians(0))
 
                 .build();
 

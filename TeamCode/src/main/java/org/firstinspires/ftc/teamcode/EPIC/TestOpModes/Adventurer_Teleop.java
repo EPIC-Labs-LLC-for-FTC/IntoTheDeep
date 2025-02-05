@@ -30,10 +30,10 @@ public class Adventurer_Teleop extends LinearOpMode {
     private PIDController controller;
     private PIDController controller2;
 
-    public static double p1 = 0.02, i1 = 0, d1 = 0.00075;
+    public static double p1 = 0.013, i1 = 0, d1 = 0.00075;
     public static double p2 = 0.017, i2 = 0, d2 = 0.0001;
 
-    public static double f1 = -0.2;
+    public static double f1 = -0.25;
     public static double f2 = -0.02;
     public static int target1 = 0;
     public static int target2 = 0;
@@ -93,9 +93,10 @@ public class Adventurer_Teleop extends LinearOpMode {
 
         if (gamepad2.dpad_down) {
             runningActions.add(new SequentialAction(
-                    new InstantAction(() -> target1 = -780),
+                    new InstantAction(() -> target1 = -830),
                     new SleepAction(1),
-                    new InstantAction(() -> target2 = -1030)
+                    new InstantAction(() -> wrist.setPosition(1)),
+                    new InstantAction(() -> target2 = -1960)
             ));
         }
 
@@ -104,6 +105,17 @@ public class Adventurer_Teleop extends LinearOpMode {
                     new InstantAction(() -> target1 = -800),
                     new SleepAction(1),
                     new InstantAction(() -> target2 = -2800)
+            ));
+        }
+
+        if (gamepad2.dpad_right) {
+            runningActions.add(new SequentialAction(
+                    new InstantAction(() -> target1 = -1670),
+                    new InstantAction(() -> wrist.setPosition(0.48)),
+                    new SleepAction(1),
+                    new InstantAction(() -> clawRight.setPosition(0.7)),
+                    new InstantAction(() -> clawLeft.setPosition(0.7)),
+                    new InstantAction(() -> target2 = -10)
             ));
         }
 
@@ -335,7 +347,7 @@ public class Adventurer_Teleop extends LinearOpMode {
 
                 controller2.setPID(p2, d2, i2);
                 int slidePos = slideRight.getCurrentPosition();
-                if ((target2 < maxtarget) && (target1 > -400)) {
+                if ((target2 < maxtarget) && (target1 > -600)) {
                     target2 = maxtarget;
                 }
                 double pid2 = controller2.calculate(slidePos, target2);
