@@ -61,81 +61,6 @@ public class Slides implements IComponents, ISlide{
     }
 
     @Override
-    public void start() {
-
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide1.setPower(1);
-
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setPower(1);
-
-    }
-
-    @Override
-    public void lowBar() {
-
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide1.setPower(1);
-
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setPower(1);
-
-    }
-
-    @Override
-    public void HighBar() {
-
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide1.setPower(1);
-
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setPower(1);
-
-    }
-
-    @Override
-    public void LowBucket() {
-
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide1.setPower(1);
-
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setPower(1);
-
-    }
-
-    @Override
-    public void HighBucket() {
-
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide1.setPower(1);
-
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setPower(1);
-
-    }
-
-    @Override
     public void moveTo() {
         controller.setPID(p,i,d);
 
@@ -161,21 +86,6 @@ public class Slides implements IComponents, ISlide{
 
     public void slidesGo(int position){
         target = position;
-    }
-
-    @Override
-    public void hang() {
-
-        slide1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide1.setTargetPosition(0);
-        slide1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide1.setPower(1);
-
-        slide2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slide2.setTargetPosition(0);
-        slide2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide2.setPower(1);
-
     }
 
     public void slideControl(double joystick) {

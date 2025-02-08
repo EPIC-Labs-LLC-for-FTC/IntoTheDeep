@@ -11,7 +11,6 @@ public interface IArm {
     void specimenPick();
     void specimenReadyDrop();
     void specimenDrop();
-    void specimenAutoDrop();
 
     void armBaseUp();
     void armBaseDown();

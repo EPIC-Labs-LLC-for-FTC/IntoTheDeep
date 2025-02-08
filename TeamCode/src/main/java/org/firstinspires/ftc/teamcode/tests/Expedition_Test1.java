@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.components.Wrist;
 
 @Config
 @TeleOp(name = "Expedition_Test1")
-public class Expedition_Test1 extends LinearOpMode {
+public class  Expedition_Test1 extends LinearOpMode {
 
     public FtcDashboard dashboard = FtcDashboard.getInstance();
 

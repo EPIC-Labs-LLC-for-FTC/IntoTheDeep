@@ -104,14 +104,6 @@ public class Arm implements IComponents, IArm{
     }
 
     @Override
-    public void specimenAutoDrop() {
-
-        armBase1.setPosition(0.8689);
-        armBase2.setPosition(0.1278);
-
-    }
-
-    @Override
     public void armBaseUp() {
 
         armBase1.setPosition(armBase1.getPosition() + 0.001);
