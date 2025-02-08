@@ -12,7 +12,7 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
-import org.firstinspires.ftc.teamcode.deprecatedcode.SparkFunOTOSDrive;
+import org.firstinspires.ftc.teamcode.oldRRcode.SparkFunOTOSDrive;
 
 @Config
 @Autonomous(name = "Test Auton")

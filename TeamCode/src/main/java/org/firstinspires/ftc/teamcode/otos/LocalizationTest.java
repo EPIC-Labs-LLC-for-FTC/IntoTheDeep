@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.deprecatedcode.rrtuning;
+package org.firstinspires.ftc.teamcode.otos.otos;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -8,13 +8,13 @@ import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.deprecatedcode.Drawing;
+import org.firstinspires.ftc.teamcode.oldRRcode.Drawing;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.SliderStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
-import org.firstinspires.ftc.teamcode.deprecatedcode.SparkFunOTOSDrive;
+import org.firstinspires.ftc.teamcode.oldRRcode.SparkFunOTOSDrive;
 
 public class LocalizationTest extends LinearOpMode {
     public static double ap = 0.03, ai = 0, ad = 0.0015, af = 0.065;

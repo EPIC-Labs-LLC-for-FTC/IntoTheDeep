@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
-import org.firstinspires.ftc.teamcode.deprecatedcode.MecanumDrive;
-import org.firstinspires.ftc.teamcode.deprecatedcode.SparkFunOTOSDrive;
+import org.firstinspires.ftc.teamcode.oldRRcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.oldRRcode.SparkFunOTOSDrive;
 
 import com.acmerobotics.roadrunner.Pose2d;
 
