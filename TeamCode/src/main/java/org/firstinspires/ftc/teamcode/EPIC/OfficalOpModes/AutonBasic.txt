@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
-import com.acmerobotics.roadrunner.ftc.Actions;
+//import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -123,7 +123,7 @@ public class AutonBasic extends LinearOpMode {
         waitForStart();
         coord.start();
         pidf.start();
-        Actions.runBlocking(tsc1);
+        //Actions.runBlocking(tsc1);
 
         // Move forward to position (24, 0, 0)
 //        moveToPosition(drive, new Pose2d(24, 0, 0));
