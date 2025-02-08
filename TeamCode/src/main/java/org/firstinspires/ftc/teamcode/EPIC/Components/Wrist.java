@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Wrist extends AComponents implements IWrist {
-    public Servo jointR;
+    //public Servo jointR;
     public Servo jointL;
     public WristStates stateWrist;
 
@@ -24,7 +24,7 @@ public class Wrist extends AComponents implements IWrist {
     private List<IWristListener> listeners;
 
     public Wrist(HardwareMap hardwareMap) {
-        jointR = hardwareMap.get(Servo.class, "JR");
+        //jointR = hardwareMap.get(Servo.class, "JR");
         jointL = hardwareMap.get(Servo.class, "JL");
         //jointR.setDirection(Servo.Direction.REVERSE);
         //jointL.setDirection(Servo.Direction.REVERSE);
@@ -50,9 +50,8 @@ public class Wrist extends AComponents implements IWrist {
         this.stateWrist = state;
         this.notifyWristStateChange(new WristEventObject(this, this.stateWrist));
     }
-    public Action setPos(WristStates state,boolean IsAction) {
 
-
+    public Action setPos(WristStates state, boolean IsAction) {
         Wrist wrist = this;
         Action action = new Action() {
             @Override
@@ -69,7 +68,7 @@ public class Wrist extends AComponents implements IWrist {
     }
 
     public void setPos(double tPos) {
-        jointR.setPosition(1-tPos);
+        //jointR.setPosition(1-tPos);
         jointL.setPosition(tPos);
 
 //        jointR.setPosition(tPos);
@@ -88,10 +87,6 @@ public class Wrist extends AComponents implements IWrist {
 
     public void removeWristListener(IWristListener listener) {
         listeners.remove(listener);
-    }
-
-    public double getJointRPos () {
-        return jointR.getPosition();
     }
 
     public double getJointLPos () {

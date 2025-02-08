@@ -121,8 +121,6 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                             break;
                         case HOLDING_SAMPLE_PORTRAIT:
                             break;
-                        case HOLDING_SAMPLE_LANDSCAPE:
-                            break;
                         default:
                             break;
                     }
