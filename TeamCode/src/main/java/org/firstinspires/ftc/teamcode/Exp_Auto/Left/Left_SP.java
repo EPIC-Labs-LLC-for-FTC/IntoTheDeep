@@ -36,7 +36,7 @@ public class Left_SP extends OpMode {
 
     private int pathState;
 
-    private final Pose startPose = new Pose(9, 111, Math.toRadians(270));
+    private final Pose startPose = new Pose(8.2, 111.8, Math.toRadians(0));
 
     private final Pose scorePose = new Pose(14, 129, Math.toRadians(147));
 
@@ -48,7 +48,7 @@ public class Left_SP extends OpMode {
 
     private final Pose pickup3Pose = new Pose(45, 132, Math.toRadians(270));
 
-    private final Pose parkPose = new Pose(60, 98, Math.toRadians(90));
+    private final Pose parkPose = new Pose(68, 105, Math.toRadians(90));
 
     private final Pose parkControlPose = new Pose(61, 112, Math.toRadians(90));
 
@@ -273,6 +273,11 @@ public class Left_SP extends OpMode {
 
     @Override
     public void init() {
+
+        arm.armStart();
+        wrist.start();
+        claw.close();
+
         pathTimer = new Timer();
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
