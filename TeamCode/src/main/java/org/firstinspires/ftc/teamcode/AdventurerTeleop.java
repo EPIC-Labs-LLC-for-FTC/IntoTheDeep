@@ -52,6 +52,7 @@ public class AdventurerTeleop extends LinearOpMode {
     public Servo clawRight = null;
     public Servo clawLeft = null;
     public Servo wrist = null;
+    public Servo rotation360 = null;
 
     double movement;
     double rotation;
@@ -248,6 +249,16 @@ public class AdventurerTeleop extends LinearOpMode {
         telemetry.addData("Wrist Pos", wrist.getPosition());
     }
 
+    public void rotation360() {
+        if (gamepad2.dpad_right) {
+            rotation360.setPosition(rotation360.getPosition() + 0.01);
+        } else if (gamepad2.dpad_left) {
+            rotation360.setPosition(rotation360.getPosition() - 0.01);
+        }
+
+        telemetry.addData("Rotation Pos", rotation360.getPosition());
+    }
+
     public void slideAction() {
 
         if (gamepad1.a) {
@@ -304,6 +315,7 @@ public class AdventurerTeleop extends LinearOpMode {
         clawLeft = hardwareMap.get(Servo.class, "clawLeft");
         clawRight = hardwareMap.get(Servo.class, "clawRight");
         wrist = hardwareMap.get(Servo.class, "wrist");
+        rotation360 = hardwareMap.get(Servo.class, "rotation360");
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -369,6 +381,7 @@ public class AdventurerTeleop extends LinearOpMode {
                 claw();
                 wrist();
                 actions();
+                rotation360();
 
             }
 
