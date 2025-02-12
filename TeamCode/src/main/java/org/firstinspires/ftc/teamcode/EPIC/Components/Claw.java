@@ -55,7 +55,7 @@ public class Claw extends AComponents implements IClaw{
     @Override
     public void move(ClawStates state) {
         double targetPos = state.getClawPos();
-        leftFinger.setPosition(0.22-targetPos);
+        leftFinger.setPosition(0.24-targetPos);
         rightFinger.setPosition(targetPos);
         this.stateClaw = state;
         fireClaw(new ClawEventObject(this, this.stateClaw));
