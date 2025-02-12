@@ -223,7 +223,7 @@ public class Left_S extends OpMode {
         arm.armStart();
         wrist.start();
         claw.close();
-        
+
         pathTimer = new Timer();
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();

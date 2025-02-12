@@ -24,6 +24,21 @@ import org.firstinspires.ftc.teamcode.components.Wrist;
 @Autonomous(name = "Left_SP")
 public class Left_SP extends OpMode {
 
+//    private String detectColor() {
+//        int red = colorSensor.red();
+//        int green = colorSensor.green();
+//        int blue = colorSensor.blue();
+
+//        if (red > blue && red > green) {
+//            return "Red";
+//        } else if (blue > red && blue > green) {
+//            return "Blue";
+//        } else if (red > 80 && green > 80 && blue < 50) { // Adjust threshold as needed
+//            return "Yellow";
+//        } else {
+//            return "Unknown";
+//        }
+//    }
     ColorSensor colorSensor;
     Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
     Slides slides = new Slides(hardwareMap);
@@ -258,8 +273,18 @@ public class Left_SP extends OpMode {
         pathTimer.resetTimer();
     }
 
+
+
     @Override
     public void loop() {
+
+//        boolean sampleCorrect = false;
+//        String detectedColor = detectColor();
+//        telemetry.addData("Detected Color", detectedColor);
+//        telemetry.addData("Red", colorSensor.red());
+//        telemetry.addData("Green", colorSensor.green());
+//        telemetry.addData("Blue", colorSensor.blue());
+
 
         follower.update();
         autonomousPathUpdate();
