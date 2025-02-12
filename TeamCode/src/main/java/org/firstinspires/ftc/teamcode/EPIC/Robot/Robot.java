@@ -116,6 +116,11 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                                 throw new RuntimeException(e);
                             }
                             if (odysseyArm.stateArm == ArmStates.DEPOSITING) {
+                                try {
+                                    Thread.sleep(350);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 odysseyArm.move(ArmStates.READY_TO_DEPOSIT);
                             }
                             break;
@@ -163,6 +168,12 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                             }
                             if ((odysseyClaw.stateClaw != ClawStates.OPEN) && (odysseySlider.stateSlider == SliderStates.RETRACTED)) {
                                 odysseyArm.move(ArmStates.DEPOSITING);
+                                try {
+                                    Thread.sleep(350);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                odysseyClaw.move(ClawStates.OPEN);
                             }
                             telemetry.addData("Arm Thread", "Ready to deposit sample");
                             break;
