@@ -22,8 +22,8 @@ import java.util.List;
 public class Arm_PIDF extends AComponents implements IArm, IPIDF{
     public PIDController armController;
 
-    private final DcMotorEx armMotorR;
-    private final DcMotorEx armMotorL;
+    public final DcMotorEx armMotorR;
+    public final DcMotorEx armMotorL;
     public ArmStates stateArm;
     private List<IArmListener> listeners;
 

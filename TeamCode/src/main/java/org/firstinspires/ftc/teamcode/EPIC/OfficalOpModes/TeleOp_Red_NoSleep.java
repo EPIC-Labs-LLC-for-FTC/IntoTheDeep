@@ -85,9 +85,6 @@ public class TeleOp_Red_NoSleep extends LinearOpMode {
             } else if (gamepad2.y) {
                 odyssey.odysseyClaw.move(ClawStates.OPEN);
                 sleep(100);
-            } else if (gamepad2.a) {
-                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
-                sleep(100);
             } else if (gamepad2.dpad_up) {
                 odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
                 sleep(100);

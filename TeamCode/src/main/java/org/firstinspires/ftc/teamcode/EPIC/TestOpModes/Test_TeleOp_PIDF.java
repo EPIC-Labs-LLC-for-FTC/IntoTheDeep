@@ -37,6 +37,8 @@ public class Test_TeleOp_PIDF extends LinearOpMode {
             slider.runPIDF(sp, si, sd, sf);
             arm.targetPos = atarget;
             arm.runPIDF(ap, ai, ad, af);
+            telemetry.addData("armPos", arm.armMotorR.getCurrentPosition());
+            telemetry.addData("atarget", atarget);
         }
     }
 }

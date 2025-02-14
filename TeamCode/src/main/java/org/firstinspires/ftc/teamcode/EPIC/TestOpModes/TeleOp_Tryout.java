@@ -116,9 +116,6 @@ public class TeleOp_Tryout extends LinearOpMode {
             } else if (gamepad2.y) {
                 odyssey.odysseyClaw.move(ClawStates.OPEN);
                 sleep(50);
-            } else if (gamepad2.a) {
-                odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_LANDSCAPE);
-                sleep(50);
             } else if (gamepad2.dpad_up) {
                 odyssey.odysseyWrist.setPos(WristStates.DEPOSITING_SAMPLE);
                 sleep(50);
@@ -140,6 +137,7 @@ public class TeleOp_Tryout extends LinearOpMode {
             } else if (gamepad2.right_stick_button) {
                 odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
                 odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
+                sleep(350);
                 odyssey.odysseyClaw.move(ClawStates.OPEN);
             }
 
