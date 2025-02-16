@@ -96,8 +96,8 @@ public class Mecanum_Wheels extends AComponents {
         backright.setDirection(DcMotorSimple.Direction.FORWARD);
         frontright.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        backleft.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backleft.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontleft.setDirection(DcMotorSimple.Direction.FORWARD);
 
         if(IsAutonomous)
         {
