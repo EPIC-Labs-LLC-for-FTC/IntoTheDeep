@@ -124,7 +124,7 @@ public class TeleOp_Tryout extends LinearOpMode {
                 sleep(50);
             } else if (gamepad2.left_bumper) {
                 odyssey.odysseyArm.move(ArmStates.READY_TO_DEPOSIT);
-                sleep(50);
+                sleep(100);
             } else if (gamepad2.right_bumper) {
                 odyssey.odysseyArm.move(ArmStates.LOWERED);
                 sleep(50);
