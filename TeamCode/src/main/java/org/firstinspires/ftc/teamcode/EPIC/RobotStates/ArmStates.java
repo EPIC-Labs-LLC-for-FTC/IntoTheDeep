@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.EPIC.RobotStates;
 
 public enum ArmStates {
 
-    READY_TO_DEPOSIT(300),
+    READY_TO_DEPOSIT(310),
     DEPOSITING(60),
     LOWERED(525),
     INITIALIZED(0.0),
@@ -12,6 +12,8 @@ public enum ArmStates {
 
     SPECIMEN_DROP2(220),
     HOLDING_SAMPLE(450);
+
+    //original reayd to deposit is  300 not 310
 
 
     private double stateNum;
