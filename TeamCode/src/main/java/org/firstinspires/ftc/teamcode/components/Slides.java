@@ -22,8 +22,8 @@ public class Slides implements IComponents, ISlide{
 
     public PIDController controller;
 
-    public static double p = 0.02, i = 0, d = 0.0001;
-    public static double f = 0.3;
+    public static double p = 0.05, i = 0, d = 0.0001;
+    public static double f = 0.1;
 
     public static int target = 0;
 
@@ -46,6 +46,7 @@ public class Slides implements IComponents, ISlide{
         slide2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         slide1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
@@ -110,4 +111,39 @@ public class Slides implements IComponents, ISlide{
     public double clipPower(double power) {
         return Math.max(-1, Math.min(1, power));
     }
+
+//    public void slideControl(double joystick) {
+//        double power = -joystick;
+//
+//        if (Math.abs(power) < 0.1) {
+//            setMotorPower(0, DcMotor.ZeroPowerBehavior.BRAKE);
+//        } else {
+//            power = clipPower(power);
+//            applyPIDFControl(power);
+//        }
+//    }
+//
+//    public void applyPIDFControl(double power) {
+//        controller.setPID(p, i, d);
+//
+//        int currentPosition = slide1.getCurrentPosition();
+//        target += power * 10;
+//
+//        double pidOutput = controller.calculate(currentPosition, target);
+//        double feedforward = Math.cos(Math.toRadians(target / tick_in_degrees)) * f;
+//        double finalPower = clipPower(pidOutput + feedforward);
+//
+//        setMotorPower(finalPower, DcMotor.ZeroPowerBehavior.FLOAT);
+//    }
+//
+//    public void setMotorPower(double power, DcMotor.ZeroPowerBehavior behavior) {
+//        slide1.setZeroPowerBehavior(behavior);
+//        slide2.setZeroPowerBehavior(behavior);
+//        slide1.setPower(power);
+//        slide2.setPower(power);
+//    }
+//
+//    public double clipPower(double power) {
+//        return Math.max(-1, Math.min(1, power));
+//    }
 }

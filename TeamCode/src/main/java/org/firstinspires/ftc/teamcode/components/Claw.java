@@ -11,13 +11,11 @@ public class Claw implements IComponents,IClaw{
     private LinearOpMode parent;
     private Telemetry telemetry;
 
-    public Servo claw1;
-    public Servo claw2;
+    public Servo claw;
 
     public Claw(HardwareMap hardwareMap) {
 
-        claw1 = hardwareMap.get(Servo.class,"claw1");
-        claw2 = hardwareMap.get(Servo.class,"claw2");
+        claw = hardwareMap.get(Servo.class,"claw");
 
     }
     @Override
@@ -40,44 +38,28 @@ public class Claw implements IComponents,IClaw{
     @Override
     public void open() {
 
-        claw1.setPosition(0.7972);
-        claw2.setPosition(0.2028);
+        claw.setPosition(0.5711);
 
     }
 
     @Override
     public void close() {
 
-        claw1.setPosition(0.98);
-        claw2.setPosition(0.02);
+        claw.setPosition(0.29);
 
     }
 
     @Override
     public void open1() {
 
-        claw1.setPosition(claw1.getPosition() +0.001);
+        claw.setPosition(claw.getPosition() +0.001);
 
     }
 
     @Override
     public void close1() {
 
-        claw1.setPosition(claw1.getPosition() -0.001);
-
-    }
-
-    @Override
-    public void open2() {
-
-        claw2.setPosition(claw2.getPosition() +0.001);
-
-    }
-
-    @Override
-    public void close2() {
-
-        claw2.setPosition(claw2.getPosition() -0.001);
+        claw.setPosition(claw.getPosition() -0.001);
 
     }
 }
