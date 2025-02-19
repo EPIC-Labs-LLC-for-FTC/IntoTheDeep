@@ -38,20 +38,20 @@ public class Left_S extends OpMode {
 
     private final Pose startPose = new Pose(8.2, 111.8, Math.toRadians(0));
 
-    private final Pose scorePose = new Pose(14, 129, Math.toRadians(147));
+    private final Pose scorePose = new Pose(14, 129, Math.toRadians(135));
 
-    private final Pose pickup1Pose = new Pose(45, 108, Math.toRadians(270));
+    private final Pose pickup1Pose = new Pose(30, 121, Math.toRadians(0));
 
-    private final Pose pickup2Pose = new Pose(45, 120, Math.toRadians(270));
+    private final Pose pickup2Pose = new Pose(30, 131, Math.toRadians(0));
 
-    private final Pose pickup3Pose = new Pose(45, 132, Math.toRadians(270));
+    private final Pose pickup3Pose = new Pose(45, 132, Math.toRadians(0));
 
     private final Pose parkPose = new Pose(68, 105, Math.toRadians(90));
 
-    private final Pose parkControlPose = new Pose(61, 112, Math.toRadians(90));
+    private final Pose parkPose2 = new Pose(68, 95);
 
 
-    private Path park;
+    private Path park, park2;
     private PathChain grabPickup1, grabPickup2, grabPickup3, scorePreloadedSample, scorePickup1, scorePickup2, scorePickup3;
 
     public void buildPaths() {
@@ -92,8 +92,12 @@ public class Left_S extends OpMode {
                 .build();
 
 
-        park = new Path(new BezierCurve(new Point(scorePose), new Point(parkControlPose), new Point(parkPose)));
-        park.setLinearHeadingInterpolation(scorePose.getHeading(), parkPose.getHeading());
+        park = new Path(new BezierLine(new Point(startPose), new Point(parkPose)));
+        park.setLinearHeadingInterpolation(startPose.getHeading(), parkPose.getHeading());
+
+        park2 = new Path(new BezierLine(new Point(parkPose), new Point(parkPose2)));
+        park2.setTangentHeadingInterpolation();
+
 
 
 
@@ -109,10 +113,14 @@ public class Left_S extends OpMode {
             case 1:
                 if(!follower.isBusy()) {
 
+                    //slides.moveTo(6000);
                     arm.armDrop();
                     wrist.wristDrop();
                     claw.open();
+                    //sleep(500);
                     claw.close();
+                    //slides.moveTo(6000);
+                    //sleep(2000);
 
                     follower.followPath(grabPickup1,true);
                     setPathState(2);
@@ -123,8 +131,10 @@ public class Left_S extends OpMode {
 
                     wrist.wristPick();
                     claw.open();
+                    //sleep(500)
                     arm.armPick();
                     claw.close();
+                    //sleep(500);
                     arm.armDrop();
 
                     follower.followPath(scorePickup1,true);
@@ -134,11 +144,14 @@ public class Left_S extends OpMode {
             case 3:
                 if(!follower.isBusy()) {
 
-                    slides.moveTo();
+                    //slides.moveTo(6000);
+                    arm.armDrop();
                     wrist.wristDrop();
                     claw.open();
+                    //sleep(500);
                     claw.close();
-                    slides.moveTo();
+                    //slides.moveTo(6000);
+                    //sleep(2000);
 
                     follower.followPath(grabPickup2,true);
                     setPathState(4);
@@ -149,8 +162,10 @@ public class Left_S extends OpMode {
 
                     wrist.wristPick();
                     claw.open();
+                    //sleep(500)
                     arm.armPick();
                     claw.close();
+                    //sleep(500);
                     arm.armDrop();
 
                     follower.followPath(scorePickup2,true);
@@ -160,11 +175,14 @@ public class Left_S extends OpMode {
             case 5:
                 if(!follower.isBusy()) {
 
-                    slides.moveTo();
+                    //slides.moveTo(6000);
+                    arm.armDrop();
                     wrist.wristDrop();
                     claw.open();
+                    //sleep(500);
                     claw.close();
-                    slides.moveTo();
+                    //slides.moveTo(6000);
+                    //sleep(2000);
 
                     follower.followPath(grabPickup3,true);
                     setPathState(6);
@@ -175,8 +193,10 @@ public class Left_S extends OpMode {
 
                     wrist.wristPick();
                     claw.open();
+                    //sleep(500)
                     arm.armPick();
                     claw.close();
+                    //sleep(500);
                     arm.armDrop();
 
                     follower.followPath(scorePickup3, true);
@@ -185,6 +205,15 @@ public class Left_S extends OpMode {
                 break;
             case 7:
                 if(!follower.isBusy()) {
+
+                    //slides.moveTo(6000);
+                    arm.armDrop();
+                    wrist.wristDrop();
+                    claw.open();
+                    //sleep(500);
+                    claw.close();
+                    //slides.moveTo(6000);
+                    //sleep(2000);
 
                     follower.followPath(park,true);
                     setPathState(8);
