@@ -41,65 +41,48 @@ public class Arm implements IComponents, IArm{
     @Override
     public void armStart() {
 
-        armBase1.setPosition(0);
-        armBase2.setPosition(1);
-
+        armBase1.setPosition(0.8156);
+        armBase2.setPosition(0.1556);
 
     }
 
     @Override
     public void armRest() {
 
-        armBase1.setPosition(1);
-        armBase2.setPosition(0);
-
-    }
-
-    @Override
-    public void armRest2() {
-
-        armBase1.setPosition(0.4656);
-        armBase2.setPosition(0.5317);
+        armBase1.setPosition(0.1544);
+        armBase2.setPosition(0.8444);
 
     }
 
     @Override
     public void armPick() {
 
-        armBase1.setPosition(1);
-        armBase2.setPosition(0);
+        armBase1.setPosition(0.1544);
+        armBase2.setPosition(0.8444);
 
     }
 
     @Override
     public void armDrop() {
 
-        armBase1.setPosition(0.185);
-        armBase2.setPosition(0.8018);
+        armBase1.setPosition(0.6161);
+        armBase2.setPosition(0.3672);
 
     }
 
     @Override
     public void specimenPick() {
 
-        armBase1.setPosition(0.0561);
-        armBase2.setPosition(0.9411);
-
-    }
-
-    @Override
-    public void specimenReadyDrop() {
-
-        armBase1.setPosition(0.5311);
-        armBase2.setPosition(0.4633);
+        armBase1.setPosition(0.7372);
+        armBase2.setPosition(0.2606867529);
 
     }
 
     @Override
     public void specimenDrop() {
 
-        armBase1.setPosition(0.7189);
-        armBase2.setPosition(0.2661);
+        armBase1.setPosition(0.3767);
+        armBase2.setPosition(0.6039);
 
     }
 

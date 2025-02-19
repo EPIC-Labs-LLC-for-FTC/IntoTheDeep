@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.components.Arm;
 import org.firstinspires.ftc.teamcode.components.Claw;
 import org.firstinspires.ftc.teamcode.components.Wrist;
 
-@Autonomous(name = "Right_Park")
+@Autonomous(name = "Left_Park")
 public class Left_Park extends OpMode {
 
     private Follower follower;
@@ -62,7 +62,6 @@ public class Left_Park extends OpMode {
                 if(!follower.isBusy()) {
 
                     wrist.rest();
-                    arm.armRest2();
 
                     follower.followPath(park2,true);
                     setPathState(2);

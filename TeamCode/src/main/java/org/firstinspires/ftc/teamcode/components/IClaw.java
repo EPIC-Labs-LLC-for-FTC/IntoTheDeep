@@ -6,7 +6,4 @@ public interface IClaw {
 
     void open1();
     void close1();
-
-    void open2();
-    void close2();
 }

@@ -81,14 +81,6 @@ public class  Expedition_Test1 extends LinearOpMode {
 
                 claw.close1();
 
-            } else if (gamepad2.right_trigger > 0.2) {
-
-                claw.open2();
-
-            } else if (gamepad2.left_trigger > 0.2) {
-
-                claw.close2();
-
             }
 
             if (gamepad1.dpad_up) {
@@ -109,16 +101,6 @@ public class  Expedition_Test1 extends LinearOpMode {
 
                 wrist.wrist2.setPosition(0.5);
 
-            } else if (gamepad1.right_bumper) {
-
-                claw.claw1.setPosition(0);
-                claw.claw2.setPosition(1);
-
-            } else if (gamepad1.left_bumper) {
-
-                claw.claw1.setPosition(1);
-                claw.claw2.setPosition(0);
-
             }
 
             telemetry.addData("Slide1Position", slides.slide1.getCurrentPosition());
@@ -130,8 +112,7 @@ public class  Expedition_Test1 extends LinearOpMode {
             telemetry.addData("Wrist1Position", wrist.wrist1.getPosition());
             telemetry.addData("Wrist2Position", wrist.wrist2.getPosition());
             
-            telemetry.addData("Claw1", claw.claw1.getPosition());
-            telemetry.addData("Claw2", claw.claw2.getPosition());
+            telemetry.addData("Claw", claw.claw.getPosition());
 
             telemetry.update();
         }

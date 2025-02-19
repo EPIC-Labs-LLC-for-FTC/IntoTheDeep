@@ -31,9 +31,10 @@ public class Slides_Test_Pidf extends LinearOpMode {
         while (opModeInInit()){
             
             wheels.initialize();
-            arm.armRest2();
+            arm.armRest();
             wrist.rest();
             claw.close();
+            slides.initialize();
 
         }
 
@@ -66,8 +67,7 @@ public class Slides_Test_Pidf extends LinearOpMode {
             telemetry.addData("Wrist1Position", wrist.wrist1.getPosition());
             telemetry.addData("Wrist2Position", wrist.wrist2.getPosition());
             
-            telemetry.addData("Claw1", claw.claw1.getPosition());
-            telemetry.addData("Claw2", claw.claw2.getPosition());
+            telemetry.addData("Claw", claw.claw.getPosition());
 
             telemetry.update();
         }
