@@ -2,12 +2,14 @@ package org.firstinspires.ftc.teamcode.EPIC.RobotStates;
 
 public enum ArmStates {
 
+    AUTON_ARM_UP(70),
+    AUTON_BUCKET_DROP(100),
     READY_TO_DEPOSIT(310),
     DEPOSITING(60),
     LOWERED(525),
     INITIALIZED(0.0),
     NEUTRAL(250),
-    SPECIMEN_PICK(400),
+    SPECIMEN_PICK(405),
     SPECIMEN_DROP(200),
 
     SPECIMEN_DROP2(220),

@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyColorRangeSensor;
 import org.firstinspires.ftc.teamcode.EPIC.Sensors.MyTouchSensor;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public class Robot implements IColorListener, ITouchListener, IClawListener, IArmListener, IWristListener, ISliderListener, IMecanumListener {
 
@@ -42,6 +43,8 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
         this.telemetry = parent.telemetry;
         this.alliance = alliance;
     }
+
+
 
     public void setIsAutonomous(boolean isAutonomous) {
         this.isAutonomous = isAutonomous;

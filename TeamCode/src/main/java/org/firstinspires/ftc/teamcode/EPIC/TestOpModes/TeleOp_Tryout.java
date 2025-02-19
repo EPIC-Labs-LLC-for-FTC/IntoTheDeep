@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.EPIC.TestOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.EPIC.Components.Arm_PIDF;
 import org.firstinspires.ftc.teamcode.EPIC.Robot.Robot;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ArmStates;
 import org.firstinspires.ftc.teamcode.EPIC.RobotStates.ClawStates;
@@ -18,6 +20,8 @@ public class TeleOp_Tryout extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Robot odyssey = new Robot(this, "Red", false);
         odyssey.initialize();
+
+        Arm_PIDF Arm_PIDF = new Arm_PIDF(hardwareMap);
 
         Thread pidf = new Thread() {
             public void run() {
@@ -139,7 +143,34 @@ public class TeleOp_Tryout extends LinearOpMode {
                 odyssey.odysseyArm.move(ArmStates.SPECIMEN_PICK);
                 sleep(350);
                 odyssey.odysseyClaw.move(ClawStates.OPEN);
+
+
             }
+
+            if(gamepad2.right_trigger > 0.2){
+                Arm_PIDF.armMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                Arm_PIDF.armMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                Arm_PIDF.armMotorL.setPower(1);
+                Arm_PIDF.armMotorR.setPower(1);
+            } else {
+                Arm_PIDF.armMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                Arm_PIDF.armMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                Arm_PIDF.armMotorL.setPower(0);
+                Arm_PIDF.armMotorR.setPower(0);
+            }
+
+            if(gamepad2.left_trigger > 0.2){
+                Arm_PIDF.armMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                Arm_PIDF.armMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                Arm_PIDF.armMotorL.setPower(-1);
+                Arm_PIDF.armMotorR.setPower(-1);
+            } else {
+                Arm_PIDF.armMotorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                Arm_PIDF.armMotorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                Arm_PIDF.armMotorL.setPower(0);
+                Arm_PIDF.armMotorR.setPower(0);
+            }
+
 
             telemetry.update();
         }
