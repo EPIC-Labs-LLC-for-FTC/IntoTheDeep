@@ -36,7 +36,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
     private final Pose firstPickupPose = new Pose(24, 116);
     private final Pose secondPickupPose = new Pose(21, 129);
     private final Pose thirdPickupPose = new Pose(22, 112);
-    private final Pose depositPose = new Pose(10, 130, Math.toRadians(-45));
+    private final Pose depositPose = new Pose(10, 130, Math.toRadians(-42));
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
     private Path goToPreload, moveToPark;
@@ -233,13 +233,13 @@ public class BlueBucket_Pedro extends LinearOpMode {
         odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
         sleep(500);
 
-        odyssey.odysseyWrist.setPos(WristStates.INITIALIZING);
+        odyssey.odysseyWrist.setPos(WristStates.INITIALIZING_AUTON);
+        sleep(500);
+
+        odyssey.odysseyClaw.move(ClawStates.OPEN);
         sleep(500);
 
         odyssey.odysseyArm.move(ArmStates.AUTON_BUCKET_DROP);
-        sleep(50);
-
-        odyssey.odysseyClaw.move(ClawStates.OPEN);
         sleep(500);
     }
 

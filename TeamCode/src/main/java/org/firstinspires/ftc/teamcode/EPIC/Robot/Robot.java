@@ -142,6 +142,7 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
     public void onArmMove(ArmEventObject event) {
         if (parent.opModeIsActive()) {
             ArmStates newState = event.getNewState();
+            //Robot parent = (Robot)  event.getSource();
             Thread tc = new Thread() {
                 public void run() {
                     switch (newState) {
@@ -176,7 +177,8 @@ public class Robot implements IColorListener, ITouchListener, IClawListener, IAr
                                 } catch (InterruptedException e) {
                                     throw new RuntimeException(e);
                                 }
-                                odysseyClaw.move(ClawStates.OPEN);
+                                //if(!parent.isAutonomous)
+                                //    odysseyClaw.move(ClawStates.OPEN);
                             }
                             telemetry.addData("Arm Thread", "Ready to deposit sample");
                             break;
