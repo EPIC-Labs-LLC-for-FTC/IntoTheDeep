@@ -31,12 +31,12 @@ public class BlueBucket_Pedro extends LinearOpMode {
     private int pathState = 0;
 
     private final Pose startPose = new Pose(8, 80, Math.toRadians(0));
-    private final Pose specimenDropPose = new Pose(30, 80);
-    private final Pose specimenBackPose = new Pose(26, 80);
-    private final Pose firstPickupPose = new Pose(24, 116);
-    private final Pose secondPickupPose = new Pose(21, 129);
-    private final Pose thirdPickupPose = new Pose(22, 112);
-    private final Pose depositPose = new Pose(10, 130, Math.toRadians(-42));
+    private final Pose specimenDropPose = new Pose(28.5, 78);
+    private final Pose specimenBackPose = new Pose(28, 80);
+    private final Pose firstPickupPose = new Pose(25, 116);
+    private final Pose secondPickupPose = new Pose(25, 120, Math.toRadians(0));
+    private final Pose thirdPickupPose = new Pose(25, 124, Math.toRadians(0));
+    private final Pose depositPose = new Pose(11, 130, Math.toRadians(-42));
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
     private Path goToPreload, moveToPark;
@@ -67,7 +67,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
         grabPickup2 = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(depositPose), new Point(secondPickupPose)))
                 .setLinearHeadingInterpolation(depositPose.getHeading(), secondPickupPose.getHeading())
-                .addParametricCallback(0.2, () -> performSlideDownRunnable(odyssey))
+//                .addParametricCallback(0.50, () -> performSlideDown(odyssey))
                 .build();
 
         scorePickup2 = follower.pathBuilder()
@@ -169,47 +169,61 @@ public class BlueBucket_Pedro extends LinearOpMode {
                 break;
 
             case 4:
-                if (!follower.isBusy()) {
-                    sleep(1000);
+  //              if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 0.5) {
+                    if (!follower.isBusy()) {
+                    //       if (pathTimer.getElapsedTimeSeconds() > 0.5) {
                     follower.followPath(grabPickup2, true);
-//                    sleep(3000);
-//                    performSlideDown(odyssey);
                     sleep(1000);
                     performSamplePickup(odyssey);
+                    sleep(1000);
+                    performSlideDown(odyssey);
                     pathState = 5;
                 }
                 break;
 
-   /*         case 5:
-                if (pathTimer.getElapsedTimeSeconds() > 1) {
+            case 5:
+                if (!follower.isBusy()) {
+                    sleep(1000);
+                    follower.followPath(scorePickup2, true);
+                    sleep(3000);
                     performSlideUp(odyssey);
-  //                  follower.followPath(moveToDeposit);
+                    sleep(1000);
+                    performSamplePickup(odyssey);
                     pathState = 6;
                 }
                 break;
 
             case 6:
                 if (!follower.isBusy()) {
+                    sleep(1000);
+                    follower.followPath(grabPickup3, true);
+                    sleep(1000);
+                    performSamplePickup(odyssey);
+                    sleep(1000);
                     performSlideDown(odyssey);
-                    pathTimer.resetTimer();
                     pathState = 7;
                 }
                 break;
 
             case 7:
-                if (pathTimer.getElapsedTimeSeconds() > 1) {
-                    follower.followPath(moveToPark);
+                if (!follower.isBusy()) {
+                    sleep(1000);
+                    follower.followPath(scorePickup3, true);
+                    sleep(3000);
+                    performSlideUp(odyssey);
+                    sleep(1000);
+                    performSamplePickup(odyssey);
                     pathState = 8;
                 }
                 break;
+//
+//            case 8:
+//                if (!follower.isBusy()) {
+//                    pathState = -1;
+//                }
+//                break;
 
-            case 8:
-                if (!follower.isBusy()) {
-                    pathState = -1;
-                }
-                break;
 
-    */
         }
     }
 
@@ -227,19 +241,19 @@ public class BlueBucket_Pedro extends LinearOpMode {
     }
 
     private void performSpecimenDropoffUnder(Robot odyssey) {
-        odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
         sleep(500);
 
-        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
+        odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
         sleep(500);
 
         odyssey.odysseyWrist.setPos(WristStates.INITIALIZING_AUTON);
         sleep(500);
 
-        odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(500);
-
         odyssey.odysseyArm.move(ArmStates.AUTON_BUCKET_DROP);
+        sleep(1600);
+
+        odyssey.odysseyClaw.move(ClawStates.OPEN);
         sleep(500);
     }
 
@@ -278,6 +292,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
         sleep(500);
 
         odyssey.odysseyArm.move(ArmStates.LOWERED);
+        sleep(1000);
 
     }
 
