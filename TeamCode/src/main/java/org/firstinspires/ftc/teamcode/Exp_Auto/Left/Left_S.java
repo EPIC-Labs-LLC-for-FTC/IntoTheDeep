@@ -46,13 +46,17 @@ public class Left_S extends OpMode {
 
     private final Pose pickup3Pose = new Pose(45, 132, Math.toRadians(0));
 
+    private final Pose sampleScanStart = new Pose(58, 94, Math.toRadians(270));
+
+    private final Pose sampleScanStop = new Pose(88, 94, Math.toRadians(270));
+
     private final Pose parkPose = new Pose(68, 105, Math.toRadians(90));
 
     private final Pose parkPose2 = new Pose(68, 95);
 
 
     private Path park, park2;
-    private PathChain grabPickup1, grabPickup2, grabPickup3, scorePreloadedSample, scorePickup1, scorePickup2, scorePickup3;
+    private PathChain scorePreloadedSample, grabPickup1, grabPickup2, grabPickup3, scorePickup1, scorePickup2, scorePickup3, submersibleTravel, submersibleSearch, scorePickup4;
 
     public void buildPaths() {
 
@@ -90,6 +94,21 @@ public class Left_S extends OpMode {
                 .addPath(new BezierLine(new Point(pickup3Pose), new Point(scorePose)))
                 .setLinearHeadingInterpolation(pickup3Pose.getHeading(), scorePose.getHeading())
                 .build();
+
+//        submersibleTravel = follower.pathBuilder()
+//                .addPath(new BezierLine(new Point(scorePose), new Point(sampleScanStart)))
+//                .setLinearHeadingInterpolation(scorePose.getHeading(), sampleScanStart.getHeading())
+//                .build();
+//
+//        submersibleSearch = follower.pathBuilder()
+//                .addPath(new BezierLine(new Point(sampleScanStart), new Point(sampleScanStop)))
+//                .setLinearHeadingInterpolation(sampleScanStart.getHeading(), sampleScanStop.getHeading())
+//                .build();
+//
+//        scorePickup4 = follower.pathBuilder()
+//                .addPath(new BezierLine(new Point(sampleScanStop), new Point(scorePose)))
+//                .setLinearHeadingInterpolation(sampleScanStop.getHeading(), scorePose.getHeading())
+//                .build();
 
 
         park = new Path(new BezierLine(new Point(startPose), new Point(parkPose)));
