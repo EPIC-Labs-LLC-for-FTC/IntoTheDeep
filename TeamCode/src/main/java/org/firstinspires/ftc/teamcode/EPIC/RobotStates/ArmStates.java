@@ -4,7 +4,7 @@ public enum ArmStates {
 
     AUTON_ARM_UP(40),
     AUTON_BUCKET_DROP(100),
-    READY_TO_DEPOSIT(310),
+    READY_TO_DEPOSIT(315),
     DEPOSITING(60),
     LOWERED(525),
     INITIALIZED(0.0),

@@ -21,14 +21,27 @@ public class Test_Claw extends LinearOpMode {
         claw.setTelemetry(telemetry);
         claw.initialize();
 
+        telemetry.addData("LF", claw.leftFinger.getPosition());
+        telemetry.update();
         waitForStart();
 
         while (opModeIsActive()) {
             if (gamepad1.a) {
-                claw.rightFinger.setPosition(posR);
-                claw.leftFinger.setPosition(posL);
+                posL+=0.05;
+                //claw.rightFinger.setPosition(posR);
+                //claw.leftFinger.setPosition(posL);
+                claw.move(posL);
+                sleep(500);
             }
-            telemetry.addData("RF", claw.rightFinger.getPosition());
+
+            else if (gamepad1.x) {
+                posL-=0.05;
+                //claw.rightFinger.setPosition(posR);
+                //claw.leftFinger.setPosition(posL);
+                claw.move(posL);
+                sleep(500);
+            }
+            //telemetry.addData("RF", claw.rightFinger.getPosition());
             telemetry.addData("LF", claw.leftFinger.getPosition());
             telemetry.update();
         }
