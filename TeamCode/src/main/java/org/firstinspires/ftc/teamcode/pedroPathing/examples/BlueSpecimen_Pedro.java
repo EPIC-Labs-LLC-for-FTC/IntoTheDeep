@@ -30,20 +30,20 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
 
     private int pathState = 0;
 
-    private final Pose startPose = new Pose(8.2, 65, Math.toRadians(0));
-    private final Pose specimenDropPose = new Pose(30, 65);
-    private final Pose specimenBackPose = new Pose(30, 40);
-    private final Pose firstSamplePushStartPose = new Pose(54, 34);
+    private final Pose startPose = new Pose(8.0, 64, Math.toRadians(0));
+    private final Pose specimenDropPose = new Pose(28.5, 64);
+    private final Pose specimenBackPose = new Pose(29, 40);
+    private final Pose firstSamplePushStartPose = new Pose(56, 37);
     private final Pose firstSamplePushEndPose = new Pose(10, 24);
-    private final Pose secondSamplePushStartPose = new Pose(54, 30);
+    private final Pose secondSamplePushStartPose = new Pose(56, 22);
     private final Pose secondSamplePushEndPose = new Pose(10, 22);
-    private final Pose thirdSamplePushStartPose = new Pose(54, 26);
+    private final Pose thirdSamplePushStartPose = new Pose(56, 26);
     private final Pose thirdSamplePushEndPose = new Pose(10, 20);
     private final Pose sampleGrab = new Pose(25, 116);
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
     private Path goToPreload, moveToPark;
-    private PathChain scorePreload, pushFirstSample, firstSampleObservationPoint, pushSecondSample, pushThirdSample, grabSampleFromPlayer,secondSampleObservationPoint,thirdSampleObservationPoint;
+    private PathChain scorePreload, pushFirstSample, firstSampleObservationPoint, pushSecondSample, pushThirdSample, grabSampleFromPlayer, secondSampleObservationPoint, thirdSampleObservationPoint;
 
     private void buildPaths() {
 
@@ -58,32 +58,34 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
                 .build();
         pushFirstSample = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(specimenBackPose), new Point(firstSamplePushStartPose)))
-                .setLinearHeadingInterpolation(specimenBackPose.getHeading(), firstSamplePushStartPose.getHeading())
+                .setConstantHeadingInterpolation(0)
                 .build();
 
         firstSampleObservationPoint = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(firstSamplePushStartPose), new Point(firstSamplePushEndPose)))
-                .setLinearHeadingInterpolation(firstSamplePushStartPose.getHeading(), firstSamplePushEndPose.getHeading())
+                .setConstantHeadingInterpolation(0)
                 .build();
 
         pushSecondSample = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(firstSamplePushEndPose), new Point(secondSamplePushStartPose)))
-                .setLinearHeadingInterpolation(firstSamplePushEndPose.getHeading(), secondSamplePushStartPose.getHeading())
+                .addPath(new BezierLine(new Point(firstSamplePushEndPose), new Point(firstSamplePushStartPose)))
+                .addPath(new BezierLine(new Point(firstSamplePushStartPose), new Point(secondSamplePushStartPose)))
+                .setConstantHeadingInterpolation(0)
                 .build();
 
         secondSampleObservationPoint = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(secondSamplePushStartPose), new Point(secondSamplePushEndPose)))
-                .setLinearHeadingInterpolation(secondSamplePushStartPose.getHeading(), secondSamplePushEndPose.getHeading())
+                .setConstantHeadingInterpolation(0)
                 .build();
 
         pushThirdSample = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(secondSamplePushEndPose), new Point(thirdSamplePushStartPose)))
-                .setLinearHeadingInterpolation(secondSamplePushEndPose.getHeading(), thirdSamplePushStartPose.getHeading())
+                .addPath(new BezierLine(new Point(secondSamplePushEndPose), new Point(secondSamplePushStartPose)))
+                .addPath(new BezierLine(new Point(secondSamplePushStartPose), new Point(thirdSamplePushStartPose)))
+                .setConstantHeadingInterpolation(0)
                 .build();
 
         thirdSampleObservationPoint = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(thirdSamplePushStartPose), new Point(thirdSamplePushEndPose)))
-                .setLinearHeadingInterpolation(thirdSamplePushStartPose.getHeading(), thirdSamplePushEndPose.getHeading())
+                .setConstantHeadingInterpolation(0)
                 .build();
 
         grabSampleFromPlayer = follower.pathBuilder()
@@ -163,20 +165,23 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
 
             case 2:
                 if (!follower.isBusy()) {
+                    performSpecimenDropoffUnder(odyssey);
+                    sleep(1000);
                     follower.followPath(pushFirstSample, true);
                     pathState = 3;
                 }
                 break;
 
             case 3:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
                     follower.followPath(firstSampleObservationPoint, true);
                     pathState = 4;
                 }
                 break;
 
-
             case 4:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
                     follower.followPath(pushSecondSample, true);
                     pathState = 5;
@@ -184,6 +189,7 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
                 break;
 
             case 5:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
                     follower.followPath(secondSampleObservationPoint, true);
                     pathState = 6;
@@ -191,22 +197,24 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
                 break;
 
             case 6:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
                     follower.followPath(pushThirdSample, true);
-                    pathState =7;
+                    pathState = 7;
                 }
                 break;
             case 7:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
                     follower.followPath(thirdSampleObservationPoint, true);
-                    pathState =8;
+                    pathState = 8;
                 }
                 break;
 
             case 8:
                 if (!follower.isBusy()) {
                     follower.followPath(grabSampleFromPlayer, true);
-                    // add method from grabbing sample from human player
+                    performSpecimenPickup(odyssey);
                     pathState = 9;
                 }
                 break;
@@ -223,12 +231,12 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
                 pathState = 11;
                 break;
 
-            case 12:
+            case 11:
                 if (!follower.isBusy()) {
-                    performSpecimenDropoffUnder(odyssey);
+                    performSpecimenDropoff(odyssey);
                     sleep(1000);
                     follower.followPath(grabSampleFromPlayer, true);
-                    pathState = 10;
+                    pathState = 12;
                 }
                 break;
 

@@ -38,14 +38,14 @@ public class Claw extends AComponents implements IClaw{
 
     @Override
     public void initialize() {
-
+        move(HOLDING_SAMPLE_PORTRAIT);
         if(IsAutonomous){
             //override settings for autonomous mode if needed
-            move(OPEN);
+            //move(OPEN);
         }
-        else
+        //else
 
-            move(HOLDING_SAMPLE_PORTRAIT);
+           // move(HOLDING_SAMPLE_PORTRAIT);
         this.displayComponentValues();
     }
 

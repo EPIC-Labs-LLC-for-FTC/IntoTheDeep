@@ -34,9 +34,9 @@ public class BlueBucket_Pedro extends LinearOpMode {
     private final Pose specimenDropPose = new Pose(28.5, 78);
     private final Pose specimenBackPose = new Pose(28, 80);
     private final Pose firstPickupPose = new Pose(25, 116);
-    private final Pose secondPickupPose = new Pose(25, 120, Math.toRadians(0));
-    private final Pose thirdPickupPose = new Pose(25, 124, Math.toRadians(0));
-    private final Pose depositPose = new Pose(11, 130, Math.toRadians(-42));
+    private final Pose secondPickupPose = new Pose(20, 124, Math.toRadians(0));
+    private final Pose thirdPickupPose = new Pose(20, 132, Math.toRadians(0));
+    private final Pose depositPose = new Pose(13, 130, Math.toRadians(-42));
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
     private Path goToPreload, moveToPark;
@@ -67,7 +67,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
         grabPickup2 = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(depositPose), new Point(secondPickupPose)))
                 .setLinearHeadingInterpolation(depositPose.getHeading(), secondPickupPose.getHeading())
-//                .addParametricCallback(0.50, () -> performSlideDown(odyssey))
+                .addParametricCallback(0.60, () -> performSlideDown(odyssey))
                 .build();
 
         scorePickup2 = follower.pathBuilder()
@@ -78,6 +78,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
         grabPickup3 = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(depositPose), new Point(thirdPickupPose)))
                 .setLinearHeadingInterpolation(depositPose.getHeading(), thirdPickupPose.getHeading())
+                .addParametricCallback(0.30, () -> performSlideDown(odyssey))
                 .build();
 
         scorePickup3 = follower.pathBuilder()
@@ -152,7 +153,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
             case 2:
                 if (!follower.isBusy()) {
                     performSpecimenDropoffUnder(odyssey);
-                    sleep(1000);
+                    sleep(500);
                     follower.followPath(grabPickup1, true);
                     pathState = 3;
                 }
@@ -163,37 +164,57 @@ public class BlueBucket_Pedro extends LinearOpMode {
                     performSamplePickup(odyssey);
                     sleep(500);
                     performSlideUp(odyssey);
-                    follower.followPath(scorePickup1, true);
                     pathState = 4;
                 }
                 break;
 
             case 4:
-  //              if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 0.5) {
-                    if (!follower.isBusy()) {
-                    //       if (pathTimer.getElapsedTimeSeconds() > 0.5) {
-                    follower.followPath(grabPickup2, true);
-                    sleep(1000);
-                    performSamplePickup(odyssey);
-                    sleep(1000);
-                    performSlideDown(odyssey);
+                if (!follower.isBusy()) {
+                    follower.followPath(scorePickup1, true);
                     pathState = 5;
+                    pathTimer.resetTimer();
                 }
                 break;
 
             case 5:
-                if (!follower.isBusy()) {
-                    sleep(1000);
-                    follower.followPath(scorePickup2, true);
-                    sleep(3000);
-                    performSlideUp(odyssey);
-                    sleep(1000);
-                    performSamplePickup(odyssey);
+                if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 5.0) {
+                 //   performSlideDown(odyssey);
+                    sleep(500);
+                    follower.followPath(grabPickup2, true);
+                    sleep(500);
                     pathState = 6;
+
+                }
+                break;
+            case 6:
+                if (!follower.isBusy()) {
+                    performSamplePickup(odyssey);
+                    sleep(500);
+                    performSlideUp(odyssey);
+                    pathState = 7;
                 }
                 break;
 
-            case 6:
+            case 7:
+                if (!follower.isBusy()) {
+                    sleep(500);
+                    follower.followPath(scorePickup2, true);
+                    sleep(500);
+                    pathState = 8;
+                    pathTimer.resetTimer();
+                }
+                break;
+
+            case 8:
+                if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 5.0) {
+               //     performSlideDown(odyssey);
+                    sleep(500);
+                    performSamplePickup(odyssey);
+                    pathState = 9;
+                }
+                break;
+
+            case 9:
                 if (!follower.isBusy()) {
                     sleep(1000);
                     follower.followPath(grabPickup3, true);
@@ -201,19 +222,26 @@ public class BlueBucket_Pedro extends LinearOpMode {
                     performSamplePickup(odyssey);
                     sleep(1000);
                     performSlideDown(odyssey);
-                    pathState = 7;
+                    pathState = 10;
                 }
                 break;
 
-            case 7:
+            case 10:
                 if (!follower.isBusy()) {
                     sleep(1000);
                     follower.followPath(scorePickup3, true);
-                    sleep(3000);
+                    sleep(1000);
+                    pathState = 11;
+                    pathTimer.resetTimer();
+                }
+                break;
+
+            case 11:
+                if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 2.0) {
                     performSlideUp(odyssey);
                     sleep(1000);
-                    performSamplePickup(odyssey);
-                    pathState = 8;
+                    //performSamplePickup(odyssey);
+                    pathState = 12;
                 }
                 break;
 //
@@ -299,7 +327,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
 
     private void performSlideUp(Robot odyssey) {
         odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET);
-        sleep(2000);
+        sleep(1000);
     }
 
     private void performSlideDown(Robot odyssey) {
@@ -314,3 +342,4 @@ public class BlueBucket_Pedro extends LinearOpMode {
         return null;
     }
 }
+
