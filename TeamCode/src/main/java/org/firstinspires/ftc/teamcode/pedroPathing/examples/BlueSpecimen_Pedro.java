@@ -30,15 +30,15 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
 
     private int pathState = 0;
 
-    private final Pose startPose = new Pose(8, 80, Math.toRadians(0));
-    private final Pose specimenDropPose = new Pose(28.5, 78);
-    private final Pose specimenBackPose = new Pose(28, 80);
-    private final Pose firstSamplePushStartPose = new Pose(25, 116);
+    private final Pose startPose = new Pose(8.2, 65, Math.toRadians(0));
+    private final Pose specimenDropPose = new Pose(30, 65);
+    private final Pose specimenBackPose = new Pose(30, 40);
+    private final Pose firstSamplePushStartPose = new Pose(54, 34);
     private final Pose firstSamplePushEndPose = new Pose(10, 24);
-    private final Pose secondSamplePushStartPose = new Pose(25, 116);
-    private final Pose secondSamplePushEndPose = new Pose(10, 15);
-    private final Pose thirdSamplePushStartPose = new Pose(25, 116);
-    private final Pose thirdSamplePushEndPose = new Pose(10, 8);
+    private final Pose secondSamplePushStartPose = new Pose(54, 30);
+    private final Pose secondSamplePushEndPose = new Pose(10, 22);
+    private final Pose thirdSamplePushStartPose = new Pose(54, 26);
+    private final Pose thirdSamplePushEndPose = new Pose(10, 20);
     private final Pose sampleGrab = new Pose(25, 116);
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
@@ -79,13 +79,11 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
         pushThirdSample = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(secondSamplePushEndPose), new Point(thirdSamplePushStartPose)))
                 .setLinearHeadingInterpolation(secondSamplePushEndPose.getHeading(), thirdSamplePushStartPose.getHeading())
-//                .addParametricCallback(0.50, () -> performSlideDown(odyssey))
                 .build();
 
         thirdSampleObservationPoint = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(thirdSamplePushStartPose), new Point(thirdSamplePushEndPose)))
                 .setLinearHeadingInterpolation(thirdSamplePushStartPose.getHeading(), thirdSamplePushEndPose.getHeading())
-//                .addParametricCallback(0.50, () -> performSlideDown(odyssey))
                 .build();
 
         grabSampleFromPlayer = follower.pathBuilder()
@@ -187,7 +185,7 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
 
             case 5:
                 if (!follower.isBusy()) {
-                    follower.followPath(pushSecondSample, true);
+                    follower.followPath(secondSampleObservationPoint, true);
                     pathState = 6;
                 }
                 break;
@@ -198,28 +196,34 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
                     pathState =7;
                 }
                 break;
-
             case 7:
+                if (!follower.isBusy()) {
+                    follower.followPath(thirdSampleObservationPoint, true);
+                    pathState =8;
+                }
+                break;
+
+            case 8:
                 if (!follower.isBusy()) {
                     follower.followPath(grabSampleFromPlayer, true);
                     // add method from grabbing sample from human player
-                    pathState = 8;
+                    pathState = 9;
                 }
-                break;
-
-            case 17:
-                if (!follower.isBusy()) {
-                    follower.setMaxPower(0.6);
-                    follower.followPath(goToPreload);
-                    pathState = 8;
-                }
-                break;
-            case 8:
-                follower.followPath(scorePreload);
-                pathState = 9;
                 break;
 
             case 9:
+                if (!follower.isBusy()) {
+                    follower.setMaxPower(0.6);
+                    follower.followPath(goToPreload);
+                    pathState = 10;
+                }
+                break;
+            case 10:
+                follower.followPath(scorePreload);
+                pathState = 11;
+                break;
+
+            case 12:
                 if (!follower.isBusy()) {
                     performSpecimenDropoffUnder(odyssey);
                     sleep(1000);
@@ -228,17 +232,7 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
                 }
                 break;
 
-            case 10:
-                if (!follower.isBusy()) {
-                    follower.setMaxPower(0.6);
-                    follower.followPath(goToPreload);
-                    pathState = 11;
-                }
-                break;
-            case 11:
-                follower.followPath(scorePreload);
-                pathState = 12;
-                break;
+
 //
 //            case 8:
 //                if (!follower.isBusy()) {
