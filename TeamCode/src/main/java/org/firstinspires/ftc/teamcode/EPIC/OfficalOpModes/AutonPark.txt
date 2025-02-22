@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.oldRRcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.oldRRcode.SparkFunOTOSDrive;
 
 import com.acmerobotics.roadrunner.Pose2d;
-
+import android.graphics.Color;
 
 @Autonomous(name = "AutonPark")
 public class AutonPark extends LinearOpMode {
@@ -121,12 +121,32 @@ public class AutonPark extends LinearOpMode {
         Action tsc1 = tab.build();
 
 //
-
+        int colorMode = 1;
+        boolean scanningMode = false;
         waitForStart();
         coord.start();
         pidf.start();
         Actions.runBlocking(tsc1);
 
+        Color.RGBToHSV(colorSensor.red() * 8,
+        colorSensor.green() * 8,
+        colorSensor.blue() * 8,
+        hsvValues);
+        boolean targetDetected = false;
+        if (colorMode == 1) { // Target: Red OR Yellow
+            // Red: hue between 0-30 or 330-360; Yellow: hue between 30-90
+            if (hsvValues[0] <= 90 || hsvValues[0] >= 330) {
+                targetDetected = true;
+            }
+        } else if (colorMode == 2) { // Target: Blue OR Yellow
+            // Blue: hue between 180-270; Yellow: hue between 30-90
+            if ((hsvValues[0] >= 30 && hsvValues[0] <= 90) ||
+                    (hsvValues[0] >= 180 && hsvValues[0] <= 270)) {
+                targetDetected = true;
+            }
+        }
+        telemetry.addData("Sensor Reading", "Detected: " + sensorColor);
+        telemetry.addData("HSV", "[%.1f, %.2f, %.2f]", hsvValues[0], hsvValues[1], hsvValues[2]);
         // Move forward to position (24, 0, 0)
 //        moveToPosition(drive, new Pose2d(24, 0, 0));
 
