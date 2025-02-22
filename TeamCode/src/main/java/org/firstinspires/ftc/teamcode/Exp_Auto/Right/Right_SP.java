@@ -9,7 +9,7 @@ import com.pedropathing.pathgen.Point;
 import com.pedropathing.util.Constants;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.PedroPathing.Constants.FConstants;
 import org.firstinspires.ftc.teamcode.PedroPathing.Constants.LConstants;
@@ -18,111 +18,111 @@ import org.firstinspires.ftc.teamcode.components.Claw;
 import org.firstinspires.ftc.teamcode.components.Wrist;
 
 @Autonomous(name = "Right_SP")
-public class Right_SP extends OpMode {
+public class Right_SP extends LinearOpMode {
 
     private Follower follower;
-    private Timer pathTimer, opmodeTimer;
+    private Timer pathTimer;
 
     private int pathState;
 
-//    Arm arm = new Arm(hardwareMap);
-//    Wrist wrist = new Wrist(hardwareMap);
-//    Claw claw = new Claw(hardwareMap);
-
     private final Pose startPose = new Pose(8.2, 56.2, Math.toRadians(0));
 
-    private final Pose scoreSP1Pose = new Pose(37, 60);
+    private final Pose scoreSP1Pose = new Pose(36, 61);
 
-    private final Pose readyDrop1 = new Pose(32, 36);
+    private final Pose scoreSP1BackPose = new Pose(20, 61);
+
+    private final Pose readyDrop1 = new Pose(30, 36);
 
     private final Pose readyDrop2 = new Pose(58, 36);
 
     private final Pose readyDropS1Pose = new Pose(58, 24);
 
-    private final Pose DropS1Pose = new Pose(10, 24);
+    private final Pose DropS1Pose = new Pose(12, 24);
 
     private final Pose readyDropS2Pose = new Pose(58, 15);
 
-    private final Pose DropS2Pose = new Pose(10, 15);
+    private final Pose DropS2Pose = new Pose(12, 15);
 
     private final Pose readyDropS3Pose = new Pose(58, 11);
 
-    private final Pose DropS3Pose = new Pose(10, 8);
+    private final Pose DropS3Pose = new Pose(12, 9);
 
-    private final Pose scoreSP2Pose = new Pose(37, 62);
+    private final Pose scoreSP2Pose = new Pose(15, 62);
 
-    private final Pose pickSP = new Pose(10, 27);
+    private final Pose scoreSP2Pose2 = new Pose(37, 62);
 
-    private final Pose scoreSp3pose = new Pose(37, 64);
+    private final Pose pickSP = new Pose(12, 27);
 
-    private final Pose scoreSp4pose = new Pose(37, 66);
+    private final Pose scoreSp3pose = new Pose(37, 66);
 
-    private final Pose parkPose = new Pose(10, 27);
+    private final Pose scoreSp4pose = new Pose(37, 70);
+
+    private final Pose parkPose = new Pose(9, 27);
 
     // s = score, S = sample, SP = Specimen, b=back, r = ready, d = drop, p(at the end) = pose, p(at the beginning) = pick
 
-    private Path scorePreload, park;
-    private PathChain r1Dp, r2dp, rdS1p, dS1p, brdS1p, rdS2p, dS2p, brdS2p, rds3p, dS3p, sSP2p, pSP3, sSP3p, pSP4, sSP4p;
+    private Path park;
+    private PathChain scorePreload, r1Dp, r2dp, rdS1p, dS1p, brdS1p, rdS2p, dS2p, brdS2p, rds3p, dS3p, sSP2p, pSP3, sSP3p, pSP4, sSP4p;
 
     public void buildPaths() {
 
-        scorePreload = new Path(new BezierLine(new Point(startPose), new Point(scoreSP1Pose)));
-        scorePreload.setLinearHeadingInterpolation(startPose.getHeading(), scoreSP1Pose.getHeading());
+        Arm arm = new Arm(hardwareMap);
+        Wrist wrist = new Wrist(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
+
+        scorePreload = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(startPose), new Point(scoreSP1Pose)))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+
+                .addParametricCallback(0.001, () -> arm.specimenDrop())
+                .addParametricCallback(0.001, () -> wrist.specimenDrop())
+                .addParametricCallback(1, () -> claw.open())
+                .addParametricCallback(1, () -> arm.specimenPick())
+                .addParametricCallback(1, () -> wrist.specimenPick())
+
+                .build();
 
         r1Dp = follower.pathBuilder()
 
-                .addPath(new BezierLine(new Point(scoreSP1Pose), new Point(readyDrop1)))
+                .addPath(new BezierLine(new Point(scoreSP1Pose), new Point(scoreSP1BackPose)))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
 
-                .addPath(new BezierLine(new Point(readyDrop1), new Point(readyDrop2)))
-                .setConstantHeadingInterpolation(Math.toRadians(0))
-
-                .addPath(new BezierLine(new Point(readyDrop2), new Point(readyDropS1Pose)))
-                .setConstantHeadingInterpolation(Math.toRadians(0))
-
-                .addPath(new BezierLine(new Point(readyDropS1Pose), new Point(DropS1Pose)))
-                .setConstantHeadingInterpolation(Math.toRadians(0))
-
-                .addPath(new BezierLine(new Point(DropS1Pose), new Point(readyDropS1Pose)))
-                .setConstantHeadingInterpolation(Math.toRadians(0))
-
-                .addPath(new BezierLine(new Point(readyDropS1Pose), new Point(readyDropS2Pose)))
-                .setConstantHeadingInterpolation(Math.toRadians(0))
-
-                .addPath(new BezierLine(new Point(readyDropS2Pose), new Point(DropS2Pose)))
+                .addPath(new BezierLine(new Point(scoreSP1BackPose), new Point(readyDrop1)))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
 
                 .build();
 
-//        r2dp = follower.pathBuilder()
-//                .addPath(new BezierLine(new Point(readyDrop1), new Point(readyDrop2)))
-//                .setConstantHeadingInterpolation(Math.toRadians(0))
-//                .build();
+        r2dp = follower.pathBuilder()
 
-//        rdS1p = follower.pathBuilder()
-//                .addPath(new BezierLine(new Point(readyDrop2), new Point(readyDropS1Pose)))
-//                .setConstantHeadingInterpolation(Math.toRadians(0))
-//                .build();
+                .addPath(new BezierLine(new Point(readyDrop1), new Point(readyDrop2)))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .build();
 
-//        dS1p = follower.pathBuilder()
-//                .addPath(new BezierLine(new Point(readyDropS1Pose), new Point(DropS1Pose)))
-//                .setConstantHeadingInterpolation(Math.toRadians(0))
-//                .build();
+        rdS1p = follower.pathBuilder()
 
-//        brdS1p = follower.pathBuilder()
-//                .addPath(new BezierLine(new Point(DropS1Pose), new Point(readyDropS1Pose)))
-//                .setConstantHeadingInterpolation(Math.toRadians(0))
-//                .build();
+                .addPath(new BezierLine(new Point(readyDrop2), new Point(readyDropS1Pose)))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .build();
 
-//        rdS2p = follower.pathBuilder()
-//                .addPath(new BezierLine(new Point(readyDropS1Pose), new Point(readyDropS2Pose)))
-//                .setConstantHeadingInterpolation(Math.toRadians(0))
-//                .build();
+        dS1p = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(readyDropS1Pose), new Point(DropS1Pose)))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .build();
 
-//        dS2p = follower.pathBuilder()
-//                .addPath(new BezierLine(new Point(readyDropS2Pose), new Point(DropS2Pose)))
-//                .setConstantHeadingInterpolation(Math.toRadians(0))
-//                .build();
+        brdS1p = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(DropS1Pose), new Point(readyDropS1Pose)))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .build();
+
+        rdS2p = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(readyDropS1Pose), new Point(readyDropS2Pose)))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .build();
+
+        dS2p = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(readyDropS2Pose), new Point(DropS2Pose)))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .build();
 
         brdS2p = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(DropS2Pose), new Point(readyDropS2Pose)))
@@ -137,21 +137,48 @@ public class Right_SP extends OpMode {
         dS3p = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(readyDropS3Pose), new Point(DropS3Pose)))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
+
+                .addParametricCallback(1, () -> claw.close())
+
+
                 .build();
 
         sSP2p = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(DropS3Pose), new Point(scoreSP2Pose)))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
+
+                .addParametricCallback(0.01, () -> arm.specimenDrop())
+                .addParametricCallback(0.01, () -> wrist.specimenDrop())
+
+                .addPath(new BezierLine(new Point(scoreSP2Pose), new Point(scoreSP2Pose2)))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+
                 .build();
 
         pSP3 = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(scoreSP2Pose), new Point(pickSP)))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
+
+                .addParametricCallback(0.001, () -> claw.open())
+                .addParametricCallback(0.001, () -> arm.specimenPick())
+                .addParametricCallback(0.001, () -> wrist.specimenPick())
+                .addParametricCallback(1, () -> claw.close())
+
                 .build();
 
         sSP3p = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(pickSP), new Point(scoreSp3pose)))
+                .addPath(new BezierLine(new Point(pickSP), new Point(scoreSP2Pose)))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
+
+                .addPath(new BezierLine(new Point(scoreSP2Pose), new Point(scoreSp3pose)))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+
+                .addParametricCallback(0.001, () -> arm.specimenDrop())
+                .addParametricCallback(0.001, () -> wrist.specimenDrop())
+                .addParametricCallback(1, () -> claw.open())
+                .addParametricCallback(1, () -> arm.specimenPick())
+                .addParametricCallback(1, () -> wrist.specimenPick())
+
                 .build();
 
         pSP4 = follower.pathBuilder()
@@ -160,18 +187,28 @@ public class Right_SP extends OpMode {
                 .build();
 
         sSP4p = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(pickSP), new Point(scoreSp4pose)))
+                .addPath(new BezierLine(new Point(pickSP), new Point(scoreSP2Pose)))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
+
+                .addPath(new BezierLine(new Point(scoreSP2Pose), new Point(scoreSp4pose)))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+
                 .build();
 
         park = new Path(new BezierLine(new Point(scoreSp4pose), new Point(parkPose)));
-        park.setConstantHeadingInterpolation(1);
+        park.setConstantHeadingInterpolation(0);
     }
 
     public void autonomousPathUpdate() {
+
+        Arm arm = new Arm(hardwareMap);
+        Wrist wrist = new Wrist(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
+
         switch (pathState) {
             case 0:
                 if(!follower.isBusy()){
+                    follower.setMaxPower(0.5);
 
                     follower.followPath(scorePreload);
                     setPathState(1);
@@ -179,6 +216,7 @@ public class Right_SP extends OpMode {
                 break;
             case 1:
                 if(!follower.isBusy()) {
+                    follower.setMaxPower(1);
 
                     follower.followPath(r1Dp,true);
                     setPathState(2);
@@ -303,81 +341,47 @@ public class Right_SP extends OpMode {
     }
 
     @Override
-    public void loop() {
+    public void runOpMode() throws InterruptedException {
 
-        follower.update();
-        autonomousPathUpdate();
-
-        telemetry.addData("path state", pathState);
-        telemetry.addData("x", follower.getPose().getX());
-        telemetry.addData("y", follower.getPose().getY());
-        telemetry.addData("heading", follower.getPose().getHeading());
-        telemetry.update();
-    }
-
-//    @Override
-//    public void runOpMode() throws InterruptedException {
-//
-//        follower.update();
-//        autonomousPathUpdate();
-//
-//        telemetry.addData("path state", pathState);
-//        telemetry.addData("x", follower.getPose().getX());
-//        telemetry.addData("y", follower.getPose().getY());
-//        telemetry.addData("heading", follower.getPose().getHeading());
-//        telemetry.update();
-//
-//        while (opModeInInit()){
-//
-//            arm.armStart();
-//            claw.close();
-//            wrist.start();
-//
-//            pathTimer = new Timer();
-//            opmodeTimer = new Timer();
-//            opmodeTimer.resetTimer();
-//
-//            Constants.setConstants(FConstants.class, LConstants.class);
-//            follower = new Follower(hardwareMap);
-//            follower.setStartingPose(startPose);
-//            buildPaths();
-//
-//        }
-//
-//        waitForStart();
-//
-//        opmodeTimer.resetTimer();
-//        setPathState(0);
-//
-//    }
-
-    @Override
-    public void init() {
-
-//        arm.armStart();
-//        wrist.start();
-//        claw.close();
+        Arm arm = new Arm(hardwareMap);
+        Wrist wrist = new Wrist(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
 
         pathTimer = new Timer();
-        opmodeTimer = new Timer();
+        Timer opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
 
         Constants.setConstants(FConstants.class, LConstants.class);
         follower = new Follower(hardwareMap);
         follower.setStartingPose(startPose);
+
         buildPaths();
-    }
 
-    @Override
-    public void init_loop() {}
+        while (opModeInInit()) {
 
-    @Override
-    public void start() {
+            arm.armStart();
+            wrist.start();
+            claw.close();
+
+        }
+
+        waitForStart();
+
         opmodeTimer.resetTimer();
         setPathState(0);
-    }
 
-    @Override
-    public void stop() {
+        while (opModeIsActive()){
+
+            follower.update();
+            autonomousPathUpdate();
+
+            telemetry.addData("path state", pathState);
+            telemetry.addData("x", follower.getPose().getX());
+            telemetry.addData("y", follower.getPose().getY());
+            telemetry.addData("heading", follower.getPose().getHeading());
+            telemetry.update();
+
+        }
+
     }
 }

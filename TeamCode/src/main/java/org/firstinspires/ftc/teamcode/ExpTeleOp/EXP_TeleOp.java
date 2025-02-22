@@ -89,12 +89,6 @@ public class EXP_TeleOp extends LinearOpMode {
                 rightBumperPressed = false;
             }
 
-//            if (gamepad2.right_trigger > 0.2) {
-//                claw.open();
-//            } else {
-//                claw.close();
-//            }
-
             if (gamepad2.left_bumper && !leftBumperPressed) {
                 leftBumperToggle = !leftBumperToggle;
                 if (leftBumperToggle) {
@@ -102,7 +96,7 @@ public class EXP_TeleOp extends LinearOpMode {
                     wrist.specimenPick();
                 } else {
                     arm.specimenDrop();
-                    wrist.specimenReadyDrop();
+                    wrist.specimenDrop();
                 }
                 leftBumperPressed = true;
             } else if (!gamepad2.left_bumper) {
@@ -114,19 +108,34 @@ public class EXP_TeleOp extends LinearOpMode {
                 wrist.wristDrop();
             }
 
-            if (gamepad2.y) {
-                wrist.specimenDrop();
-            }
-
-            if (gamepad1.a) {
+            if (gamepad1.b) {
                 colorMode = 1; // Look for red and yellow
-            } else if (gamepad1.b) {
+            } else if (gamepad1.x) {
                 colorMode = 2; // Look for blue and yellow
+            } else if (gamepad1.a) {
+                colorMode = 3; // Look for only blue
+            } else if (gamepad1.y) {
+                colorMode = 4; // Look for only red
             }
 
-            telemetry.addData("Target Mode", colorMode == 1 ? "Red+Yellow" : "Blue+Yellow");
+            String mode = "Unknown";
+            if (colorMode == 1) {
+                mode = "Red+Yellow";
+            } else if (colorMode == 2) {
+                mode = "Blue+Yellow";
+            } else if (colorMode == 3) {
+                mode = "Only Blue";
+            } else if (colorMode == 4) {
+                mode = "Only Red";
+            }
+            telemetry.addData("Target Mode", mode);
 
-            if (gamepad2.left_trigger > 0.2) {
+            if (gamepad2.right_trigger > 0.2) {
+                claw.open();
+                scanningMode = false;
+                telemetry.addData("Claw", "Manual override: Open");
+            }
+            else if (gamepad1.right_trigger > 0.2) {
                 if (!scanningMode) {
                     scanningMode = true;
                     claw.open();
@@ -140,15 +149,22 @@ public class EXP_TeleOp extends LinearOpMode {
                         hsvValues);
 
                 boolean targetDetected = false;
-                if (colorMode == 1) { // Target: Red OR Yellow
-                    // Red: hue between 0-30 or 330-360; Yellow: hue between 30-90
+
+                if (colorMode == 1) { // Look for Red OR Yellow
                     if (hsvValues[0] <= 90 || hsvValues[0] >= 330) {
                         targetDetected = true;
                     }
-                } else if (colorMode == 2) { // Target: Blue OR Yellow
-                    // Blue: hue between 180-270; Yellow: hue between 30-90
+                } else if (colorMode == 2) { // Look for Blue OR Yellow
                     if ((hsvValues[0] >= 30 && hsvValues[0] <= 90) ||
                             (hsvValues[0] >= 180 && hsvValues[0] <= 270)) {
+                        targetDetected = true;
+                    }
+                } else if (colorMode == 3) { // Look for ONLY Blue
+                    if (hsvValues[0] >= 180 && hsvValues[0] <= 270) {
+                        targetDetected = true;
+                    }
+                } else if (colorMode == 4) { // Look for ONLY Red
+                    if (hsvValues[0] <= 30 || hsvValues[0] >= 330) {
                         targetDetected = true;
                     }
                 }
@@ -158,17 +174,14 @@ public class EXP_TeleOp extends LinearOpMode {
                 if (targetDetected) {
                     telemetry.addData("Color Sensor", "Target color detected!");
                     claw.close();
+                    sleep(30);
                     arm.armRest();
                     wrist.rest();
                     scanningMode = false;
                 }
             } else {
                 scanningMode = false;
-                if (gamepad2.right_trigger > 0.2) {
-                    claw.open();
-                } else {
-                    claw.close();
-                }
+                claw.close();
             }
 
             float hsvValues[] = new float[3];
@@ -176,6 +189,7 @@ public class EXP_TeleOp extends LinearOpMode {
                     colorSensor.green() * 8,
                     colorSensor.blue() * 8,
                     hsvValues);
+
 
             String sensorColor;
             if (hsvValues[0] <= 30 || hsvValues[0] >= 330) {
@@ -190,7 +204,6 @@ public class EXP_TeleOp extends LinearOpMode {
 
             telemetry.addData("Sensor Reading", "Detected: " + sensorColor);
             telemetry.addData("HSV", "[%.1f, %.2f, %.2f]", hsvValues[0], hsvValues[1], hsvValues[2]);
-
 
             telemetry.addData("Slide1Position", slides.slide1.getCurrentPosition());
             telemetry.addData("Slide2Position", slides.slide2.getCurrentPosition());

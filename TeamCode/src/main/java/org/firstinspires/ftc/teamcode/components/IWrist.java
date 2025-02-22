@@ -9,7 +9,6 @@ public interface IWrist {
     void wristDrop();
 
     void specimenPick();
-    void specimenReadyDrop();
     void specimenDrop();
 
     void plus1();

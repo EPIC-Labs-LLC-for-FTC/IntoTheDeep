@@ -34,7 +34,6 @@ public class Slides_Test_Pidf extends LinearOpMode {
             arm.armRest();
             wrist.rest();
             claw.close();
-            slides.initialize();
 
         }
 
