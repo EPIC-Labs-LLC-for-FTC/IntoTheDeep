@@ -31,13 +31,13 @@ public class SampleFinalPedro extends LinearOpMode {
 
     private int pathState = 0;
 
-    private final Pose startPose = new Pose(0, 0, Math.toRadians(0));
-    private final Pose specimenDropPose = new Pose(22, -2); //x=28.5, y=78
-    private final Pose specimenBackPose = new Pose(27.5, 80);
-    private final Pose firstPickupPose = new Pose(25, 116);
-    private final Pose secondPickupPose = new Pose(25, 124, Math.toRadians(0));
-    private final Pose thirdPickupPose = new Pose(20, 132, Math.toRadians(0));
-    private final Pose depositPose = new Pose(13, 130, Math.toRadians(-42));
+    private final Pose startPose = new Pose(0, 0, Math.toRadians(0)); //x=0, y=0
+    private final Pose specimenDropPose = new Pose(23, -2); //x=22 (plus or minus 1), y=-2
+    private final Pose specimenBackPose = new Pose(17.5, -2);
+    private final Pose firstPickupPose = new Pose(14, 30); // x=14.5, y=31.5
+    private final Pose secondPickupPose = new Pose(18, 44, Math.toRadians(0));
+    private final Pose thirdPickupPose = new Pose(12, 52, Math.toRadians(0));
+    private final Pose depositPose = new Pose(0, 39, Math.toRadians(-42));
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
     private Path goToPreload, moveToPark;
@@ -141,24 +141,24 @@ public class SampleFinalPedro extends LinearOpMode {
             case 0: // strafe to submirsable, working
                 follower.setMaxPower(0.6);
                 follower.followPath(goToPreload);
-                pathState = 2;
+                pathState = 2; // path state should be 2
                 break;
 
-            case 1:
-                follower.followPath(scorePreload);
-                pathState = 7;
+            case 1: // move back from submirsable, working
+                if (!follower.isBusy()) {
+                    follower.followPath(scorePreload);
+                    pathState = 8; // should go to 8
+                }
                 break;
 
             case 2: // deposit specimen, working
                 if (!follower.isBusy()) {
                     performSpecimenDropoffUnder(odyssey);
-                    //sleep(500);
-                    //follower.followPath(grabPickup1, true);
-                    pathState = 7;
+                    pathState = 1; // should go to 1
                 }
                 break;
 
-            case 3:
+            case 3: //picking up sample, working
                 if (!follower.isBusy()) {
                     performSamplePickup(odyssey);
                     sleep(500);
@@ -167,17 +167,17 @@ public class SampleFinalPedro extends LinearOpMode {
                 }
                 break;
 
-            case 4:
+            case 4: //score sample, should be working. needs 1 more test.
                 if (!follower.isBusy()) {
                     follower.followPath(scorePickup1, true);
-                    pathState = 5;
+                    pathState = 7;
                     pathTimer.resetTimer();
                 }
                 break;
 
-            case 5:
+            case 5: // gram second sample
                 if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 5.0) {
-                    //   performSlideDown(odyssey);
+                    performSlideDown(odyssey);
                     sleep(500);
                     follower.followPath(grabPickup2, true);
                     sleep(500);
@@ -186,7 +186,7 @@ public class SampleFinalPedro extends LinearOpMode {
                 }
                 break;
 
-            case 6:
+            case 6: // pick up sample no slides?
                 if (!follower.isBusy()) {
                     performSamplePickup(odyssey);
                     sleep(500);
@@ -198,6 +198,14 @@ public class SampleFinalPedro extends LinearOpMode {
             case 7: // end state
                 if(!follower.isBusy()) {
                     sleep(1000);
+                    pathState = 7;
+                }
+                break;
+
+            case 8: // move from submirsable back pose to first sample, working
+                if(!follower.isBusy()) {
+                    follower.followPath(grabPickup1);
+                    pathState = 3;
                 }
                 break;
 
@@ -256,12 +264,11 @@ public class SampleFinalPedro extends LinearOpMode {
         odyssey.odysseyClaw.move(ClawStates.OPEN);
         sleep(500);
 
-        odyssey.odysseyArm.move(ArmStates.LOWERED);
+        odyssey.odysseyArm.move(ArmStates.AUTON_LOWERED);
         sleep(500);
 
         odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
         sleep(500);
-
         odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
         sleep(500);
 
@@ -274,7 +281,7 @@ public class SampleFinalPedro extends LinearOpMode {
         odyssey.odysseyClaw.move(ClawStates.OPEN);
         sleep(500);
 
-        odyssey.odysseyArm.move(ArmStates.LOWERED);
+        odyssey.odysseyArm.move(ArmStates.AUTON_LOWERED);
         sleep(1000);
 
     }
