@@ -31,8 +31,8 @@ public class SampleFinalPedro extends LinearOpMode {
 
     private int pathState = 0;
 
-    private final Pose startPose = new Pose(8, 80, Math.toRadians(0));
-    private final Pose specimenDropPose = new Pose(28.5, 78);
+    private final Pose startPose = new Pose(0, 0, Math.toRadians(0));
+    private final Pose specimenDropPose = new Pose(22, -2); //x=28.5, y=78
     private final Pose specimenBackPose = new Pose(27.5, 80);
     private final Pose firstPickupPose = new Pose(25, 116);
     private final Pose secondPickupPose = new Pose(25, 124, Math.toRadians(0));
@@ -138,23 +138,23 @@ public class SampleFinalPedro extends LinearOpMode {
 
     private void autonomousPathUpdate() {
         switch (pathState) {
-            case 0:
+            case 0: // strafe to submirsable, working
                 follower.setMaxPower(0.6);
                 follower.followPath(goToPreload);
-                pathState = 1;
+                pathState = 2;
                 break;
 
             case 1:
                 follower.followPath(scorePreload);
-                pathState = 2;
+                pathState = 7;
                 break;
 
-            case 2:
+            case 2: // deposit specimen, working
                 if (!follower.isBusy()) {
                     performSpecimenDropoffUnder(odyssey);
-                    sleep(500);
-                    follower.followPath(grabPickup1, true);
-                    pathState = 3;
+                    //sleep(500);
+                    //follower.followPath(grabPickup1, true);
+                    pathState = 7;
                 }
                 break;
 
@@ -195,6 +195,12 @@ public class SampleFinalPedro extends LinearOpMode {
                 }
                 break;
 
+            case 7: // end state
+                if(!follower.isBusy()) {
+                    sleep(1000);
+                }
+                break;
+
 
 
         }
@@ -214,20 +220,24 @@ public class SampleFinalPedro extends LinearOpMode {
     }
 
     private void performSpecimenDropoffUnder(Robot odyssey) {
-        odyssey.odysseyArm.move(ArmStates.SPECIMEN_DROP);
+        odyssey.odysseyWrist.setPos(WristStates.SPECIMEN_DROP_AUTON);
         sleep(500);
 
-        odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+        odyssey.odysseyArm.move(ArmStates.AUTON_SPECIMEN_DROP);
+        sleep(500);
+
+        //odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
+        //sleep(2000);
+
+        odyssey.odysseyClaw.move(ClawStates.OPEN);
+        sleep(500);
+
+        odyssey.odysseyArm.move(ArmStates.AUTON_ARM_UP);
         sleep(500);
 
         odyssey.odysseyWrist.setPos(WristStates.INITIALIZING_AUTON);
         sleep(500);
 
-        odyssey.odysseyArm.move(ArmStates.AUTON_ARM_UP);
-        sleep(1600);
-
-        odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(500);
     }
 
     private void performSpecimenPickup(Robot odyssey) {

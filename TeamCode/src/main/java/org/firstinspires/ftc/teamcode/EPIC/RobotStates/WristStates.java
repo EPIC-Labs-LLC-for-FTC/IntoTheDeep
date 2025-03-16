@@ -9,8 +9,8 @@ public enum WristStates {
     INITIALIZING(0.1),
     INITIALIZING_AUTON(0.1),
     SPECIMEN_PICK(0.38),
-    SPECIMEN_DROP(0.55),
-    SPECIMEN_DROP_AUTON(0.55);//0.380
+    SPECIMEN_DROP(0.55),//0.55
+    SPECIMEN_DROP_AUTON(0.65);
 
     //orignal pick is 0.38
 
