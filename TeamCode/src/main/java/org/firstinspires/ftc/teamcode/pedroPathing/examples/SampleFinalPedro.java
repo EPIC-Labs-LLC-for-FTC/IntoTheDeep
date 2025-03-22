@@ -29,19 +29,20 @@ public class SampleFinalPedro extends LinearOpMode {
     private Timer pathTimer, opmodeTimer;
     private Robot odyssey;
 
-    private int pathState = 0;
+    private int pathState = 7; // supposed to be 0
 
     private final Pose startPose = new Pose(0, 0, Math.toRadians(0)); //x=0, y=0
     private final Pose specimenDropPose = new Pose(23, -2); //x=22 (plus or minus 1), y=-2
-    private final Pose specimenBackPose = new Pose(17.5, -2);
-    private final Pose firstPickupPose = new Pose(14, 30); // x=14.5, y=31.5
-    private final Pose secondPickupPose = new Pose(18, 44, Math.toRadians(0));
+    private final Pose specimenBackPose = new Pose(17, -1.5); // x=17.5, y=-2
+    private final Pose firstPickupPose = new Pose(14.5, 29.5); // x=14.5, y=31.5
+    private final Pose secondPickupPose = new Pose(14.5, 37, Math.toRadians(0)); // x= 18, y=44
     private final Pose thirdPickupPose = new Pose(12, 52, Math.toRadians(0));
-    private final Pose depositPose = new Pose(0, 39, Math.toRadians(-42));
+    private final Pose depositPose = new Pose(-0.03, 39, Math.toRadians(-45)); // x= 0, y= 39, h= -42
+    private final Pose bucketBackPose = new Pose(4, 35, Math.toRadians(-21));
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
     private Path goToPreload, moveToPark;
-    private PathChain scorePreload, grabPickup1, grabPickup2, grabPickup3, scorePickup1, scorePickup2, scorePickup3;
+    private PathChain scorePreload, grabPickup1, backFromBucket, grabPickup2, grabPickup3, scorePickup1, scorePickup2, scorePickup3;
 
     private void buildPaths() {
 
@@ -64,11 +65,15 @@ public class SampleFinalPedro extends LinearOpMode {
                 .addPath(new BezierLine(new Point(firstPickupPose), new Point(depositPose)))
                 .setLinearHeadingInterpolation(firstPickupPose.getHeading(), depositPose.getHeading())
                 .build();
+        backFromBucket = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(depositPose), new Point(bucketBackPose)))
+                .setLinearHeadingInterpolation(depositPose.getHeading(), bucketBackPose.getHeading())
+                .build();
 
         grabPickup2 = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(depositPose), new Point(secondPickupPose)))
-                .setLinearHeadingInterpolation(depositPose.getHeading(), secondPickupPose.getHeading())
-                .addParametricCallback(0.60, () -> performSlideDown(odyssey))
+                .addPath(new BezierLine(new Point(bucketBackPose), new Point(secondPickupPose)))
+                .setLinearHeadingInterpolation(bucketBackPose.getHeading(), secondPickupPose.getHeading())
+                //.addParametricCallback(0.60, () -> performSlideDown(odyssey))
                 .build();
 
         scorePickup2 = follower.pathBuilder()
@@ -167,38 +172,64 @@ public class SampleFinalPedro extends LinearOpMode {
                 }
                 break;
 
-            case 4: //score sample, should be working. needs 1 more test.
+            case 4: //score sample, working
                 if (!follower.isBusy()) {
                     follower.followPath(scorePickup1, true);
-                    pathState = 7;
+                    pathState = 5;
                     pathTimer.resetTimer();
                 }
                 break;
 
-            case 5: // gram second sample
-                if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 5.0) {
-                    performSlideDown(odyssey);
-                    sleep(500);
-                    follower.followPath(grabPickup2, true);
-                    sleep(500);
-                    pathState = 6;
+            case 5: // back up from bucket
+                if (!follower.isBusy()) {
+                    follower.followPath(backFromBucket, true);
+                    pathState = 9;
+                }
+                break;
+            case 9: // go to second sample
+                 if(!follower.isBusy()) {
+                     performSlideDown(odyssey);
+                     //sleep(500);
+                     pathState = 10;
+                 }
+                 break;
 
+
+            case 10: // sample pick up or arm up
+                if(!follower.isBusy() || pathTimer.getElapsedTimeSeconds()>5.0){
+                    follower.followPath(grabPickup2, true);
+                    pathState = 6;
+                }
+                else{
+                    odyssey.odysseyArm.move(ArmStates.AUTON_ARM_UP);
+                    sleep(1000);
+                    pathState = 7;
                 }
                 break;
 
-            case 6: // pick up sample no slides?
-                if (!follower.isBusy()) {
+            case 6: // pick up sample, no slides
+                if (!follower.isBusy()||pathTimer.getElapsedTimeSeconds()>0.5) {
                     performSamplePickup(odyssey);
                     sleep(500);
-                   // performSlideUp(odyssey);
-                   // pathState = 7;
+                   pathState = 7;
+                }
+                else{
+                    odyssey.odysseyArm.move(ArmStates.AUTON_ARM_UP);
+                    sleep(1000);
+                    pathState = 7;
                 }
                 break;
 
             case 7: // end state
                 if(!follower.isBusy()) {
-                    sleep(1000);
+                    sleep(5000);
                     pathState = 7;
+
+                    telemetry.addData("path state", pathState);
+                    telemetry.addData("x", follower.getPose().getX());
+                    telemetry.addData("y", follower.getPose().getY());
+                    telemetry.addData("heading", follower.getPose().getHeading());
+                    telemetry.update();
                 }
                 break;
 
@@ -288,7 +319,7 @@ public class SampleFinalPedro extends LinearOpMode {
 
 
     private void performSlideUp(Robot odyssey) {
-        odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET);
+        odyssey.odysseySlider.slide(SliderStates.AUTON_HIGH_BUCKET);
         sleep(1000);
     }
 
@@ -300,7 +331,7 @@ public class SampleFinalPedro extends LinearOpMode {
 
     private Runnable performSlideDownRunnable(Robot odyssey) {
         odyssey.odysseySlider.slide(SliderStates.RETRACTED);
-        sleep(1000);
+        sleep(500);
         return null;
     }
 }
