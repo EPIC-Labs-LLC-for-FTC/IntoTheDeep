@@ -7,7 +7,7 @@ public enum ArmStates {
     READY_TO_DEPOSIT(315),
     DEPOSITING(60),
     LOWERED(525),
-    AUTON_LOWERED(440),
+    AUTON_LOWERED(455), // 440
     INITIALIZED(0.0),
     NEUTRAL(250),
     SPECIMEN_PICK(397),

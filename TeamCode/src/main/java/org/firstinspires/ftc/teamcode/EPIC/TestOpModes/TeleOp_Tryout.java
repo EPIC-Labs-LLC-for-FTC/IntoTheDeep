@@ -114,10 +114,10 @@ public class TeleOp_Tryout extends LinearOpMode {
         gamepadOne.start();
 
         while (opModeIsActive()) {
-            if (gamepad2.x) {
+            if (gamepad2.y) { // was x
                 odyssey.odysseyClaw.move(ClawStates.OPEN);
                 sleep(50);
-            } else if (gamepad2.y) {
+            } else if (gamepad2.x) { // was y
                 odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
                 sleep(50);
             } else if (gamepad2.dpad_up) {
