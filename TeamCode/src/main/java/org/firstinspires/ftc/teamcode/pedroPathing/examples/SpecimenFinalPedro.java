@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode.pedroPathing.examples;
 
 import com.pedropathing.follower.Follower;
@@ -19,8 +20,8 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
-@Autonomous(name = "BlueBucket_Pedro")
-public class BlueBucket_Pedro extends LinearOpMode {
+@Autonomous(name = "Specimen_Final_Pedro")
+public class SpecimenFinalPedro extends LinearOpMode {
     public static double ap = 0.03, ai = 0, ad = 0.0015, af = 0.065;
     public static double sp = 0.02, si = 0, sd = 0.001, sf = 0;
 
@@ -30,17 +31,20 @@ public class BlueBucket_Pedro extends LinearOpMode {
 
     private int pathState = 0;
 
-    private final Pose startPose = new Pose(8, 80, Math.toRadians(0));
-    private final Pose specimenDropPose = new Pose(28.5, 78);
-    private final Pose specimenBackPose = new Pose(28, 80);
-    private final Pose firstPickupPose = new Pose(25, 116);
-    private final Pose secondPickupPose = new Pose(20, 124, Math.toRadians(0));
-    private final Pose thirdPickupPose = new Pose(20, 132, Math.toRadians(0));
-    private final Pose depositPose = new Pose(13, 130, Math.toRadians(-42));
+    private final Pose startPose = new Pose(8.0, 64, Math.toRadians(0));
+    private final Pose specimenDropPose = new Pose(28.5, 64);
+    private final Pose specimenBackPose = new Pose(29, 40);
+    private final Pose firstSamplePushStartPose = new Pose(56, 37);
+    private final Pose firstSamplePushEndPose = new Pose(10, 24);
+    private final Pose secondSamplePushStartPose = new Pose(56, 22);
+    private final Pose secondSamplePushEndPose = new Pose(10, 22);
+    private final Pose thirdSamplePushStartPose = new Pose(56, 26);
+    private final Pose thirdSamplePushEndPose = new Pose(10, 20);
+    private final Pose sampleGrab = new Pose(25, 116);
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
     private Path goToPreload, moveToPark;
-    private PathChain scorePreload, grabPickup1, grabPickup2, grabPickup3, scorePickup1, scorePickup2, scorePickup3;
+    private PathChain scorePreload, pushFirstSample, firstSampleObservationPoint, pushSecondSample, pushThirdSample, grabSampleFromPlayer, secondSampleObservationPoint, thirdSampleObservationPoint;
 
     private void buildPaths() {
 
@@ -48,43 +52,53 @@ public class BlueBucket_Pedro extends LinearOpMode {
         goToPreload = new Path(new BezierLine(new Point(startPose), new Point(specimenDropPose)));
         goToPreload.setConstantHeadingInterpolation(0);
 
-        // Path chains for picking up and scoring samples
 
         scorePreload = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(specimenDropPose), new Point(specimenBackPose)))
                 .setConstantHeadingInterpolation(0)
                 .build();
-        grabPickup1 = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(specimenBackPose), new Point(firstPickupPose)))
+        pushFirstSample = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(specimenBackPose), new Point(firstSamplePushStartPose)))
                 .setConstantHeadingInterpolation(0)
                 .build();
 
-        scorePickup1 = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(firstPickupPose), new Point(depositPose)))
-                .setLinearHeadingInterpolation(firstPickupPose.getHeading(), depositPose.getHeading())
+        firstSampleObservationPoint = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(firstSamplePushStartPose), new Point(firstSamplePushEndPose)))
+                .setConstantHeadingInterpolation(0)
                 .build();
 
-        grabPickup2 = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(depositPose), new Point(secondPickupPose)))
-                .setLinearHeadingInterpolation(depositPose.getHeading(), secondPickupPose.getHeading())
-                .addParametricCallback(0.60, () -> performSlideDown(odyssey))
+        pushSecondSample = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(firstSamplePushEndPose), new Point(firstSamplePushStartPose)))
+                .addPath(new BezierLine(new Point(firstSamplePushStartPose), new Point(secondSamplePushStartPose)))
+                .setConstantHeadingInterpolation(0)
                 .build();
 
-        scorePickup2 = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(secondPickupPose), new Point(depositPose)))
-                .setLinearHeadingInterpolation(secondPickupPose.getHeading(), depositPose.getHeading())
+        secondSampleObservationPoint = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(secondSamplePushStartPose), new Point(secondSamplePushEndPose)))
+                .setConstantHeadingInterpolation(0)
                 .build();
 
-        grabPickup3 = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(depositPose), new Point(thirdPickupPose)))
-                .setLinearHeadingInterpolation(depositPose.getHeading(), thirdPickupPose.getHeading())
-                .addParametricCallback(0.30, () -> performSlideDown(odyssey))
+        pushThirdSample = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(secondSamplePushEndPose), new Point(secondSamplePushStartPose)))
+                .addPath(new BezierLine(new Point(secondSamplePushStartPose), new Point(thirdSamplePushStartPose)))
+                .setConstantHeadingInterpolation(0)
                 .build();
 
-        scorePickup3 = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(thirdPickupPose), new Point(depositPose)))
-                .setLinearHeadingInterpolation(thirdPickupPose.getHeading(), depositPose.getHeading())
+        thirdSampleObservationPoint = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(thirdSamplePushStartPose), new Point(thirdSamplePushEndPose)))
+                .setConstantHeadingInterpolation(0)
                 .build();
+
+        grabSampleFromPlayer = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(thirdSamplePushEndPose), new Point(sampleGrab)))
+                .setLinearHeadingInterpolation(thirdSamplePushEndPose.getHeading(), sampleGrab.getHeading())
+                .build();
+
+        scorePreload = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(sampleGrab), new Point(specimenDropPose)))
+                .setConstantHeadingInterpolation(0)
+                .build();
+
 
         // Curved path for parking
         //     park = new Path(new BezierCurve(new Point(scorePose), new Point(parkControlPose), new Point(parkPose)));
@@ -153,97 +167,81 @@ public class BlueBucket_Pedro extends LinearOpMode {
             case 2:
                 if (!follower.isBusy()) {
                     performSpecimenDropoffUnder(odyssey);
-                    sleep(500);
-                    follower.followPath(grabPickup1, true);
+                    sleep(1000);
+                    follower.followPath(pushFirstSample, true);
                     pathState = 3;
                 }
                 break;
 
             case 3:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
-                    performSamplePickup(odyssey);
-                    sleep(500);
-                    performSlideUp(odyssey);
+                    follower.followPath(firstSampleObservationPoint, true);
                     pathState = 4;
                 }
                 break;
 
             case 4:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
-                    follower.followPath(scorePickup1, true);
+                    follower.followPath(pushSecondSample, true);
                     pathState = 5;
-                    pathTimer.resetTimer();
                 }
                 break;
 
             case 5:
-                if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 5.0) {
-                 //   performSlideDown(odyssey);
-                    sleep(500);
-                    follower.followPath(grabPickup2, true);
-                    sleep(500);
+                follower.setMaxPower(1.0);
+                if (!follower.isBusy()) {
+                    follower.followPath(secondSampleObservationPoint, true);
                     pathState = 6;
-
                 }
                 break;
+
             case 6:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
-                    performSamplePickup(odyssey);
-                    sleep(500);
-                    performSlideUp(odyssey);
+                    follower.followPath(pushThirdSample, true);
                     pathState = 7;
                 }
                 break;
-
             case 7:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
-                    sleep(500);
-                    follower.followPath(scorePickup2, true);
-                    sleep(500);
+                    follower.followPath(thirdSampleObservationPoint, true);
                     pathState = 8;
-                    pathTimer.resetTimer();
                 }
                 break;
 
             case 8:
-                if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 5.0) {
-               //     performSlideDown(odyssey);
-                    sleep(500);
-                    performSamplePickup(odyssey);
+                if (!follower.isBusy()) {
+                    follower.followPath(grabSampleFromPlayer, true);
+                    performSpecimenPickup(odyssey);
                     pathState = 9;
                 }
                 break;
 
             case 9:
                 if (!follower.isBusy()) {
-                    sleep(1000);
-                    follower.followPath(grabPickup3, true);
-                    sleep(1000);
-                    performSamplePickup(odyssey);
-                    sleep(1000);
-                    performSlideDown(odyssey);
+                    follower.setMaxPower(0.6);
+                    follower.followPath(goToPreload);
                     pathState = 10;
                 }
                 break;
-
             case 10:
-                if (!follower.isBusy()) {
-                    sleep(1000);
-                    follower.followPath(scorePickup3, true);
-                    sleep(1000);
-                    pathState = 11;
-                    pathTimer.resetTimer();
-                }
+                follower.followPath(scorePreload);
+                pathState = 11;
                 break;
 
             case 11:
-                if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 2.0) {
-                    performSlideUp(odyssey);
+                if (!follower.isBusy()) {
+                    performSpecimenDropoff(odyssey);
                     sleep(1000);
-                    //performSamplePickup(odyssey);
+                    follower.followPath(grabSampleFromPlayer, true);
                     pathState = 12;
                 }
                 break;
+
+
 //
 //            case 8:
 //                if (!follower.isBusy()) {
@@ -284,6 +282,9 @@ public class BlueBucket_Pedro extends LinearOpMode {
         odyssey.odysseyClaw.move(ClawStates.OPEN);
         sleep(500);
     }
+
+
+    //specimen pickup equals picking up it fomr the wall and smaple pickeup is when you pick irt up from the floor.
 
     private void performSpecimenPickup(Robot odyssey) {
         odyssey.odysseyWrist.setPos(WristStates.SPECIMEN_PICK);
@@ -327,7 +328,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
 
     private void performSlideUp(Robot odyssey) {
         odyssey.odysseySlider.slide(SliderStates.HIGH_BUCKET);
-        sleep(1000);
+        sleep(2000);
     }
 
     private void performSlideDown(Robot odyssey) {

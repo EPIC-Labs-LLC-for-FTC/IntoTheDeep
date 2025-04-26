@@ -30,17 +30,20 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
 
     private int pathState = 0;
 
-    private final Pose startPose = new Pose(8, 80, Math.toRadians(0));
-    private final Pose specimenDropPose = new Pose(28.5, 78);
-    private final Pose specimenBackPose = new Pose(28, 80);
-    private final Pose firstSamplePushPose = new Pose(25, 116);
-    private final Pose secondSamplePushPose = new Pose(25, 120, Math.toRadians(0));
-    private final Pose thirdSamplePushPose = new Pose(25, 124, Math.toRadians(0));
+    private final Pose startPose = new Pose(8.0, 64, Math.toRadians(0));
+    private final Pose specimenDropPose = new Pose(28.5, 64);
+    private final Pose specimenBackPose = new Pose(29, 40);
+    private final Pose firstSamplePushStartPose = new Pose(56, 37);
+    private final Pose firstSamplePushEndPose = new Pose(10, 24);
+    private final Pose secondSamplePushStartPose = new Pose(56, 22);
+    private final Pose secondSamplePushEndPose = new Pose(10, 22);
+    private final Pose thirdSamplePushStartPose = new Pose(56, 26);
+    private final Pose thirdSamplePushEndPose = new Pose(10, 20);
     private final Pose sampleGrab = new Pose(25, 116);
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
     private Path goToPreload, moveToPark;
-    private PathChain scorePreload, pushFirstSample, pushSecondSample, pushThirdSample, grabSampleFromPlayer;
+    private PathChain scorePreload, pushFirstSample, firstSampleObservationPoint, pushSecondSample, pushThirdSample, grabSampleFromPlayer, secondSampleObservationPoint, thirdSampleObservationPoint;
 
     private void buildPaths() {
 
@@ -54,24 +57,40 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
                 .setConstantHeadingInterpolation(0)
                 .build();
         pushFirstSample = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(specimenBackPose), new Point(firstSamplePushPose)))
+                .addPath(new BezierLine(new Point(specimenBackPose), new Point(firstSamplePushStartPose)))
+                .setConstantHeadingInterpolation(0)
+                .build();
+
+        firstSampleObservationPoint = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(firstSamplePushStartPose), new Point(firstSamplePushEndPose)))
                 .setConstantHeadingInterpolation(0)
                 .build();
 
         pushSecondSample = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(firstSamplePushPose), new Point(secondSamplePushPose)))
-                .setLinearHeadingInterpolation(firstSamplePushPose.getHeading(), secondSamplePushPose.getHeading())
+                .addPath(new BezierLine(new Point(firstSamplePushEndPose), new Point(firstSamplePushStartPose)))
+                .addPath(new BezierLine(new Point(firstSamplePushStartPose), new Point(secondSamplePushStartPose)))
+                .setConstantHeadingInterpolation(0)
+                .build();
+
+        secondSampleObservationPoint = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(secondSamplePushStartPose), new Point(secondSamplePushEndPose)))
+                .setConstantHeadingInterpolation(0)
                 .build();
 
         pushThirdSample = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(secondSamplePushPose), new Point(thirdSamplePushPose)))
-                .setLinearHeadingInterpolation(secondSamplePushPose.getHeading(), thirdSamplePushPose.getHeading())
-//                .addParametricCallback(0.50, () -> performSlideDown(odyssey))
+                .addPath(new BezierLine(new Point(secondSamplePushEndPose), new Point(secondSamplePushStartPose)))
+                .addPath(new BezierLine(new Point(secondSamplePushStartPose), new Point(thirdSamplePushStartPose)))
+                .setConstantHeadingInterpolation(0)
+                .build();
+
+        thirdSampleObservationPoint = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(thirdSamplePushStartPose), new Point(thirdSamplePushEndPose)))
+                .setConstantHeadingInterpolation(0)
                 .build();
 
         grabSampleFromPlayer = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(thirdSamplePushPose), new Point(sampleGrab)))
-                .setLinearHeadingInterpolation(thirdSamplePushPose.getHeading(), sampleGrab.getHeading())
+                .addPath(new BezierLine(new Point(thirdSamplePushEndPose), new Point(sampleGrab)))
+                .setLinearHeadingInterpolation(thirdSamplePushEndPose.getHeading(), sampleGrab.getHeading())
                 .build();
 
         scorePreload = follower.pathBuilder()
@@ -146,50 +165,56 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
 
             case 2:
                 if (!follower.isBusy()) {
+                    performSpecimenDropoffUnder(odyssey);
+                    sleep(1000);
                     follower.followPath(pushFirstSample, true);
                     pathState = 3;
                 }
                 break;
 
             case 3:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
-                    follower.followPath(pushSecondSample, true);
+                    follower.followPath(firstSampleObservationPoint, true);
                     pathState = 4;
                 }
                 break;
 
             case 4:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
-                    follower.followPath(pushThirdSample, true);
+                    follower.followPath(pushSecondSample, true);
                     pathState = 5;
                 }
                 break;
 
             case 5:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
-                    follower.followPath(grabSampleFromPlayer, true);
-                    // add method from grabbing sample from human player
+                    follower.followPath(secondSampleObservationPoint, true);
                     pathState = 6;
                 }
                 break;
 
             case 6:
+                follower.setMaxPower(1.0);
                 if (!follower.isBusy()) {
-                    follower.setMaxPower(0.6);
-                    follower.followPath(goToPreload);
+                    follower.followPath(pushThirdSample, true);
                     pathState = 7;
                 }
                 break;
             case 7:
-                follower.followPath(scorePreload);
-                pathState = 8;
+                follower.setMaxPower(1.0);
+                if (!follower.isBusy()) {
+                    follower.followPath(thirdSampleObservationPoint, true);
+                    pathState = 8;
+                }
                 break;
 
             case 8:
                 if (!follower.isBusy()) {
-                    performSpecimenDropoffUnder(odyssey);
-                    sleep(1000);
                     follower.followPath(grabSampleFromPlayer, true);
+                    performSpecimenPickup(odyssey);
                     pathState = 9;
                 }
                 break;
@@ -205,6 +230,17 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
                 follower.followPath(scorePreload);
                 pathState = 11;
                 break;
+
+            case 11:
+                if (!follower.isBusy()) {
+                    performSpecimenDropoff(odyssey);
+                    sleep(1000);
+                    follower.followPath(grabSampleFromPlayer, true);
+                    pathState = 12;
+                }
+                break;
+
+
 //
 //            case 8:
 //                if (!follower.isBusy()) {
@@ -245,6 +281,9 @@ public class BlueSpecimen_Pedro extends LinearOpMode {
         odyssey.odysseyClaw.move(ClawStates.OPEN);
         sleep(500);
     }
+
+
+    //specimen pickup equals picking up it fomr the wall and smaple pickeup is when you pick irt up from the floor.
 
     private void performSpecimenPickup(Robot odyssey) {
         odyssey.odysseyWrist.setPos(WristStates.SPECIMEN_PICK);

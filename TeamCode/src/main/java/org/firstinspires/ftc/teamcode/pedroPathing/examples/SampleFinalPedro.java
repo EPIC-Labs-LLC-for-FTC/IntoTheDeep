@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode.pedroPathing.examples;
 
 import com.pedropathing.follower.Follower;
@@ -19,8 +20,8 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
-@Autonomous(name = "BlueBucket_Pedro")
-public class BlueBucket_Pedro extends LinearOpMode {
+@Autonomous(name = "Sample_Final_Pedro")
+public class SampleFinalPedro extends LinearOpMode {
     public static double ap = 0.03, ai = 0, ad = 0.0015, af = 0.065;
     public static double sp = 0.02, si = 0, sd = 0.001, sf = 0;
 
@@ -32,9 +33,9 @@ public class BlueBucket_Pedro extends LinearOpMode {
 
     private final Pose startPose = new Pose(8, 80, Math.toRadians(0));
     private final Pose specimenDropPose = new Pose(28.5, 78);
-    private final Pose specimenBackPose = new Pose(28, 80);
+    private final Pose specimenBackPose = new Pose(27.5, 80);
     private final Pose firstPickupPose = new Pose(25, 116);
-    private final Pose secondPickupPose = new Pose(20, 124, Math.toRadians(0));
+    private final Pose secondPickupPose = new Pose(25, 124, Math.toRadians(0));
     private final Pose thirdPickupPose = new Pose(20, 132, Math.toRadians(0));
     private final Pose depositPose = new Pose(13, 130, Math.toRadians(-42));
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
@@ -86,9 +87,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
                 .setLinearHeadingInterpolation(thirdPickupPose.getHeading(), depositPose.getHeading())
                 .build();
 
-        // Curved path for parking
-        //     park = new Path(new BezierCurve(new Point(scorePose), new Point(parkControlPose), new Point(parkPose)));
-        //    park.setLinearHeadingInterpolation(scorePose.getHeading(), parkPose.getHeading());
+
     }
 
 
@@ -178,7 +177,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
 
             case 5:
                 if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 5.0) {
-                 //   performSlideDown(odyssey);
+                    //   performSlideDown(odyssey);
                     sleep(500);
                     follower.followPath(grabPickup2, true);
                     sleep(500);
@@ -186,70 +185,16 @@ public class BlueBucket_Pedro extends LinearOpMode {
 
                 }
                 break;
+
             case 6:
                 if (!follower.isBusy()) {
                     performSamplePickup(odyssey);
                     sleep(500);
-                    performSlideUp(odyssey);
-                    pathState = 7;
+                   // performSlideUp(odyssey);
+                   // pathState = 7;
                 }
                 break;
 
-            case 7:
-                if (!follower.isBusy()) {
-                    sleep(500);
-                    follower.followPath(scorePickup2, true);
-                    sleep(500);
-                    pathState = 8;
-                    pathTimer.resetTimer();
-                }
-                break;
-
-            case 8:
-                if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 5.0) {
-               //     performSlideDown(odyssey);
-                    sleep(500);
-                    performSamplePickup(odyssey);
-                    pathState = 9;
-                }
-                break;
-
-            case 9:
-                if (!follower.isBusy()) {
-                    sleep(1000);
-                    follower.followPath(grabPickup3, true);
-                    sleep(1000);
-                    performSamplePickup(odyssey);
-                    sleep(1000);
-                    performSlideDown(odyssey);
-                    pathState = 10;
-                }
-                break;
-
-            case 10:
-                if (!follower.isBusy()) {
-                    sleep(1000);
-                    follower.followPath(scorePickup3, true);
-                    sleep(1000);
-                    pathState = 11;
-                    pathTimer.resetTimer();
-                }
-                break;
-
-            case 11:
-                if (!follower.isBusy() || pathTimer.getElapsedTimeSeconds() > 2.0) {
-                    performSlideUp(odyssey);
-                    sleep(1000);
-                    //performSamplePickup(odyssey);
-                    pathState = 12;
-                }
-                break;
-//
-//            case 8:
-//                if (!follower.isBusy()) {
-//                    pathState = -1;
-//                }
-//                break;
 
 
         }
@@ -278,7 +223,7 @@ public class BlueBucket_Pedro extends LinearOpMode {
         odyssey.odysseyWrist.setPos(WristStates.INITIALIZING_AUTON);
         sleep(500);
 
-        odyssey.odysseyArm.move(ArmStates.AUTON_BUCKET_DROP);
+        odyssey.odysseyArm.move(ArmStates.AUTON_ARM_UP);
         sleep(1600);
 
         odyssey.odysseyClaw.move(ClawStates.OPEN);
