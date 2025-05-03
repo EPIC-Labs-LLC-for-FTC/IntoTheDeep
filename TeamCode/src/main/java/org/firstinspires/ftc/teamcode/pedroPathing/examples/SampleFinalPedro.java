@@ -37,13 +37,13 @@ public class SampleFinalPedro extends LinearOpMode {
     private int nextPathState = 0;
 
     private final Pose startPose = new Pose(0, 0, Math.toRadians(0)); //x=0, y=0
-    private final Pose specimenDropPose = new Pose(23.7, -1); //x=22 (plus or minus 1), y=-2
-    private final Pose specimenBackPose = new Pose(16.8, -1); // x=17.5, y=-2
-    private final Pose firstPickupPose = new Pose(15.5, 31); // x=16.2, y=31.5 (UPDATED)
-    private final Pose secondPickupPose = new Pose(15.5, 39); // x= 16.2, y=44
+    private final Pose specimenDropPose = new Pose(29.25, -1.5);
+    private final Pose specimenBackPose = new Pose(21, -1);
+    private final Pose firstPickupPose = new Pose(21, 41);
+    private final Pose secondPickupPose = new Pose(21.5, 51);
     private final Pose thirdPickupPose = new Pose(12, 52, Math.toRadians(0));
-    private final Pose depositPose = new Pose(1, 40.5, Math.toRadians(-45)); // x= 0, y= 39, h= -42
-    private final Pose bucketBackPose = new Pose(5.8, 39, Math.toRadians(0)); // heading -21 (UPDATED)
+    private final Pose depositPose = new Pose(0, 52, Math.toRadians(315));
+    private final Pose bucketBackPose = new Pose(8, 49, Math.toRadians(0));
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
     private Path goToPreload, moveToPark;
@@ -154,7 +154,7 @@ public class SampleFinalPedro extends LinearOpMode {
                 follower.setMaxPower(1); // 0.6 (UPDATED)
                 follower.followPath(goToPreload);
                 follower.update();
-                nextPathState = 1;
+                nextPathState = 1; //1
                 pathState = 100;
                 break;
 
@@ -163,13 +163,13 @@ public class SampleFinalPedro extends LinearOpMode {
                 //follower.followPath(scorePreload);
                 //follower.update();
                 nextPathState = 2;
-                pathState = 2; // 100
+                pathState = 2; //2
                 break;
 
             case 2: // move from submirsable back pose to first sample, working
                 follower.followPath(grabPickup1);
                 follower.update();
-                nextPathState = 3;
+                nextPathState = 3;//3
                 pathState = 100;
                 break;
 
@@ -181,15 +181,15 @@ public class SampleFinalPedro extends LinearOpMode {
                 follower.followPath(scorePickup1, true);
                 follower.update();
                 maxFollowerBusyTime = 1.75;
-                nextPathState = 4;
+                nextPathState = 4; //4
                 pathState = 100;
                 break;
 
             case 4: // back up from bucket
-                    maxFollowerBusyTime = 3;
+                    maxFollowerBusyTime = 3; //3
                     follower.followPath(backFromBucket, true);
                     follower.update();
-                    nextPathState = 5;
+                    nextPathState = 5; //5
                     pathState = 100;
                 break;
 
@@ -227,7 +227,7 @@ public class SampleFinalPedro extends LinearOpMode {
                     telemetry.addData("path state", pathState);
                     telemetry.addData("x", follower.getPose().getX());
                     telemetry.addData("y", follower.getPose().getY());
-                    telemetry.addData("heading", follower.getPose().getHeading());
+                    telemetry.addData("heading", Math.toDegrees(follower.getPose().getHeading()));
                     telemetry.addData("elapsedTime", pathTimer.getElapsedTimeSeconds());
                 telemetry.addData("nextState", nextPathState);
                 telemetry.addData("timeInFollowerBusyState", timeInFollowerBusyState);
@@ -320,24 +320,24 @@ public class SampleFinalPedro extends LinearOpMode {
     private void performSamplePickup1(Robot odyssey) {
 
         odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(500);
+        sleep(400);
 
         odyssey.odysseyArm.move(ArmStates.AUTON_LOWERED);
-        sleep(500);
+        sleep(450);
 
         odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
-        sleep(500);
+        sleep(400);
         odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
-        sleep(500);
+        sleep(400);
 
         odyssey.odysseyWrist.setPos(WristStates.INITIALIZING);
-        sleep(500);
+        sleep(400);
 
         odyssey.odysseyArm.move(ArmStates.AUTON_ARM_UP);
-        sleep(1000);
+        sleep(900);
 
         odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(500);
+        sleep(400);
 
         odyssey.odysseyArm.move(ArmStates.AUTON_LOWERED);
         sleep(1000);
@@ -347,18 +347,18 @@ public class SampleFinalPedro extends LinearOpMode {
     private void performSamplePickup2(Robot odyssey) {
 
         odyssey.odysseyWrist.setPos(WristStates.PICKING_UP_SAMPLE);
-        sleep(500);
+        sleep(400);
         odyssey.odysseyClaw.move(ClawStates.HOLDING_SAMPLE_PORTRAIT);
-        sleep(500);
+        sleep(400);
 
         odyssey.odysseyWrist.setPos(WristStates.INITIALIZING);
-        sleep(500);
+        sleep(400);
 
         odyssey.odysseyArm.move(ArmStates.AUTON_ARM_UP);
-        sleep(1000);
+        sleep(900);
 
         odyssey.odysseyClaw.move(ClawStates.OPEN);
-        sleep(500);
+        sleep(400);
 
         odyssey.odysseyArm.move(ArmStates.AUTON_LOWERED);
         sleep(1000);
