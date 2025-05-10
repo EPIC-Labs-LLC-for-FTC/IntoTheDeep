@@ -39,8 +39,8 @@ public class SampleFinalPedro extends LinearOpMode {
     private final Pose startPose = new Pose(0, 0, Math.toRadians(0)); //x=0, y=0
     private final Pose specimenDropPose = new Pose(29.25, -1.5);
     private final Pose specimenBackPose = new Pose(21, -1);
-    private final Pose firstPickupPose = new Pose(21, 41);
-    private final Pose secondPickupPose = new Pose(21.5, 51);
+    private final Pose firstPickupPose = new Pose(18, 41);
+    private final Pose secondPickupPose = new Pose(18.5, 51);//21.5, 51
     private final Pose thirdPickupPose = new Pose(12, 52, Math.toRadians(0));
     private final Pose depositPose = new Pose(0, 52, Math.toRadians(315));
     private final Pose bucketBackPose = new Pose(8, 49, Math.toRadians(0));

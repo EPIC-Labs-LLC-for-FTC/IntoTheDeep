@@ -20,8 +20,8 @@ import org.firstinspires.ftc.teamcode.EPIC.RobotStates.WristStates;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
-@Autonomous(name = "Sample_Final_Pedro")
-public class SpecFinalPedroCowtown extends LinearOpMode {
+@Autonomous(name = "Spec_Final_Pedro")
+public class pedroSpec2 extends LinearOpMode {
     public static double ap = 0.03, ai = 0, ad = 0.0015, af = 0.065;
     public static double sp = 0.02, si = 0, sd = 0.001, sf = 0.1; //sf=0
 
@@ -37,14 +37,14 @@ public class SpecFinalPedroCowtown extends LinearOpMode {
     private int nextPathState = 0;
 
     private final Pose startPose = new Pose(0, 0, Math.toRadians(0)); //x=0, y=0
-    private final Pose specimenDropPose = new Pose(29.25, -1.5);
+    private final Pose specimenDropPose = new Pose(29.25, 0);
     private final Pose specimenDropPose2 = new Pose(29.25, -1.5);
     private final Pose specimenBackPose = new Pose(21, -1);
     private final Pose pickupPose = new Pose(21, 41);
     private final Pose pushPose = new Pose(0, 52, Math.toRadians(315));
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
     private Path goToPreload, moveToPark;
-    private PathChain scorePreload, grabPickup1, pushSample, backFromBucket, grabPickup2, grabPickup3, scoreSpec, scorePickup2, scorePickup3;
+    private PathChain scorePreload, grabPickup1, scoreSpec, pushSample, park;
 
     private void buildPaths() {
 
@@ -70,9 +70,9 @@ public class SpecFinalPedroCowtown extends LinearOpMode {
                 .addPath(new BezierLine(new Point(specimenDropPose2), new Point(pushPose)))
                 .setLinearHeadingInterpolation(specimenDropPose2.getHeading(), pushPose.getHeading())
                 .build();
-        backFromBucket = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(depositPose), new Point(bucketBackPose)))
-                .setLinearHeadingInterpolation(depositPose.getHeading(), bucketBackPose.getHeading())
+        park = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(pushPose), new Point(parkPose)))
+                .setLinearHeadingInterpolation(pushPose.getHeading(), parkPose.getHeading())
                 .build();
 
 
@@ -130,25 +130,23 @@ public class SpecFinalPedroCowtown extends LinearOpMode {
     private void autonomousPathUpdate() {
         switch (pathState) {
             case 0: // strafe to submirsable, working
-                follower.setMaxPower(1); // 0.6 (UPDATED)
+                follower.setMaxPower(1);
                 follower.followPath(goToPreload);
                 follower.update();
-                nextPathState = 1; //1
+                nextPathState = 1;
                 pathState = 100;
                 break;
 
-            case 1: // move back from submirsable, working
+            case 1:
                 performSpecimenDropoffUnder(odyssey);
-                //follower.followPath(scorePreload);
-                //follower.update();
                 nextPathState = 2;
-                pathState = 2; //2
+                pathState = 2;
                 break;
 
             case 2: // move from submirsable back pose to first sample, working
                 follower.followPath(grabPickup1);
                 follower.update();
-                nextPathState = 3;//3
+                nextPathState = 3;
                 pathState = 100;
                 break;
 
@@ -157,7 +155,7 @@ public class SpecFinalPedroCowtown extends LinearOpMode {
                 sleep(500);
                 performSlideUp(odyssey);
                 follower.setMaxPower(0.6);
-                follower.followPath(scorePickup1, true);
+                follower.followPath(scoreSpec, true);
                 follower.update();
                 maxFollowerBusyTime = 1.75;
                 nextPathState = 4; //4
@@ -166,7 +164,7 @@ public class SpecFinalPedroCowtown extends LinearOpMode {
 
             case 4: // back up from bucket
                     maxFollowerBusyTime = 3; //3
-                    follower.followPath(backFromBucket, true);
+                    follower.followPath(pushSample, true);
                     follower.update();
                     nextPathState = 5; //5
                     pathState = 100;
@@ -175,7 +173,7 @@ public class SpecFinalPedroCowtown extends LinearOpMode {
             case 5: // slides down + sample pick up or arm up
             performSlideDown(odyssey);
                     if(pathTimer.getElapsedTimeSeconds()<26.0){ // time should be 15.0 for 1+1
-                        follower.followPath(grabPickup2, true);
+                        follower.followPath(park, true);
                         follower.update();
                         nextPathState = 6;
                         pathState = 100;
@@ -188,7 +186,7 @@ public class SpecFinalPedroCowtown extends LinearOpMode {
 
                 break;
 
-            case 6: // pick up + score sample 2
+           /* case 6: // pick up + score sample 2
                 performSamplePickup2(odyssey);
                 sleep(500);
                 performSlideUp(odyssey);
@@ -199,7 +197,7 @@ public class SpecFinalPedroCowtown extends LinearOpMode {
                 nextPathState = 4;
                 pathState = 100;
 
-                break;
+                break; */
 
             case 7: // end state
                 //if(!follower.isBusy()) {
