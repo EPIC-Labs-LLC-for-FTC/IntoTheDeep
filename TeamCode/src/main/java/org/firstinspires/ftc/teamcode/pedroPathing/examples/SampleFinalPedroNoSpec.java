@@ -35,15 +35,16 @@ public class SampleFinalPedroNoSpec extends LinearOpMode {
 
     private int pathState = 0; // supposed to be 0
     private int nextPathState = 0;
+    private int x = 0;
 
     private final Pose startPose = new Pose(0, 0, Math.toRadians(0)); //x=0, y=0
     private final Pose specimenDropPose = new Pose(29.25, -1.5);
     private final Pose specimenBackPose = new Pose(21, -1);
-    private final Pose firstPickupPose = new Pose(18, 41);
-    private final Pose secondPickupPose = new Pose(18.5, 51);//21.5, 51
-    private final Pose thirdPickupPose = new Pose(12, 52, Math.toRadians(0));
-    private final Pose depositPose = new Pose(0, 52, Math.toRadians(315));
-    private final Pose bucketBackPose = new Pose(8, 49, Math.toRadians(0));
+    private final Pose firstPickupPose = new Pose(18, 34.5);
+    private final Pose secondPickupPose = new Pose(18.5, 44.5);//21.5, 51
+    private final Pose thirdPickupPose = new Pose(12, 43.5, Math.toRadians(0));
+    private final Pose depositPose = new Pose(0, 43.5, Math.toRadians(315));
+    private final Pose bucketBackPose = new Pose(8, 42.5, Math.toRadians(0));
     private final Pose parkPose = new Pose(2, 15, Math.toRadians(270));
 
     private Path goToPreload, moveToPark;
@@ -52,7 +53,7 @@ public class SampleFinalPedroNoSpec extends LinearOpMode {
     private void buildPaths() {
 
         // Path for scoring preload
-        goToPreload = new Path(new BezierLine(new Point(startPose), new Point(specimenDropPose)));
+        goToPreload = new Path(new BezierLine(new Point(startPose), new Point(depositPose)));
         goToPreload.setConstantHeadingInterpolation(0);
 
         // Path chains for picking up and scoring samples
@@ -62,7 +63,7 @@ public class SampleFinalPedroNoSpec extends LinearOpMode {
                 .setConstantHeadingInterpolation(0)
                 .build();
         grabPickup1 = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(specimenDropPose), new Point(firstPickupPose))) // first one is sepecimenBackPose
+                .addPath(new BezierLine(new Point(bucketBackPose), new Point(firstPickupPose))) // first one is sepecimenBackPose
                 .setConstantHeadingInterpolation(0)
                 .build();
         scorePickup1 = follower.pathBuilder()
@@ -151,22 +152,29 @@ public class SampleFinalPedroNoSpec extends LinearOpMode {
     private void autonomousPathUpdate() {
         switch (pathState) {
             case 0: // strafe to submirsable, working
-                follower.setMaxPower(1); // 0.6 (UPDATED)
+                odyssey.odysseyArm.move(ArmStates.AUTON_LOWERED);
+                performSlideUp(odyssey);
+                sleep(500);
+                follower.setMaxPower(0.6); // 0.6 (UPDATED)
                 follower.followPath(goToPreload);
                 follower.update();
-                nextPathState = 1; //1
+                x = 0;
+                nextPathState = 4;
                 pathState = 100;
                 break;
 
-            case 1: // move back from submirsable, working
-                performSpecimenDropoffUnder(odyssey);
-                //follower.followPath(scorePreload);
-                //follower.update();
-                nextPathState = 2;
-                pathState = 2; //2
+            case 1: // not used
+                follower.followPath(backFromBucket);
+                follower.update();
+                //follower.setMaxPower(0.6);
+                maxFollowerBusyTime = 1.75;
+                x = 0;
+                nextPathState = 4;
+                pathState = 100;
                 break;
 
             case 2: // move from submirsable back pose to first sample, working
+
                 follower.followPath(grabPickup1);
                 follower.update();
                 nextPathState = 3;//3
@@ -196,9 +204,16 @@ public class SampleFinalPedroNoSpec extends LinearOpMode {
             case 5: // slides down + sample pick up or arm up
             performSlideDown(odyssey);
                     if(pathTimer.getElapsedTimeSeconds()<26.0){ // time should be 15.0 for 1+1
-                        follower.followPath(grabPickup2, true);
+                        if(x==0){
+                            follower.followPath(grabPickup1, true);
+                            x = x+1;
+                            nextPathState = 3;
+                        }
+                        else {
+                            follower.followPath(grabPickup2, true);
+                            nextPathState = 6;
+                        }
                         follower.update();
-                        nextPathState = 6;
                         pathState = 100;
                     }
                     else{
