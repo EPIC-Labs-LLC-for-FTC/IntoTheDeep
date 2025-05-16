@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.examples;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
 import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.PathChain;
@@ -38,6 +39,7 @@ public class SampleFinalPedroNoSpec extends LinearOpMode {
     private int x = 0;
 
     private final Pose startPose = new Pose(0, 0, Math.toRadians(0)); //x=0, y=0
+    private final Pose preloadCenterPose = new Pose(8, 20);
     private final Pose specimenDropPose = new Pose(29.25, -1.5);
     private final Pose specimenBackPose = new Pose(21, -1);
     private final Pose firstPickupPose = new Pose(18, 34.5);
@@ -53,8 +55,8 @@ public class SampleFinalPedroNoSpec extends LinearOpMode {
     private void buildPaths() {
 
         // Path for scoring preload
-        goToPreload = new Path(new BezierLine(new Point(startPose), new Point(depositPose)));
-        goToPreload.setConstantHeadingInterpolation(0);
+        goToPreload = new Path(new BezierCurve(new Point(startPose), new Point(preloadCenterPose), new Point(depositPose)));
+        goToPreload.setLinearHeadingInterpolation(startPose.getHeading(), depositPose.getHeading());
 
         // Path chains for picking up and scoring samples
 
