@@ -150,6 +150,7 @@ public class pedroSpec2 extends LinearOpMode {
     private void autonomousPathUpdate() {
         switch (pathState) {
             case 0: // strafe to submirsable, working
+                pathTimer.resetTimer();
                 follower.setMaxPower(1);
                 follower.followPath(goToPreload);
                 follower.update();

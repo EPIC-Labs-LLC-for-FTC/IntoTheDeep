@@ -151,6 +151,7 @@ public class SampleFinalPedro extends LinearOpMode {
     private void autonomousPathUpdate() {
         switch (pathState) {
             case 0: // strafe to submirsable, working
+                pathTimer.resetTimer();
                 follower.setMaxPower(1); // 0.6 (UPDATED)
                 follower.followPath(goToPreload);
                 follower.update();

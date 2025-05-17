@@ -154,6 +154,7 @@ public class SampleFinalPedroNoSpec extends LinearOpMode {
     private void autonomousPathUpdate() {
         switch (pathState) {
             case 0: // strafe to submirsable, working
+                pathTimer.resetTimer();
                 odyssey.odysseyArm.move(ArmStates.AUTON_LOWERED);
                 performSlideUp(odyssey);
                 sleep(500);
