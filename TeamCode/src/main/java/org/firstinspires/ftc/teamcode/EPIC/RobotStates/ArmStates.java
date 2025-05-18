@@ -12,7 +12,7 @@ public enum ArmStates {
     NEUTRAL(250),
     SPECIMEN_PICK(388), //397
     SPECIMEN_DROP(200),
-    AUTON_SPECIMEN_DROP(225), // initally 220
+    AUTON_SPECIMEN_DROP(230), // initally 220
 
     SPECIMEN_DROP2(220),
     HOLDING_SAMPLE(450);
