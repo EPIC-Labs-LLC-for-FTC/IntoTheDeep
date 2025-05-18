@@ -38,7 +38,7 @@ public class pedroSpec2 extends LinearOpMode {
     private int nextPathState = 0;
 
     private final Pose startPose = new Pose(0, 0, Math.toRadians(0)); //x=0, y=0
-    private final Pose specimenDropPose = new Pose(29.25, 0);
+    private final Pose specimenDropPose = new Pose(30.25, 0); //x=29.5
     private final Pose centerOfPushPose = new Pose(6,-8);
     private final Pose pushPose = new Pose(50, -35, Math.toRadians(180));
     private final Pose parkPose = new Pose(2, -35, Math.toRadians(180));
